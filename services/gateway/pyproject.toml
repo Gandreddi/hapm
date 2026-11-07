@@ -5,7 +5,7 @@ requires-python = ">=3.12,<3.13"
 dependencies = [
   "hapm-core",
   "hapm-telemetry",
-  "fastapi>=0.115",
+  "fastapi>=0.120",
   "uvicorn>=0.34",
   "httpx>=0.28",
   "redis>=5.2",
