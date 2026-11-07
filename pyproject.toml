@@ -1,0 +1,87 @@
+[project]
+name = "hapm"
+version = "0.0.0"
+requires-python = ">=3.12,<3.13"
+
+[tool.uv]
+package = false
+
+[tool.uv.workspace]
+members = [
+  "libs/core",
+  "libs/events",
+  "libs/mcp_client",
+  "libs/memory",
+  "libs/policy",
+  "libs/telemetry",
+  "services/audit",
+  "services/eval",
+  "services/gateway",
+  "services/oidc_stub",
+  "services/oneview",
+  "services/orchestrator",
+  "services/relay",
+  "connectors/mock_repo",
+  "connectors/mock_tracker",
+]
+
+[tool.uv.sources]
+hapm-core = { workspace = true }
+hapm-events = { workspace = true }
+hapm-mcp-client = { workspace = true }
+hapm-memory = { workspace = true }
+hapm-policy = { workspace = true }
+hapm-telemetry = { workspace = true }
+hapm-audit = { workspace = true }
+hapm-eval = { workspace = true }
+hapm-gateway = { workspace = true }
+hapm-oidc-stub = { workspace = true }
+hapm-oneview = { workspace = true }
+hapm-orchestrator = { workspace = true }
+hapm-relay = { workspace = true }
+hapm-mock-repo = { workspace = true }
+hapm-mock-tracker = { workspace = true }
+
+[dependency-groups]
+dev = [
+  "hapm-core",
+  "hapm-events",
+  "hapm-mcp-client",
+  "hapm-memory",
+  "hapm-policy",
+  "hapm-telemetry",
+  "hapm-audit",
+  "hapm-eval",
+  "hapm-gateway",
+  "hapm-oidc-stub",
+  "hapm-oneview",
+  "hapm-orchestrator",
+  "hapm-relay",
+  "hapm-mock-repo",
+  "hapm-mock-tracker",
+  "ruff==0.8.4",
+  "mypy==1.13.0",
+  "pytest==8.3.4",
+  "pytest-cov==6.0.0",
+  "httpx==0.28.1",
+  "respx>=0.22",
+  "types-jsonschema>=4.23",
+  "types-PyYAML>=6.0",
+]
+
+[tool.ruff]
+line-length = 120
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "S", "N"]
+ignore = ["S101", "E501", "N818"]  # long SQL strings; exception names read better without Error
+
+[tool.ruff.lint.per-file-ignores]
+# Role passwords come from the operator environment and are quote-escaped before use.
+"libs/core/src/hapm_core/migrations/**" = ["S608"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests/unit"]
+addopts = "--import-mode=importlib"
+pythonpath = ["."]
