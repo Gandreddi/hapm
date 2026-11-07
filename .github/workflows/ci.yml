@@ -72,13 +72,10 @@ jobs:
       - run: npm install -g pnpm@9.15.0
       - run: uv sync --all-packages
       - run: make up
-      - name: Container scan
-        uses: aquasecurity/trivy-action@0.28.0
-        with:
-          image-ref: hapm-python:dev
-          severity: CRITICAL,HIGH
-          ignore-unfixed: true
-          exit-code: "1"
+      - name: Container scan (pinned Trivy image, same as local)
+        run: >-
+          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy:0.74.0
+          image --severity CRITICAL,HIGH --ignore-unfixed --exit-code 1 --no-progress --scanners vuln hapm-python:dev
       - run: make demo
       - run: make verify
       - run: make coverage
