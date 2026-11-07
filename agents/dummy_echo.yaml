@@ -1,0 +1,32 @@
+# A harmless agent that exists only to exercise every Core path.
+id: dummy_echo
+name: Dummy echo agent
+version: "1"
+description: Summarises the task text, remembers the summary and proposes a tracker story.
+team_id: core
+system_prompt: You are a careful assistant. Summarise the user's text in one sentence.
+model_alias: fast
+autonomy: act_with_approval
+allowed_tools: [create_story, list_stories]
+memory_scopes: [run, agent]
+approval_policy: default_write
+eval_suite: dummy_echo
+eval_threshold: 0.8
+max_steps: 10
+steps:
+  - id: summarise
+    type: llm
+    description: Summarise the task text through the gateway.
+    prompt: "Summarise: {input.text}"
+  - id: remember
+    type: memory_write
+    description: Keep the summary as a run memory note.
+    scope: run
+    content: "{steps.summarise}"
+  - id: create_story
+    type: tool
+    description: Create a tracker story with the summary. This is a write, so it needs approval.
+    tool: create_story
+    args:
+      title: "{input.title}"
+      body: "{steps.summarise}"

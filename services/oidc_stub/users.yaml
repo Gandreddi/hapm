@@ -1,0 +1,10 @@
+# DEV ONLY. Local test identities for the OIDC stub. Never deploy this file or this service.
+# In the cloud, Entra ID issues tokens with the same claims (sub, roles, aud=hapm).
+users:
+  requester: { password: requester-dev, roles: [viewer] }
+  approver: { password: approver-dev, roles: [viewer, approver] }
+  approver2: { password: approver2-dev, roles: [viewer, approver] }
+  admin: { password: admin-dev, roles: [admin] }
+  viewer: { password: viewer-dev, roles: [viewer] }
+clients:
+  eval-service: { secret: eval-service-dev, roles: [admin] }

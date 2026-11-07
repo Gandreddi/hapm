@@ -1,0 +1,284 @@
+{
+  "$defs": {
+    "Autonomy": {
+      "enum": [
+        "suggest_only",
+        "act_with_approval"
+      ],
+      "title": "Autonomy",
+      "type": "string"
+    },
+    "LlmStep": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "title": "Id",
+          "type": "string"
+        },
+        "type": {
+          "const": "llm",
+          "title": "Type",
+          "type": "string"
+        },
+        "description": {
+          "default": "",
+          "title": "Description",
+          "type": "string"
+        },
+        "prompt": {
+          "title": "Prompt",
+          "type": "string"
+        },
+        "model_alias": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Model Alias"
+        },
+        "max_tokens": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Max Tokens"
+        }
+      },
+      "required": [
+        "id",
+        "type",
+        "prompt"
+      ],
+      "title": "LlmStep",
+      "type": "object"
+    },
+    "MemoryWriteStep": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "title": "Id",
+          "type": "string"
+        },
+        "type": {
+          "const": "memory_write",
+          "title": "Type",
+          "type": "string"
+        },
+        "description": {
+          "default": "",
+          "title": "Description",
+          "type": "string"
+        },
+        "scope": {
+          "enum": [
+            "run",
+            "task",
+            "agent"
+          ],
+          "title": "Scope",
+          "type": "string"
+        },
+        "content": {
+          "title": "Content",
+          "type": "string"
+        },
+        "ttl_seconds": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Ttl Seconds"
+        }
+      },
+      "required": [
+        "id",
+        "type",
+        "scope",
+        "content"
+      ],
+      "title": "MemoryWriteStep",
+      "type": "object"
+    },
+    "ToolStep": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "title": "Id",
+          "type": "string"
+        },
+        "type": {
+          "const": "tool",
+          "title": "Type",
+          "type": "string"
+        },
+        "description": {
+          "default": "",
+          "title": "Description",
+          "type": "string"
+        },
+        "tool": {
+          "title": "Tool",
+          "type": "string"
+        },
+        "args": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "title": "Args",
+          "type": "object"
+        }
+      },
+      "required": [
+        "id",
+        "type",
+        "tool",
+        "args"
+      ],
+      "title": "ToolStep",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "pattern": "^[a-z][a-z0-9_]*$",
+      "title": "Id",
+      "type": "string"
+    },
+    "name": {
+      "title": "Name",
+      "type": "string"
+    },
+    "version": {
+      "default": "1",
+      "title": "Version",
+      "type": "string"
+    },
+    "description": {
+      "default": "",
+      "title": "Description",
+      "type": "string"
+    },
+    "team_id": {
+      "title": "Team Id",
+      "type": "string"
+    },
+    "system_prompt": {
+      "title": "System Prompt",
+      "type": "string"
+    },
+    "model_alias": {
+      "default": "fast",
+      "title": "Model Alias",
+      "type": "string"
+    },
+    "autonomy": {
+      "$ref": "#/$defs/Autonomy",
+      "default": "suggest_only"
+    },
+    "allowed_tools": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Allowed Tools",
+      "type": "array"
+    },
+    "memory_scopes": {
+      "items": {
+        "enum": [
+          "run",
+          "task",
+          "agent"
+        ],
+        "type": "string"
+      },
+      "title": "Memory Scopes",
+      "type": "array"
+    },
+    "approval_policy": {
+      "default": "default_write",
+      "title": "Approval Policy",
+      "type": "string"
+    },
+    "eval_suite": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Eval Suite"
+    },
+    "eval_threshold": {
+      "default": 0.8,
+      "maximum": 1,
+      "minimum": 0,
+      "title": "Eval Threshold",
+      "type": "number"
+    },
+    "max_steps": {
+      "default": 20,
+      "exclusiveMinimum": 0,
+      "title": "Max Steps",
+      "type": "integer"
+    },
+    "steps": {
+      "items": {
+        "discriminator": {
+          "mapping": {
+            "llm": "#/$defs/LlmStep",
+            "memory_write": "#/$defs/MemoryWriteStep",
+            "tool": "#/$defs/ToolStep"
+          },
+          "propertyName": "type"
+        },
+        "oneOf": [
+          {
+            "$ref": "#/$defs/LlmStep"
+          },
+          {
+            "$ref": "#/$defs/MemoryWriteStep"
+          },
+          {
+            "$ref": "#/$defs/ToolStep"
+          }
+        ]
+      },
+      "minItems": 1,
+      "title": "Steps",
+      "type": "array"
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "team_id",
+    "system_prompt",
+    "steps"
+  ],
+  "title": "AgentConfig",
+  "type": "object"
+}
