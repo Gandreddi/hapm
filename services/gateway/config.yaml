@@ -1,0 +1,63 @@
+# Gateway routing, prices and budgets. Provider keys come from the environment or Key Vault
+# references (for example AZURE_OPENAI_API_KEY), never from this file.
+providers:
+  fake:
+    type: fake
+  fake-broken:
+    type: fake
+    always_fail: true
+  azure-openai:
+    type: azure_openai
+    endpoint_env: AZURE_OPENAI_ENDPOINT
+    api_key_env: AZURE_OPENAI_API_KEY
+    api_version: "2024-10-21"
+  anthropic:
+    type: anthropic
+    api_key_env: ANTHROPIC_API_KEY
+
+# Each alias lists targets in order; the next target is tried on a retryable error or timeout.
+aliases:
+  fast:
+    timeout_seconds: 30
+    targets:
+      - { provider: fake, model: fake-fast }
+  smart:
+    timeout_seconds: 60
+    targets:
+      - { provider: fake, model: fake-smart }
+  judge:
+    timeout_seconds: 60
+    targets:
+      - { provider: fake, model: fake-judge }
+  embed:
+    timeout_seconds: 30
+    targets:
+      - { provider: fake, model: fake-embed }
+  fallback-demo:
+    timeout_seconds: 30
+    targets:
+      - { provider: fake-broken, model: fake-broken }
+      - { provider: fake, model: fake-fast }
+
+# USD per 1,000 tokens.
+prices:
+  default: { prompt: 0.001, completion: 0.002 }
+  fake-embed: { prompt: 0.0001, completion: 0.0 }
+
+budgets:
+  per_run: { tokens: 50000, cost_usd: 1.00 }
+  per_team_daily: { tokens: 1000000, cost_usd: 20.00 }
+  team_overrides:
+    tiny-team:
+      per_run: { tokens: 5, cost_usd: 0.0001 }
+      per_team_daily: { tokens: 5, cost_usd: 0.0001 }
+
+redaction:
+  enabled: true
+  patterns:
+    email: "[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
+    api_key: "(sk-[A-Za-z0-9_-]{16,}|AKIA[0-9A-Z]{16})"
+    bearer: "Bearer\\s+[A-Za-z0-9._-]{16,}"
+
+retention:
+  usage_days: 90
