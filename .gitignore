@@ -16,3 +16,4 @@ playwright-report/
 .demo/
 .terraform/
 .terraform.lock.hcl
+requirements-audit.txt

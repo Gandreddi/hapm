@@ -12,28 +12,31 @@ jobs:
   check:
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
-      - uses: astral-sh/setup-uv@v4
+      - uses: actions/checkout@v5
+      - uses: astral-sh/setup-uv@v6
       - run: uv sync --all-packages
       - run: make check
       - name: Dependency audit (Python)
-        run: uvx pip-audit==2.7.3 --strict --progress-spinner off -r <(uv export --all-packages --no-dev --no-hashes --format requirements-txt)
+        # The export is fully pinned with hashes, so pip-audit checks it without re-resolving.
+        run: |
+          uv export --all-packages --no-dev --no-emit-workspace --format requirements-txt > requirements-audit.txt
+          uvx pip-audit==2.7.3 --strict --progress-spinner off --no-deps --disable-pip -r requirements-audit.txt
 
   portal:
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
         with:
           node-version: "22"
       - run: npm install -g pnpm@9.15.0
       - run: make portal-check
-      - run: cd apps/portal && pnpm audit --prod
+      - run: cd apps/portal && pnpm audit --prod --ignore-workspace
 
   infra:
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: azure/setup-helm@v4
         with:
           version: v3.16.3
@@ -48,21 +51,20 @@ jobs:
   secrets:
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           fetch-depth: 0
-      - uses: gitleaks/gitleaks-action@v2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Secret scan of the full git history (pinned gitleaks, same as local)
+        run: docker run --rm --user "$(id -u):$(id -g)" -v "$PWD:/repo" zricethezav/gitleaks:v8.21.2 git /repo --no-banner --redact
 
   exit-demo:
     runs-on: ubuntu-24.04
     needs: [check, portal]
     timeout-minutes: 45
     steps:
-      - uses: actions/checkout@v4
-      - uses: astral-sh/setup-uv@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v5
+      - uses: astral-sh/setup-uv@v6
+      - uses: actions/setup-node@v5
         with:
           node-version: "22"
       - run: npm install -g pnpm@9.15.0

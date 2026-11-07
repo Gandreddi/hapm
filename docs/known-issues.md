@@ -3,8 +3,8 @@
 ## Open
 1. **No commits yet.** git `user.email` on this machine is set to `--list`, so the work is
    uncommitted. Fix the identity, then commit by concern.
-2. **CI has never run.** The repository has no GitHub remote. Container scanning (Trivy), secret
-   scanning (gitleaks) and pip-audit only run in CI, so they are unverified.
+2. **CI not yet green.** The first run failed on CI setup and real Python advisories, both fixed;
+   see docs/progress.md. Trivy and the exit-demo job have not run on GitHub yet.
 3. **Live LLM adapters unverified.** Azure OpenAI and Anthropic adapters are tested against mocked
    HTTP only; no credentials were provided. The demo uses the Fake provider, so eval scores prove the
    plumbing, not answer quality.

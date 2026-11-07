@@ -86,3 +86,16 @@ PASS (f) killing the worker mid-run and restarting it still completes the run
 - Live Azure OpenAI and Anthropic calls (no credentials).
 - Any cloud deployment.
 - No commits (git identity).
+
+## First CI run and fixes (2026-11-07)
+- Run 1 on GitHub: infra passed; check, portal and secrets failed, exit-demo skipped.
+  - Portal audit: pnpm ran without `--ignore-workspace` and found no lockfile. Fixed in CI.
+  - Python audit: pip-audit tried to re-resolve the export and failed. With a hashed export and
+    `--no-deps --disable-pip` it ran and found 8 real advisories: starlette 0.41.3 (7) and
+    opentelemetry-api 1.29.0 (1).
+  - gitleaks: the unpinned action failed; the pinned v8.21.2 scan of the full git history locally
+    reports 0 findings. CI now runs the same pinned image.
+- Upgraded FastAPI 0.115.6 -> 0.162.0 (Starlette 0.41.3 -> 1.10.0) and OpenTelemetry 1.29 -> 1.45.2.
+  pip-audit: no known vulnerabilities.
+- Retest after the upgrade from a wiped stack: make check passed (41 unit tests), make demo succeeded,
+  make verify 6/6, make coverage 70 passed at 84.25%, Playwright 3 passed.
