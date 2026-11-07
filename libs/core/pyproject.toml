@@ -1,0 +1,34 @@
+[project]
+name = "hapm-core"
+version = "0.1.0"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+  "hapm-events",
+  "hapm-policy",
+  "hapm-telemetry",
+  "sqlalchemy>=2.0.36",
+  "psycopg[binary]>=3.2.3",
+  "alembic>=1.14",
+  "pydantic-settings>=2.7",
+  "azure-storage-blob>=12.24",
+  "pyjwt[crypto]>=2.10",
+  "httpx>=0.28",
+  "typer>=0.15",
+  "fastapi>=0.115",
+  "jsonschema>=4.23",
+]
+
+[project.scripts]
+hapm = "hapm_core.cli:app"
+
+[tool.uv.sources]
+hapm-events = { workspace = true }
+hapm-policy = { workspace = true }
+hapm-telemetry = { workspace = true }
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/hapm_core"]

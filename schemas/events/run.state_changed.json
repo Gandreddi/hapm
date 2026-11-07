@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://hapm.local/schemas/events/run.state_changed.json",
+  "title": "run.state_changed",
+  "description": "Data payload of the event. Unknown extra fields are allowed.",
+  "type": "object",
+  "required": [
+    "agent_id",
+    "run_id",
+    "state",
+    "task_id"
+  ],
+  "properties": {
+    "run_id": {
+      "type": "string"
+    },
+    "task_id": {
+      "type": "string"
+    },
+    "agent_id": {
+      "type": "string"
+    },
+    "state": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": true
+}

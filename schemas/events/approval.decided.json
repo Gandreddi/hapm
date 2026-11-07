@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://hapm.local/schemas/events/approval.decided.json",
+  "title": "approval.decided",
+  "description": "Data payload of the event. Unknown extra fields are allowed.",
+  "type": "object",
+  "required": [
+    "approval_id",
+    "decided_by",
+    "decision",
+    "run_id"
+  ],
+  "properties": {
+    "approval_id": {
+      "type": "string"
+    },
+    "run_id": {
+      "type": "string"
+    },
+    "decision": {
+      "type": "string"
+    },
+    "decided_by": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": true
+}

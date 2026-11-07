@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://hapm.local/schemas/events/run.step.json",
+  "title": "run.step",
+  "description": "Data payload of the event. Unknown extra fields are allowed.",
+  "type": "object",
+  "required": [
+    "kind",
+    "run_id",
+    "status",
+    "step",
+    "task_id"
+  ],
+  "properties": {
+    "run_id": {
+      "type": "string"
+    },
+    "task_id": {
+      "type": "string"
+    },
+    "step": {
+      "type": "string"
+    },
+    "kind": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": true
+}

@@ -1,0 +1,52 @@
+# HAPM default policy. Rules are checked top to bottom; the first match wins.
+# Anything that matches no rule is denied (rule id: default-deny).
+version: 1
+
+approval_policies:
+  default_write:
+    approvers: ["approver", "admin"]
+    forbid_self_approval: true
+    timeout_seconds: 3600
+
+rules:
+  - id: llm-agents-allowed
+    description: Registered agents may call the gateway; budgets are enforced separately.
+    effect: allow
+    match:
+      actor: ["agent:*"]
+      action: ["llm.chat", "llm.embed"]
+
+  - id: memory-agents-allowed
+    description: Agents may use memory scopes; each agent's YAML narrows this further.
+    effect: allow
+    match:
+      actor: ["agent:*"]
+      action: ["memory.*"]
+      resource: ["run", "task", "agent"]
+
+  - id: tools-read-allowed
+    effect: allow
+    match:
+      actor: ["agent:*"]
+      action: ["tool.call"]
+      attributes:
+        kind: ["read"]
+
+  - id: tools-write-eval-dry-run
+    description: In eval mode write tools are dry-run and recorded, never executed.
+    effect: allow
+    match:
+      actor: ["agent:*"]
+      action: ["tool.call"]
+      attributes:
+        kind: ["write"]
+        mode: ["eval"]
+
+  - id: tools-write-need-approval
+    effect: require_approval
+    approval_policy: default_write
+    match:
+      actor: ["agent:*"]
+      action: ["tool.call"]
+      attributes:
+        kind: ["write"]

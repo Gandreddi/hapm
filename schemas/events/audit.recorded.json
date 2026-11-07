@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://hapm.local/schemas/events/audit.recorded.json",
+  "title": "audit.recorded",
+  "description": "Data payload of the event. Unknown extra fields are allowed.",
+  "type": "object",
+  "required": [
+    "action",
+    "audit_id",
+    "decision",
+    "run_id"
+  ],
+  "properties": {
+    "audit_id": {
+      "type": "string"
+    },
+    "run_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "action": {
+      "type": "string"
+    },
+    "decision": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": true
+}

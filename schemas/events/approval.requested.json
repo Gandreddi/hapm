@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://hapm.local/schemas/events/approval.requested.json",
+  "title": "approval.requested",
+  "description": "Data payload of the event. Unknown extra fields are allowed.",
+  "type": "object",
+  "required": [
+    "approval_id",
+    "proposed_action",
+    "run_id",
+    "task_id",
+    "what"
+  ],
+  "properties": {
+    "approval_id": {
+      "type": "string"
+    },
+    "run_id": {
+      "type": "string"
+    },
+    "task_id": {
+      "type": "string"
+    },
+    "what": {
+      "type": "string"
+    },
+    "proposed_action": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": true
+}

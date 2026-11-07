@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://hapm.local/schemas/events/run.policy_decided.json",
+  "title": "run.policy_decided",
+  "description": "Data payload of the event. Unknown extra fields are allowed.",
+  "type": "object",
+  "required": [
+    "action",
+    "decision",
+    "resource",
+    "rule_id",
+    "run_id"
+  ],
+  "properties": {
+    "run_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "action": {
+      "type": "string"
+    },
+    "resource": {
+      "type": "string"
+    },
+    "decision": {
+      "type": "string"
+    },
+    "rule_id": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": true
+}

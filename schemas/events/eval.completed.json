@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://hapm.local/schemas/events/eval.completed.json",
+  "title": "eval.completed",
+  "description": "Data payload of the event. Unknown extra fields are allowed.",
+  "type": "object",
+  "required": [
+    "agent_id",
+    "aggregate",
+    "eval_id",
+    "passed",
+    "suite_id"
+  ],
+  "properties": {
+    "eval_id": {
+      "type": "string"
+    },
+    "agent_id": {
+      "type": "string"
+    },
+    "suite_id": {
+      "type": "string"
+    },
+    "aggregate": {
+      "type": "number"
+    },
+    "passed": {
+      "type": "boolean"
+    }
+  },
+  "additionalProperties": true
+}

@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://hapm.local/schemas/events/run.memory_accessed.json",
+  "title": "run.memory_accessed",
+  "description": "Data payload of the event. Unknown extra fields are allowed.",
+  "type": "object",
+  "required": [
+    "allowed",
+    "operation",
+    "run_id",
+    "scope"
+  ],
+  "properties": {
+    "run_id": {
+      "type": "string"
+    },
+    "operation": {
+      "type": "string"
+    },
+    "scope": {
+      "type": "string"
+    },
+    "allowed": {
+      "type": "boolean"
+    }
+  },
+  "additionalProperties": true
+}
