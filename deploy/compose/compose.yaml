@@ -1,0 +1,254 @@
+name: hapm
+
+x-python: &python
+  image: hapm-python:dev
+  build:
+    context: ../..
+    dockerfile: deploy/docker/python.Dockerfile
+  mem_limit: 256m
+  restart: unless-stopped
+
+x-env: &env
+  HAPM_LOG_LEVEL: ${HAPM_LOG_LEVEL:-INFO}
+  HAPM_OTEL_ENDPOINT: ${HAPM_OTEL_ENDPOINT:-}
+  HAPM_DATABASE_URL: postgresql+psycopg://hapm_app:${HAPM_APP_DB_PASSWORD:?set in .env}@postgres:5432/hapm
+  HAPM_BLOB_CONNECTION_STRING: DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=${AZURITE_ACCOUNT_KEY};BlobEndpoint=http://azurite:10000/devstoreaccount1;
+  HAPM_REDIS_URL: redis://redis:6379/0
+  HAPM_KAFKA_BOOTSTRAP: redpanda:9092
+  HAPM_GATEWAY_URL: http://gateway:8000
+  HAPM_ORCHESTRATOR_URL: http://orchestrator-api:8000
+  HAPM_TEMPORAL_ADDRESS: temporal:7233
+  HAPM_OIDC_ISSUER: http://localhost:8006
+  HAPM_OIDC_JWKS_URL: http://oidc:8000/jwks
+  HAPM_TRACKER_MCP_URL: http://mock-tracker:8000/mcp
+  HAPM_REPO_MCP_URL: http://mock-repo:8000/mcp
+
+x-http-health: &http-health
+  test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/healthz', timeout=2)"]
+  interval: 5s
+  timeout: 3s
+  retries: 30
+
+services:
+  postgres:
+    image: pgvector/pgvector:0.8.0-pg16
+    environment:
+      POSTGRES_USER: hapm
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in .env}
+      POSTGRES_DB: hapm
+    ports: ["127.0.0.1:5432:5432"]
+    volumes: [postgres_data:/var/lib/postgresql/data]
+    mem_limit: 1g
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U hapm -d hapm"]
+      interval: 5s
+      timeout: 3s
+      retries: 30
+
+  redis:
+    image: redis:7.4.1-alpine
+    ports: ["127.0.0.1:6379:6379"]
+    mem_limit: 256m
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 30
+
+  redpanda:
+    image: redpandadata/redpanda:v24.3.1
+    command:
+      - redpanda
+      - start
+      - --mode=dev-container
+      - --smp=1
+      - --memory=1G
+      - --kafka-addr=internal://0.0.0.0:9092,external://0.0.0.0:19092
+      - --advertise-kafka-addr=internal://redpanda:9092,external://127.0.0.1:19092
+    ports: ["127.0.0.1:19092:19092"]
+    volumes: [redpanda_data:/var/lib/redpanda/data]
+    mem_limit: 1500m
+    healthcheck:
+      test: ["CMD-SHELL", "rpk cluster health | grep -E 'Healthy:.+true'"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+
+  azurite:
+    image: mcr.microsoft.com/azure-storage/azurite:3.33.0
+    command: azurite-blob --blobHost 0.0.0.0 --location /data --skipApiVersionCheck
+    ports: ["127.0.0.1:10000:10000"]
+    volumes: [azurite_data:/data]
+    mem_limit: 256m
+    healthcheck:
+      test: ["CMD", "nc", "-z", "127.0.0.1", "10000"]
+      interval: 5s
+      timeout: 3s
+      retries: 30
+
+  temporal:
+    image: temporalio/temporal:1.10.0
+    command: ["server", "start-dev", "--ip", "0.0.0.0", "--db-filename", "/data/temporal.db"]
+    user: root
+    ports: ["127.0.0.1:7233:7233", "127.0.0.1:8233:8233"]
+    volumes: [temporal_data:/data]
+    mem_limit: 768m
+    healthcheck:
+      test: ["CMD", "temporal", "operator", "cluster", "health", "--address", "127.0.0.1:7233"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+
+  migrate:
+    <<: *python
+    restart: "no"
+    command: ["python", "-m", "hapm_orchestrator.migrate"]
+    environment:
+      HAPM_OWNER_DATABASE_URL: postgresql+psycopg://hapm:${POSTGRES_PASSWORD}@postgres:5432/hapm
+      HAPM_APP_DB_PASSWORD: ${HAPM_APP_DB_PASSWORD}
+      HAPM_READONLY_DB_PASSWORD: ${HAPM_READONLY_DB_PASSWORD}
+    depends_on:
+      postgres: { condition: service_healthy }
+
+  relay:
+    <<: *python
+    command: ["python", "-m", "hapm_relay.main"]
+    environment:
+      <<: *env
+      HAPM_SERVICE_NAME: relay
+    depends_on:
+      migrate: { condition: service_completed_successfully }
+      redpanda: { condition: service_healthy }
+
+  audit:
+    <<: *python
+    command: ["uvicorn", "hapm_audit.main:create_app", "--factory", "--host", "0.0.0.0", "--port", "8000"]
+    environment:
+      <<: *env
+      HAPM_SERVICE_NAME: audit
+    ports: ["127.0.0.1:8003:8000"]
+    healthcheck: *http-health
+    depends_on:
+      migrate: { condition: service_completed_successfully }
+
+  gateway:
+    <<: *python
+    command: ["uvicorn", "hapm_gateway.main:create_app", "--factory", "--host", "0.0.0.0", "--port", "8000"]
+    environment:
+      <<: *env
+      HAPM_SERVICE_NAME: gateway
+      HAPM_DB_HOST: postgres
+    ports: ["127.0.0.1:8001:8000"]
+    healthcheck: *http-health
+    depends_on:
+      migrate: { condition: service_completed_successfully }
+
+  mock-tracker:
+    <<: *python
+    command: ["python", "-m", "hapm_mock_tracker.main"]
+    environment:
+      <<: *env
+      HAPM_SERVICE_NAME: mock-tracker
+    ports: ["127.0.0.1:8101:8000"]
+    healthcheck: *http-health
+    depends_on:
+      migrate: { condition: service_completed_successfully }
+
+  mock-repo:
+    <<: *python
+    command: ["python", "-m", "hapm_mock_repo.main"]
+    environment:
+      <<: *env
+      HAPM_SERVICE_NAME: mock-repo
+    ports: ["127.0.0.1:8102:8000"]
+    healthcheck: *http-health
+    depends_on:
+      migrate: { condition: service_completed_successfully }
+
+  oidc:
+    <<: *python
+    command: ["uvicorn", "hapm_oidc_stub.main:create_app", "--factory", "--host", "0.0.0.0", "--port", "8000"]
+    environment:
+      HAPM_OIDC_ISSUER: http://localhost:8006
+      HAPM_LOG_LEVEL: ${HAPM_LOG_LEVEL:-INFO}
+    ports: ["127.0.0.1:8006:8000"]
+    healthcheck: *http-health
+
+  orchestrator-api:
+    <<: *python
+    command: ["uvicorn", "hapm_orchestrator.api:create_app", "--factory", "--host", "0.0.0.0", "--port", "8000"]
+    environment:
+      <<: *env
+      HAPM_SERVICE_NAME: orchestrator-api
+    ports: ["127.0.0.1:8002:8000"]
+    healthcheck: *http-health
+    depends_on:
+      migrate: { condition: service_completed_successfully }
+      temporal: { condition: service_healthy }
+      oidc: { condition: service_healthy }
+
+  orchestrator-worker:
+    <<: *python
+    mem_limit: 384m
+    command: ["python", "-m", "hapm_orchestrator.worker"]
+    environment:
+      <<: *env
+      HAPM_SERVICE_NAME: orchestrator-worker
+    depends_on:
+      migrate: { condition: service_completed_successfully }
+      temporal: { condition: service_healthy }
+      gateway: { condition: service_healthy }
+      mock-tracker: { condition: service_healthy }
+
+  eval:
+    <<: *python
+    command: ["uvicorn", "hapm_eval.main:create_app", "--factory", "--host", "0.0.0.0", "--port", "8000"]
+    environment:
+      <<: *env
+      HAPM_SERVICE_NAME: eval
+      HAPM_OIDC_TOKEN_URL: http://oidc:8000/token
+    ports: ["127.0.0.1:8004:8000"]
+    healthcheck: *http-health
+    depends_on:
+      orchestrator-api: { condition: service_healthy }
+
+  oneview:
+    <<: *python
+    command: ["uvicorn", "hapm_oneview.main:create_app", "--factory", "--host", "0.0.0.0", "--port", "8000"]
+    environment:
+      <<: *env
+      HAPM_SERVICE_NAME: oneview
+      HAPM_AUDIT_UI_URL: http://127.0.0.1:8003/v1/audit
+    ports: ["127.0.0.1:8005:8000"]
+    healthcheck: *http-health
+    depends_on:
+      migrate: { condition: service_completed_successfully }
+      redpanda: { condition: service_healthy }
+      oidc: { condition: service_healthy }
+
+  portal:
+    image: hapm-portal:dev
+    build:
+      context: ../../apps/portal
+    environment:
+      ONEVIEW_URL: http://oneview:8000
+      ORCHESTRATOR_URL: http://orchestrator-api:8000
+      OIDC_TOKEN_URL: http://oidc:8000/token
+      AUDIT_PUBLIC_URL: http://127.0.0.1:8003
+    ports: ["127.0.0.1:3000:3000"]
+    mem_limit: 384m
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3000/api/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 5s
+      timeout: 3s
+      retries: 30
+    depends_on:
+      oneview: { condition: service_healthy }
+      orchestrator-api: { condition: service_healthy }
+
+volumes:
+  postgres_data:
+  redpanda_data:
+  azurite_data:
+  temporal_data:

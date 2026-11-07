@@ -1,0 +1,80 @@
+{{- range $name, $svc := .Values.services }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ $name }}
+  labels:
+    {{- include "hapm.labels" $ | nindent 4 }}
+    app.kubernetes.io/name: {{ $name }}
+spec:
+  replicas: {{ $svc.replicas }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ $name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ $name }}
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 10001
+      containers:
+        - name: {{ $name }}
+          image: "{{ $.Values.image.python.repository }}:{{ $.Values.image.python.tag }}"
+          imagePullPolicy: {{ $.Values.imagePullPolicy }}
+          command: {{ toJson $svc.command }}
+          env:
+            - name: HAPM_SERVICE_NAME
+              value: {{ $name | quote }}
+            {{- range $k, $v := $.Values.commonEnv }}
+            - name: {{ $k }}
+              value: {{ $v | quote }}
+            {{- end }}
+          envFrom:
+            - secretRef:
+                name: hapm-secrets
+          resources: {{ toJson $.Values.resources }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+          {{- if $svc.port }}
+          ports:
+            - containerPort: {{ $svc.port }}
+          readinessProbe:
+            httpGet:
+              path: /readyz
+              port: {{ $svc.port }}
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: {{ $svc.port }}
+          {{- end }}
+          volumeMounts:
+            - name: secrets
+              mountPath: /mnt/secrets
+              readOnly: true
+      volumes:
+        - name: secrets
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: {{ $.Values.secretProviderClass }}
+{{- if $svc.port }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ $name }}
+  labels:
+    {{- include "hapm.labels" $ | nindent 4 }}
+spec:
+  selector:
+    app.kubernetes.io/name: {{ $name }}
+  ports:
+    - port: 80
+      targetPort: {{ $svc.port }}
+{{- end }}
+{{- end }}

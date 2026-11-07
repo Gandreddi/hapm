@@ -1,0 +1,85 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v4
+      - run: uv sync --all-packages
+      - run: make check
+      - name: Dependency audit (Python)
+        run: uvx pip-audit==2.7.3 --strict --progress-spinner off -r <(uv export --all-packages --no-dev --no-hashes --format requirements-txt)
+
+  portal:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - run: npm install -g pnpm@9.15.0
+      - run: make portal-check
+      - run: cd apps/portal && pnpm audit --prod
+
+  infra:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: azure/setup-helm@v4
+        with:
+          version: v3.16.3
+      - run: helm lint deploy/helm/hapm
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.9.8
+      - run: terraform -chdir=deploy/terraform init -backend=false
+      - run: terraform -chdir=deploy/terraform validate
+      - run: terraform -chdir=deploy/terraform fmt -check
+
+  secrets:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  exit-demo:
+    runs-on: ubuntu-24.04
+    needs: [check, portal]
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - run: npm install -g pnpm@9.15.0
+      - run: uv sync --all-packages
+      - run: make up
+      - name: Container scan
+        uses: aquasecurity/trivy-action@0.28.0
+        with:
+          image-ref: hapm-python:dev
+          severity: CRITICAL,HIGH
+          ignore-unfixed: true
+          exit-code: "1"
+      - run: make demo
+      - run: make verify
+      - run: make coverage
+      - run: cd apps/portal && pnpm install --frozen-lockfile --ignore-workspace && pnpm exec playwright install --with-deps chromium && pnpm exec playwright test
+      - if: failure()
+        run: make logs
+      - if: always()
+        run: make clean

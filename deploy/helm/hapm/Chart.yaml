@@ -1,0 +1,6 @@
+apiVersion: v2
+name: hapm
+description: HAPM Core services (Phase 0 skeleton; not deployed yet)
+type: application
+version: 0.1.0
+appVersion: "0.1.0"

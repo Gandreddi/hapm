@@ -1,0 +1,47 @@
+# Phase 0 skeleton. Images come from your registry; secrets come from Azure Key Vault through the
+# Secrets Store CSI driver (secretProviderClass), never from these values.
+image:
+  python: { repository: REGISTRY/hapm-python, tag: "0.1.0" }
+  portal: { repository: REGISTRY/hapm-portal, tag: "0.1.0" }
+imagePullPolicy: IfNotPresent
+
+secretProviderClass: hapm-keyvault
+
+commonEnv:
+  HAPM_LOG_LEVEL: INFO
+  HAPM_OIDC_ISSUER: https://login.microsoftonline.com/TENANT_ID/v2.0
+  HAPM_OIDC_AUDIENCE: hapm
+  HAPM_KAFKA_BOOTSTRAP: NAMESPACE.servicebus.windows.net:9093
+  HAPM_TEMPORAL_ADDRESS: temporal-frontend:7233
+
+services:
+  gateway:
+    command: ["uvicorn", "hapm_gateway.main:create_app", "--factory", "--host", "0.0.0.0", "--port", "8000"]
+    port: 8000
+    replicas: 2
+  orchestrator-api:
+    command: ["uvicorn", "hapm_orchestrator.api:create_app", "--factory", "--host", "0.0.0.0", "--port", "8000"]
+    port: 8000
+    replicas: 2
+  orchestrator-worker:
+    command: ["python", "-m", "hapm_orchestrator.worker"]
+    replicas: 2
+  audit:
+    command: ["uvicorn", "hapm_audit.main:create_app", "--factory", "--host", "0.0.0.0", "--port", "8000"]
+    port: 8000
+    replicas: 1
+  eval:
+    command: ["uvicorn", "hapm_eval.main:create_app", "--factory", "--host", "0.0.0.0", "--port", "8000"]
+    port: 8000
+    replicas: 1
+  oneview:
+    command: ["uvicorn", "hapm_oneview.main:create_app", "--factory", "--host", "0.0.0.0", "--port", "8000"]
+    port: 8000
+    replicas: 1
+  relay:
+    command: ["python", "-m", "hapm_relay.main"]
+    replicas: 1
+
+resources:
+  requests: { cpu: 100m, memory: 192Mi }
+  limits: { cpu: "1", memory: 512Mi }
