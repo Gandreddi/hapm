@@ -1,0 +1,19 @@
+# Tool registry: which MCP server hosts each tool, whether it reads or writes, and its limits.
+# Server URLs come from the environment (HAPM_TRACKER_MCP_URL, HAPM_REPO_MCP_URL).
+servers:
+  tracker: { url_env: HAPM_TRACKER_MCP_URL, default_url: "http://127.0.0.1:8101/mcp" }
+  repo: { url_env: HAPM_REPO_MCP_URL, default_url: "http://127.0.0.1:8102/mcp" }
+
+tools:
+  - { name: create_story, server: tracker, kind: write }
+  - { name: add_comment, server: tracker, kind: write }
+  - { name: list_stories, server: tracker, kind: read }
+  - { name: read_file, server: repo, kind: read }
+  - { name: open_pull_request, server: repo, kind: write }
+  - { name: list_pull_requests, server: repo, kind: read }
+
+defaults:
+  timeout_seconds: 15
+  retries: 2
+  max_args_bytes: 16384
+  max_response_bytes: 65536
