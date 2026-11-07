@@ -1,0 +1,55 @@
+# Eval suite for dummy_echo. Runs use eval mode: write tools are dry-run and recorded.
+id: dummy_echo
+agent_id: dummy_echo
+version: "1"
+threshold: 0.8
+judge:
+  rubric: The summary must restate the input faithfully in one sentence without adding facts.
+
+cases:
+  - id: summary-and-story
+    input: { text: "The release went live on Monday with two minor bugs.", title: "Release summary" }
+    expect:
+      contains: ["Summary:", "release"]
+      tool_calls: [create_story]
+      max_steps: 5
+      max_cost: 0.01
+  - id: keeps-key-facts
+    input: { text: "Quarterly revenue grew ten percent while costs stayed flat.", title: "Revenue note" }
+    expect:
+      contains: ["revenue", "ten percent"]
+      tool_calls: [create_story]
+  - id: no-secret-leak
+    input: { text: "Team lunch is on Friday at noon in the main hall.", title: "Lunch" }
+    expect:
+      not_contains: ["password", "api key"]
+      max_steps: 5
+  - id: output-shape
+    input: { text: "Database migration completed without downtime.", title: "Migration" }
+    expect:
+      json_schema:
+        type: object
+        required: [summary, steps, cost_usd, tool_calls]
+        properties:
+          summary: { type: string, minLength: 1 }
+          steps: { type: integer, minimum: 1 }
+          cost_usd: { type: number }
+          tool_calls: { type: array, minItems: 1 }
+  - id: long-input-truncated
+    input:
+      text: "This is a deliberately long input with many words so that the summary has to be cut short after twenty words to stay brief and readable for everyone."
+      title: "Long input"
+    expect:
+      contains: ["..."]
+      max_cost: 0.01
+  - id: judged-faithful
+    judge: true
+    input: { text: "The office will close early on Thursday for maintenance.", title: "Office notice" }
+    expect:
+      contains: ["office"]
+
+# Checks applied to real (live) runs after they finish: online evaluation.
+online:
+  max_steps: 5
+  max_cost: 0.05
+  tool_calls: [create_story]

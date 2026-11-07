@@ -1,0 +1,11 @@
+# A suite designed to fail. It proves that a failing eval blocks the autonomy raise.
+id: dummy_echo_strict
+agent_id: dummy_echo
+version: "1"
+threshold: 0.99
+cases:
+  - id: impossible
+    input: { text: "Nothing special here.", title: "Strict" }
+    expect:
+      contains: ["this phrase never appears in a summary"]
+      max_steps: 5
