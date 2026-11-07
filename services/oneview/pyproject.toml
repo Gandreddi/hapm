@@ -1,0 +1,22 @@
+[project]
+name = "hapm-oneview"
+version = "0.1.0"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+  "hapm-core",
+  "hapm-telemetry",
+  "fastapi>=0.115",
+  "uvicorn>=0.34",
+  "aiokafka>=0.12",
+]
+
+[tool.uv.sources]
+hapm-core = { workspace = true }
+hapm-telemetry = { workspace = true }
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/hapm_oneview"]

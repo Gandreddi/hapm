@@ -1,0 +1,50 @@
+:root {
+  --bg: #f7f7f5;
+  --surface: #ffffff;
+  --text: #1d1d1b;
+  --muted: #6b6b66;
+  --border: #e2e1dc;
+  --accent: #2f5bd3;
+  --ok: #1f7a4d;
+  --warn: #a35f00;
+  --bad: #b3261e;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #141413;
+    --surface: #1e1e1c;
+    --text: #ecebe6;
+    --muted: #a3a29c;
+    --border: #34342f;
+    --accent: #7d9cf0;
+    --ok: #5cc28c;
+    --warn: #e0a64a;
+    --bad: #f07a72;
+  }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 15px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; }
+a { color: var(--accent); }
+header { display: flex; gap: 20px; align-items: center; padding: 12px 20px; border-bottom: 1px solid var(--border); background: var(--surface); flex-wrap: wrap; }
+header strong { margin-right: 12px; }
+header .who { margin-left: auto; color: var(--muted); }
+main { max-width: 1100px; margin: 0 auto; padding: 20px 16px; }
+table { width: 100%; border-collapse: collapse; background: var(--surface); border: 1px solid var(--border); }
+th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--border); vertical-align: top; }
+th { color: var(--muted); font-weight: 600; font-size: 13px; }
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 16px; margin-bottom: 16px; }
+.badge { display: inline-block; padding: 1px 8px; border-radius: 10px; font-size: 12px; border: 1px solid var(--border); }
+.state-succeeded { color: var(--ok); }
+.state-waiting_approval, .state-running, .state-queued { color: var(--warn); }
+.state-failed, .state-rejected, .state-cancelled { color: var(--bad); }
+.stats { display: flex; gap: 16px; flex-wrap: wrap; }
+.stats div { min-width: 110px; }
+.stats b { display: block; font-size: 20px; }
+pre { white-space: pre-wrap; word-break: break-word; background: var(--bg); padding: 10px; border-radius: 6px; margin: 0; }
+form.inline { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+input, textarea, button { font: inherit; padding: 6px 10px; border: 1px solid var(--border); border-radius: 6px; background: var(--surface); color: var(--text); }
+button { cursor: pointer; }
+button.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+.error { color: var(--bad); }
+.muted { color: var(--muted); }
+.table-wrap { overflow-x: auto; }
