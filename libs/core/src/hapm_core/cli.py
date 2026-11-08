@@ -11,6 +11,38 @@ audit_app = typer.Typer(help="Audit log commands", no_args_is_help=True)
 eval_app = typer.Typer(help="Evaluation commands", no_args_is_help=True)
 app.add_typer(audit_app, name="audit")
 app.add_typer(eval_app, name="eval")
+config_app = typer.Typer(help="Project configuration commands", no_args_is_help=True)
+app.add_typer(config_app, name="config")
+
+
+@config_app.command("check")
+def config_check(
+    pilot: bool = typer.Option(False, help="Exit 2 unless everything needed for the pilot is live and present"),
+) -> None:
+    """Validate config/*.yaml, resolve every reference without printing secrets, show live vs mocked."""
+    from pathlib import Path
+
+    import yaml
+    from hapm_config import check, load_project
+    from hapm_config.loader import config_dir
+
+    directory = config_dir()
+    project = load_project(directory)
+    providers_path = next(
+        (p for p in (directory / "providers.yaml", directory / "providers.example.yaml") if p.exists()), None
+    )
+    providers = yaml.safe_load(Path(providers_path).read_text(encoding="utf-8")) if providers_path else None
+    report = check(project, providers)
+    typer.echo(f"config directory: {directory}")
+    for kind, source in {**report.sources, "providers": providers_path.name if providers_path else "missing"}.items():
+        typer.echo(f"  {kind}: {source}")
+    for title, items in (("LIVE", report.live), ("MOCKED", report.mocked), ("MISSING", report.missing)):
+        typer.echo(f"{title} ({len(items)})")
+        for item in items:
+            typer.echo(f"  - {item}")
+    typer.echo(f"pilot ready: {report.pilot_ready}")
+    if pilot and not report.pilot_ready:
+        sys.exit(2)
 
 
 @audit_app.command("verify")

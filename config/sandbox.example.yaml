@@ -1,0 +1,9 @@
+# Limits for the code sandbox. Network is off; only these registries may be reached (https only).
+allowed_registries: []
+cpus: 1.0
+memory_mb: 512
+pids_limit: 256
+timeout_seconds: 120
+max_diff_lines: 300
+retry_limit: 3
+denied_paths: [".github/workflows/*", "deploy/*", "*.pem", "*.key", "*secret*", "*credential*"]

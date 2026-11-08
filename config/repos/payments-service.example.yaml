@@ -1,0 +1,14 @@
+# One file per repository. Copy to config/repos/<name>.yaml (git-ignored) for real repositories.
+name: payments-service
+backend: mock                      # github for a real repository
+github_repo: null                  # e.g. your-org/payments-service
+mock_path: tests/fixtures/repos/payments_service
+default_branch: main
+languages: [python]
+test_command: python -m unittest discover -s tests -q
+sandbox_image: python:3.12.15-slim-trixie
+excluded_paths: [".git/*", "vendor/*", "node_modules/*", "*.min.js", "secrets/*"]
+jira_project: PAY
+approvers: []
+max_new_tickets: 10
+scan_budget_usd: 1.0

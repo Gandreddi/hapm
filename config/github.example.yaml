@@ -1,0 +1,9 @@
+# GitHub connection. Copy to config/github.yaml (git-ignored) and fill in office values.
+# Prefer a GitHub App installed only on the pilot repositories; a fine-grained PAT also works.
+backend: mock
+api_url: https://api.github.com   # GitHub Enterprise Server: https://<host>/api/v3
+organisation: null
+app_id_ref: null                  # e.g. env:GITHUB_APP_ID
+installation_id_ref: null         # e.g. env:GITHUB_APP_INSTALLATION_ID
+private_key_ref: null             # e.g. kv:github-app-private-key
+token_ref: null                   # alternative: env:GITHUB_TOKEN (contents and pull requests write)

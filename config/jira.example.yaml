@@ -1,0 +1,10 @@
+# Jira connection. Copy to config/jira.yaml (git-ignored) and fill in office values.
+# backend: mock uses the built-in mock Jira (Postgres); backend: jira calls the real REST API.
+backend: mock
+site_url: null                 # e.g. https://yourcompany.atlassian.net
+deployment: cloud              # cloud (REST v3, email + API token) or data_center (REST v2, PAT)
+allowed_projects: [PAY]        # the agent can read and write only these project keys
+epics_in_scope: [PAY-1]
+issue_types: { bug: Bug, enhancement: Story }
+email_ref: null                # e.g. env:JIRA_EMAIL
+token_ref: null                # e.g. env:JIRA_API_TOKEN or kv:jira-api-token

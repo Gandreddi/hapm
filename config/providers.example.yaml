@@ -1,6 +1,18 @@
-# Gateway routing, prices and budgets. Provider keys come from the environment or Key Vault
-# references (for example AZURE_OPENAI_API_KEY), never from this file.
+# LLM providers, model aliases, prices and budgets for the gateway.
+# Copy to config/providers.yaml (git-ignored) on the office laptop and fill in the references.
+# Secrets are references (env:NAME or kv:NAME), never values.
+
+# Set to the name or ticket of the office approval that allows sending repository and Jira
+# content to the providers below. The Developer agent pilot refuses to run while this is empty.
+data_approval: ""
+
 providers:
+  github-models:
+    # Official GitHub Models API (OpenAI-compatible). Token: fine-grained PAT with models:read
+    # issued from the office GitHub account. Never use Copilot IDE tokens or private endpoints.
+    type: github_models
+    endpoint: https://models.github.ai/inference
+    token_ref: env:GITHUB_MODELS_TOKEN
   fake:
     type: fake
   fake-broken:
@@ -8,12 +20,12 @@ providers:
     always_fail: true
   azure-openai:
     type: azure_openai
-    endpoint_env: AZURE_OPENAI_ENDPOINT
-    api_key_env: AZURE_OPENAI_API_KEY
+    endpoint_ref: env:AZURE_OPENAI_ENDPOINT
+    api_key_ref: env:AZURE_OPENAI_API_KEY
     api_version: "2024-10-21"
   anthropic:
     type: anthropic
-    api_key_env: ANTHROPIC_API_KEY
+    api_key_ref: env:ANTHROPIC_API_KEY
 
 # Each alias lists targets in order; the next target is tried on a retryable error or timeout.
 aliases:
@@ -24,6 +36,8 @@ aliases:
   smart:
     timeout_seconds: 60
     targets:
+      # Put the model id from your org's GitHub Models catalog first, for example:
+      # - { provider: github-models, model: "<model id>" }
       - { provider: fake, model: fake-smart }
   judge:
     timeout_seconds: 60

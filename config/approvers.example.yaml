@@ -1,0 +1,8 @@
+# Who may approve each Developer agent gate. Entries are user names or roles from SSO.
+default:
+  tickets: [approver, admin]
+  plan: [approver, admin]
+  pull_request: [approver, admin]
+repos: {}
+#  payments-service:
+#    pull_request: [alice, bob]
