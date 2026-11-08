@@ -33,7 +33,7 @@ class EvalSettings(CoreSettings):
     oidc_token_url: str = "http://127.0.0.1:8006/token"  # noqa: S105 - a URL, not a secret
     eval_client_id: str = "eval-service"
     eval_client_secret: str = "eval-service-dev"  # noqa: S105 - dev stub value; Key Vault reference in cloud
-    case_timeout_seconds: float = 120
+    case_timeout_seconds: float = 300
 
     @property
     def suites_dir(self) -> Path:

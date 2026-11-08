@@ -240,7 +240,8 @@ def create_app(settings: OrchestratorSettings | None = None) -> FastAPI:
                 raise refuse(409, f"approval is already {row.status}", "approval-not-pending")
             if row.expires_at <= datetime.now(UTC):
                 raise refuse(409, "approval has expired", "approval-expired")
-            if not (user.sub in policy.approvers or any(r in policy.approvers for r in user.roles)):
+            approvers = list(row.approvers) if row.approvers else policy.approvers
+            if not (user.sub in approvers or any(r in approvers for r in user.roles)):
                 raise refuse(
                     403, "you are not on the approver list for this policy", f"{row.approval_policy_id}.approvers"
                 )

@@ -62,7 +62,7 @@ class AgentRunWorkflow:
                     "run_graph", {"run_id": run_id, "resume": resume}, **GRAPH_OPTIONS
                 )
                 if result["status"] != "interrupted":
-                    return await self._finish(run_id, result["status"], result.get("output"))
+                    return await self._finish(run_id, result["status"], result.get("output"), result.get("error"))
                 approval = result["approval"]
                 approval_id = await workflow.execute_activity(
                     "create_approval", {"run_id": run_id, "approval": approval}, **SHORT_OPTIONS

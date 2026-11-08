@@ -115,8 +115,8 @@ def create_approval(
         run = get_run(conn, run_id)
         conn.execute(
             text(
-                "INSERT INTO approvals (id, run_id, task_id, what, why, proposed_action, risk, preview, approval_policy_id, "
-                "requested_by, expires_at) VALUES (:i, :r, :t, :what, :why, CAST(:pa AS jsonb), :risk, :pv, :pol, :by, :exp) "
+                "INSERT INTO approvals (id, run_id, task_id, what, why, proposed_action, risk, preview, approval_policy_id, approvers, "
+                "requested_by, expires_at) VALUES (:i, :r, :t, :what, :why, CAST(:pa AS jsonb), :risk, :pv, :pol, :apr, :by, :exp) "
                 "ON CONFLICT (id) DO NOTHING"
             ),
             {
@@ -129,6 +129,7 @@ def create_approval(
                 "risk": request["risk"],
                 "pv": request["preview"],
                 "pol": request["approval_policy_id"],
+                "apr": request.get("approvers"),
                 "by": run.requester,
                 "exp": datetime.now(UTC) + timedelta(seconds=timeout_seconds),
             },

@@ -72,7 +72,8 @@ class Activities:
             "cost_usd": values.get("cost_usd", 0.0),
             "autonomy": run.autonomy,
         }
-        return {"status": values.get("status", "succeeded"), "output": output}
+        errors = [v["error"] for v in values.get("outputs", {}).values() if isinstance(v, dict) and v.get("error")]
+        return {"status": values.get("status", "succeeded"), "output": output, "error": errors[-1] if errors else None}
 
     @activity.defn(name="create_approval")
     def create_approval(self, payload: dict[str, Any]) -> str:

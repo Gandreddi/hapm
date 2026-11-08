@@ -17,7 +17,7 @@ class Case(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
     id: str
-    input: dict[str, str]
+    input: dict[str, str]  # values are strings; steps convert numbers
     expect: dict[str, Any] = Field(default_factory=dict)
     judge: bool = False
 

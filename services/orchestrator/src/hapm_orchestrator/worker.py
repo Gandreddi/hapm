@@ -17,6 +17,14 @@ from temporalio.client import Client
 from temporalio.worker import Worker
 
 
+def _extras(settings: OrchestratorSettings) -> dict[str, object]:
+    """Optional clients for plugin steps; the sandbox client is used by the Developer agent."""
+    from hapm_developer.sandbox_client import SandboxClient, ServiceToken
+
+    token = ServiceToken(settings.oidc_token_url, settings.service_client_id, settings.service_client_secret)
+    return {"sandbox": SandboxClient(settings.sandbox_url, token)}
+
+
 def build_activities(settings: OrchestratorSettings) -> Activities:
     governor = build_governor(settings)
     deps = Deps(
@@ -24,6 +32,7 @@ def build_activities(settings: OrchestratorSettings) -> Activities:
         memory=MemoryStore(governor, GatewayEmbedder(settings.gateway_url)),
         tools=ToolClient(ToolRegistry.load(settings.tools_path), governor),
         gateway_url=settings.gateway_url,
+        extras=_extras(settings),
     )
     agents = AgentRegistry(settings.agents_dir)
     return Activities(deps, agents, settings.checkpoint_dsn, make_online_scorer(governor, agents))

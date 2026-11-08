@@ -48,7 +48,34 @@ class ToolStep(BaseModel):
     args: dict[str, str]
 
 
-Step = Annotated[LlmStep | MemoryWriteStep | ToolStep, Field(discriminator="type")]
+PLUGIN_REF = r"^[a-z_][a-z0-9_.]*:[a-z_][a-z0-9_]*$"
+
+
+class PluginStep(BaseModel):
+    """Runs a Python function (module:function) that reaches LLM, memory and tools only via Core clients."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    id: str = Field(pattern=r"^[a-z][a-z0-9_]*$")
+    type: Literal["plugin"]
+    description: str = ""
+    plugin: str = Field(pattern=PLUGIN_REF)
+    config: dict[str, str] = Field(default_factory=dict)
+
+
+class GateStep(BaseModel):
+    """A human approval gate. The plugin builds the approval request, or returns None to skip the gate."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    id: str = Field(pattern=r"^[a-z][a-z0-9_]*$")
+    type: Literal["gate"]
+    description: str = ""
+    plugin: str = Field(pattern=PLUGIN_REF)
+    gate: str = Field(pattern=r"^[a-z_]+$")
+
+
+Step = Annotated[LlmStep | MemoryWriteStep | ToolStep | PluginStep | GateStep, Field(discriminator="type")]
 
 
 class AgentConfig(BaseModel):
@@ -75,6 +102,9 @@ class AgentConfig(BaseModel):
         ids = [s.id for s in self.steps]
         if len(ids) != len(set(ids)):
             raise ValueError("step ids must be unique")
+        reserved = {"plan", "finish"} & set(ids)
+        if reserved:
+            raise ValueError(f"step ids {sorted(reserved)} are reserved by the workflow")
         if len(self.steps) > self.max_steps:
             raise ValueError("more steps than max_steps")
         for step in self.steps:
