@@ -99,3 +99,42 @@ PASS (f) killing the worker mid-run and restarting it still completes the run
   pip-audit: no known vulnerabilities.
 - Retest after the upgrade from a wiped stack: make check passed (41 unit tests), make demo succeeded,
   make verify 6/6, make coverage 70 passed at 84.25%, Playwright 3 passed.
+
+## Phase 1: Developer agent, M9 to M13 (2026-11-08, offline with mocks)
+
+### M9 Configuration, providers and connectors
+- libs/config (typed config files, env:/kv: references, example fallback), `hapm config check`,
+  GitHub Models adapter, Jira and GitHub MCP connectors with mock and REST backends.
+- `make config-check` on the examples: LIVE 0, MOCKED 4, MISSING 1 (data_approval); `--pilot` exits 2.
+- Unit: 13 tests against recorded responses (Jira Cloud and Data Center, GitHub PAT and App token,
+  push branch and PR, rate-limit retries, GitHub Models chat, embeddings and 401 mapping, allowed
+  projects, onboarded repositories only, no merge/delete/force/settings tool).
+
+### M10 Code context, scan and findings
+- libs/codeintel: snapshot filtering (excluded, oversized, binary, secret-pattern files never read),
+  Python analysers (9 rules), verified locations, fingerprints, dedupe against Jira, incremental
+  pgvector index, autofixes for 4 rules.
+- Fixture with 25 seeded defects (23 rule-detectable, 2 logic bugs). Detected 23: recall 0.92,
+  precision 1.0, location accuracy 1.0. All 13 autofixes resolve their finding.
+
+### M11 Sandbox and implementation
+- services/sandbox via the Docker Engine API. Direct check: `LEAK [] NET blocked UID 65534`;
+  unlisted image refused (403). Guardrails: denied paths, secrets, diff limit, test deletion flags.
+
+### M12 Developer workflow, injection defence and evaluation
+- General plugin and gate steps in agent YAML (ADR-0018); agents/developer.yaml with 3 gates.
+- Developer eval suite: 5 cases, aggregate 1.0; agent unlocked to act_with_approval.
+- `make dev-demo`: Gate 1 kept 1 of 3 findings -> ticket PAY-4; Gate 2 plan; sandbox fix
+  "Ran 7 tests ... OK"; Gate 3 diff -> PR #1 from hapm/pay-4-...
+- `make dev-verify` from a wiped stack: 10/10 passed (a-j).
+
+### M13 Pilot
+- `make pilot` refuses with the example config and lists the missing value. `make pilot-report`
+  writes docs/pilot-report.md (mock data, labelled).
+
+### Totals after Phase 1 (fresh stack)
+- `make check`: ruff clean (116 files), mypy --strict clean (43 files), 63 unit tests.
+- `make verify` 6/6, `make dev-verify` 10/10, `make coverage` 92 passed at 86.22%, Playwright 3/3.
+
+### Not verified
+- Real Jira, GitHub and GitHub Models (recorded responses only), AKS sandbox design.

@@ -141,6 +141,42 @@ cannot update or delete audit rows; `hapm_readonly` is used by `make verify`.
 
 One JSON Schema per type lives in `schemas/events`; `schemas/agent.schema.json` describes agent YAML.
 
+## Phase 1: Developer agent
+
+```mermaid
+flowchart LR
+  W[Worker: agent_run] --> DEV[hapm_developer plugin steps]
+  DEV --> GH[GitHub connector MCP: mock or REST]
+  DEV --> JI[Jira connector MCP: mock or REST]
+  DEV --> CI[libs/codeintel: snapshot, analysers, findings, autofix, index]
+  DEV --> GW[Gateway: Fake / GitHub Models / Azure OpenAI / Anthropic]
+  DEV --> SB[Sandbox service]
+  SB --> D[(Throwaway container: no network, nobody, limits)]
+  CFG[config/*.yaml + env:/kv: references] -.-> GH & JI & DEV & GW
+```
+
+```mermaid
+sequenceDiagram
+  participant R as requester
+  participant A as Developer agent
+  participant P as approver
+  R->>A: repo_scan (or jira_intake epic/issue)
+  A->>A: read repo at pinned SHA (excluded files never read), index, scan, verify locations, dedupe vs Jira
+  A-->>P: Gate 1: findings with file:line (edit finding_ids to keep some)
+  P->>A: approve / edit / reject
+  A->>A: create Jira tickets for approved findings only
+  A-->>P: Gate 2: plan (files, approach, tests, risk) or a clarifying comment
+  P->>A: approve
+  A->>A: autofix or model edit, guardrails, sandbox tests (retry limit 3)
+  A-->>P: Gate 3: diff, test results, guardrail flags
+  P->>A: approve
+  A->>A: push hapm/* branch, open PR linked to the ticket (a human merges)
+```
+
+Agent definition: `agents/developer.yaml` (plugin and gate steps, ADR-0018). New tables: `findings`,
+`code_chunks`, `code_index_state`, `sandbox_runs`, mock `jira_issues`, `jira_comments`,
+`github_branches`, `github_pull_requests`; approvals gained an `approvers` column.
+
 ## Decisions
 
-See `docs/adr/` (ADR-0001 to ADR-0014).
+See `docs/adr/` (ADR-0001 to ADR-0019).

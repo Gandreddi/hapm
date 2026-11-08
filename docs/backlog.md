@@ -2,8 +2,12 @@
 
 Deliberately left out of Phase 0.
 
-## Phase 1 (Developer agent, M9 to M13)
-- Real Jira and GitHub connectors, repository onboarding, code index, sandbox, Developer workflow.
+## Developer agent follow-ups
+- Read repositories as one tarball or tree request instead of file by file.
+- Analysers for languages beyond Python (TypeScript, Java, Go, C#).
+- Sandbox on AKS: Kubernetes Jobs in a locked-down namespace with gVisor or Kata.
+- Several work items per run; changes spanning several files; build commands with dependency caches.
+- Live verification of Jira Cloud and Data Center, GitHub App on Enterprise Server, GitHub Models.
 
 ## Security and governance
 - External anchoring of the audit hash chain (periodic signed checkpoints outside the database).

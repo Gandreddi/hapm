@@ -45,6 +45,31 @@ development values.
 Dev sign-in users (from `services/oidc_stub/users.yaml`): `requester`, `approver`, `approver2`,
 `admin`, `viewer`; each password is the user name followed by `-dev`.
 
+## Developer agent (Phase 1)
+| Command | What it does |
+|---|---|
+| `make dev-demo` | Offline: fixture repo, mock Jira and GitHub, Fake model, real sandbox; approves three gates |
+| `make dev-verify` | Checks (a) to (j): gates, rejections, self-approval, Jira intake, locations, sandbox isolation, no merge tool, injections, worker restarts |
+| `make config-check` | Shows which features are live, mocked or missing |
+| `make pilot` | Office only: refuses until every pilot value is present |
+| `make pilot-report` | Writes docs/pilot-report.md from the database |
+
+Extra local endpoints: Jira connector http://127.0.0.1:8103/mcp, GitHub connector
+http://127.0.0.1:8104/mcp, sandbox http://127.0.0.1:8105.
+
+## Office setup (real repositories, Jira, GitHub and models)
+1. Copy each `config/*.example.yaml` to the same name without `.example` (and
+   `config/repos/payments-service.example.yaml` to one file per real repository). These real files are git-ignored.
+2. Fill in values. Secrets are references only: `env:NAME` (put the value in `.env`) or `kv:NAME`
+   (Azure Key Vault, mounted at /mnt/secrets in AKS). For example `JIRA_API_TOKEN`, `GITHUB_TOKEN`
+   (or a GitHub App), `GITHUB_MODELS_TOKEN`.
+3. In `config/providers.yaml` put your org's GitHub Models model id first under the `smart`, `fast`
+   and `embed` aliases, and set `data_approval` to the approval reference for sending code to the provider.
+4. Run `make config-check` until MISSING is empty and the features you want show as LIVE.
+5. `make up`, then try one repository: `uv run python -m scripts.pilot <repo-name>`. Approve gates in
+   the portal inbox. Use a sandbox Jira project and repository first.
+6. `make pilot-report`.
+
 ## Adding an agent
 1. Add `agents/<id>.yaml` (schema: `schemas/agent.schema.json`). No code change.
 2. Add `agents/evals/<id>.yaml` with at least five cases.

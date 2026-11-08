@@ -20,7 +20,22 @@
 7. **Audit chain is not externally anchored.** The database owner could rewrite the whole chain
    consistently (ADR-0004); anchoring is in the backlog.
 
+8. **Phase 1 live paths unverified.** The real Jira, GitHub and GitHub Models clients are tested
+   only against recorded responses; they will be verified on the office laptop.
+9. **Fake-model limits.** With the Fake provider the LLM review finds nothing and model-written edits
+   fail, so only mechanically fixable findings (rules R1, R2, R3, R8) can be implemented offline. A
+   run whose only approved finding needs a model edit ends as failed after three attempts, by design.
+10. **Scan quality is measured on our own fixture.** Recall 0.92 and precision 1.0 come from analysers
+    written for the payments_service fixture; real precision is measured by human acceptance in the pilot.
+11. **Snapshot reads every file through the connector.** Fine for small repositories; large ones need
+    tarball or tree-at-once reads (backlog).
+
 ## Fixed during implementation
+- Phase 1: the Developer step named `plan` collided with the workflow's own `plan` node; renamed to
+  `plan_work`, and `plan`/`finish` are now reserved step ids.
+- Phase 1: hidden tests covered several functions, so a correct fix for one still failed; split into
+  one hidden test per function.
+- Phase 1: the approvals insert gained a value without its column (approvers); fixed.
 - `temporalio/temporal:1.1.2` does not exist; pinned `1.10.0`.
 - Host-side Python clients hung on `localhost` (IPv6 first on Windows); all clients and Kafka's
   advertised address use 127.0.0.1.
