@@ -1,8 +1,11 @@
-.PHONY: up down clean ps logs lint typecheck test check integration coverage e2e portal-check demo verify all
+.PHONY: up down clean ps logs lint typecheck test check integration coverage e2e portal-check demo verify all \
+	dev-demo dev-verify config-check pilot pilot-report
 
 PY = uv run python
-LIBS = libs/telemetry/src libs/events/src libs/policy/src libs/core/src libs/memory/src libs/mcp_client/src
-LIB_COV = --cov=hapm_telemetry --cov=hapm_events --cov=hapm_policy --cov=hapm_core --cov=hapm_memory --cov=hapm_mcp_client
+LIBS = libs/telemetry/src libs/events/src libs/policy/src libs/core/src libs/memory/src libs/mcp_client/src \
+	libs/config/src libs/codeintel/src
+LIB_COV = --cov=hapm_telemetry --cov=hapm_events --cov=hapm_policy --cov=hapm_core --cov=hapm_memory --cov=hapm_mcp_client \
+	--cov=hapm_config --cov=hapm_codeintel
 
 up:
 	$(PY) scripts/up.py
@@ -40,4 +43,17 @@ demo:
 verify:
 	$(PY) -m scripts.verify
 
-all: check up demo verify
+# Developer agent (Phase 1). Offline: fixture repo, mock Jira and GitHub, Fake model, real sandbox.
+dev-demo:
+	$(PY) -m scripts.dev_demo
+dev-verify:
+	$(PY) -m scripts.dev_verify
+config-check:
+	uv run hapm config check
+# Office laptop only: needs real config/*.yaml values (refuses otherwise).
+pilot:
+	$(PY) -m scripts.pilot
+pilot-report:
+	$(PY) -m scripts.pilot report
+
+all: check up demo verify dev-demo dev-verify

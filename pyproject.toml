@@ -8,6 +8,8 @@ package = false
 
 [tool.uv.workspace]
 members = [
+  "libs/codeintel",
+  "libs/config",
   "libs/core",
   "libs/events",
   "libs/mcp_client",
@@ -15,17 +17,23 @@ members = [
   "libs/policy",
   "libs/telemetry",
   "services/audit",
+  "services/developer",
   "services/eval",
   "services/gateway",
   "services/oidc_stub",
   "services/oneview",
   "services/orchestrator",
   "services/relay",
+  "services/sandbox",
+  "connectors/github",
+  "connectors/jira",
   "connectors/mock_repo",
   "connectors/mock_tracker",
 ]
 
 [tool.uv.sources]
+hapm-codeintel = { workspace = true }
+hapm-config = { workspace = true }
 hapm-core = { workspace = true }
 hapm-events = { workspace = true }
 hapm-mcp-client = { workspace = true }
@@ -33,17 +41,23 @@ hapm-memory = { workspace = true }
 hapm-policy = { workspace = true }
 hapm-telemetry = { workspace = true }
 hapm-audit = { workspace = true }
+hapm-developer = { workspace = true }
 hapm-eval = { workspace = true }
 hapm-gateway = { workspace = true }
 hapm-oidc-stub = { workspace = true }
 hapm-oneview = { workspace = true }
 hapm-orchestrator = { workspace = true }
 hapm-relay = { workspace = true }
+hapm-sandbox = { workspace = true }
+hapm-github = { workspace = true }
+hapm-jira = { workspace = true }
 hapm-mock-repo = { workspace = true }
 hapm-mock-tracker = { workspace = true }
 
 [dependency-groups]
 dev = [
+  "hapm-codeintel",
+  "hapm-config",
   "hapm-core",
   "hapm-events",
   "hapm-mcp-client",
@@ -51,12 +65,16 @@ dev = [
   "hapm-policy",
   "hapm-telemetry",
   "hapm-audit",
+  "hapm-developer",
   "hapm-eval",
   "hapm-gateway",
   "hapm-oidc-stub",
   "hapm-oneview",
   "hapm-orchestrator",
   "hapm-relay",
+  "hapm-sandbox",
+  "hapm-github",
+  "hapm-jira",
   "hapm-mock-repo",
   "hapm-mock-tracker",
   "ruff==0.8.4",
@@ -72,6 +90,8 @@ dev = [
 [tool.ruff]
 line-length = 120
 target-version = "py312"
+# Fixture repositories contain deliberately seeded defects.
+extend-exclude = ["tests/fixtures"]
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "B", "UP", "S", "N"]
@@ -80,6 +100,10 @@ ignore = ["S101", "E501", "N818"]  # long SQL strings; exception names read bett
 [tool.ruff.lint.per-file-ignores]
 # Role passwords come from the operator environment and are quote-escaped before use.
 "libs/core/src/hapm_core/migrations/**" = ["S608"]
+# ast.NodeVisitor requires visit_<NodeName> method names.
+"libs/codeintel/src/hapm_codeintel/analyzers.py" = ["N802", "N815"]
+# Tests pass env:/kv: references, not secrets.
+"tests/**" = ["S105", "S106"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests/unit"]

@@ -78,6 +78,8 @@ jobs:
           image --severity CRITICAL,HIGH --ignore-unfixed --exit-code 1 --no-progress --scanners vuln hapm-python:dev
       - run: make demo
       - run: make verify
+      - run: make dev-demo
+      - run: make dev-verify
       - run: make coverage
       - run: cd apps/portal && pnpm install --frozen-lockfile --ignore-workspace && pnpm exec playwright install --with-deps chromium && pnpm exec playwright test
       - if: failure()

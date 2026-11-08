@@ -6,10 +6,15 @@ requires-python = "==3.12.*"
 members = [
     "hapm",
     "hapm-audit",
+    "hapm-codeintel",
+    "hapm-config",
     "hapm-core",
+    "hapm-developer",
     "hapm-eval",
     "hapm-events",
     "hapm-gateway",
+    "hapm-github",
+    "hapm-jira",
     "hapm-mcp-client",
     "hapm-memory",
     "hapm-mock-repo",
@@ -19,6 +24,7 @@ members = [
     "hapm-orchestrator",
     "hapm-policy",
     "hapm-relay",
+    "hapm-sandbox",
     "hapm-telemetry",
 ]
 
@@ -339,10 +345,15 @@ source = { virtual = "." }
 [package.dev-dependencies]
 dev = [
     { name = "hapm-audit" },
+    { name = "hapm-codeintel" },
+    { name = "hapm-config" },
     { name = "hapm-core" },
+    { name = "hapm-developer" },
     { name = "hapm-eval" },
     { name = "hapm-events" },
     { name = "hapm-gateway" },
+    { name = "hapm-github" },
+    { name = "hapm-jira" },
     { name = "hapm-mcp-client" },
     { name = "hapm-memory" },
     { name = "hapm-mock-repo" },
@@ -352,6 +363,7 @@ dev = [
     { name = "hapm-orchestrator" },
     { name = "hapm-policy" },
     { name = "hapm-relay" },
+    { name = "hapm-sandbox" },
     { name = "hapm-telemetry" },
     { name = "httpx" },
     { name = "mypy" },
@@ -368,10 +380,15 @@ dev = [
 [package.metadata.requires-dev]
 dev = [
     { name = "hapm-audit", editable = "services/audit" },
+    { name = "hapm-codeintel", editable = "libs/codeintel" },
+    { name = "hapm-config", editable = "libs/config" },
     { name = "hapm-core", editable = "libs/core" },
+    { name = "hapm-developer", editable = "services/developer" },
     { name = "hapm-eval", editable = "services/eval" },
     { name = "hapm-events", editable = "libs/events" },
     { name = "hapm-gateway", editable = "services/gateway" },
+    { name = "hapm-github", editable = "connectors/github" },
+    { name = "hapm-jira", editable = "connectors/jira" },
     { name = "hapm-mcp-client", editable = "libs/mcp_client" },
     { name = "hapm-memory", editable = "libs/memory" },
     { name = "hapm-mock-repo", editable = "connectors/mock_repo" },
@@ -381,6 +398,7 @@ dev = [
     { name = "hapm-orchestrator", editable = "services/orchestrator" },
     { name = "hapm-policy", editable = "libs/policy" },
     { name = "hapm-relay", editable = "services/relay" },
+    { name = "hapm-sandbox", editable = "services/sandbox" },
     { name = "hapm-telemetry", editable = "libs/telemetry" },
     { name = "httpx", specifier = "==0.28.1" },
     { name = "mypy", specifier = "==1.13.0" },
@@ -405,6 +423,36 @@ dependencies = [
 requires-dist = [
     { name = "hapm-core", editable = "libs/core" },
     { name = "uvicorn", specifier = ">=0.34" },
+]
+
+[[package]]
+name = "hapm-codeintel"
+version = "0.1.0"
+source = { editable = "libs/codeintel" }
+dependencies = [
+    { name = "pydantic" },
+    { name = "sqlalchemy" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "pydantic", specifier = ">=2.10" },
+    { name = "sqlalchemy", specifier = ">=2.0.36" },
+]
+
+[[package]]
+name = "hapm-config"
+version = "0.1.0"
+source = { editable = "libs/config" }
+dependencies = [
+    { name = "pydantic" },
+    { name = "pyyaml" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "pydantic", specifier = ">=2.10" },
+    { name = "pyyaml", specifier = ">=6.0.2" },
 ]
 
 [[package]]
@@ -442,6 +490,29 @@ requires-dist = [
     { name = "pyjwt", extras = ["crypto"], specifier = ">=2.10" },
     { name = "sqlalchemy", specifier = ">=2.0.36" },
     { name = "typer", specifier = ">=0.15" },
+]
+
+[[package]]
+name = "hapm-developer"
+version = "0.1.0"
+source = { editable = "services/developer" }
+dependencies = [
+    { name = "hapm-codeintel" },
+    { name = "hapm-config" },
+    { name = "hapm-core" },
+    { name = "hapm-memory" },
+    { name = "httpx" },
+    { name = "pyyaml" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "hapm-codeintel", editable = "libs/codeintel" },
+    { name = "hapm-config", editable = "libs/config" },
+    { name = "hapm-core", editable = "libs/core" },
+    { name = "hapm-memory", editable = "libs/memory" },
+    { name = "httpx", specifier = ">=0.28" },
+    { name = "pyyaml", specifier = ">=6.0.2" },
 ]
 
 [[package]]
@@ -490,6 +561,7 @@ version = "0.1.0"
 source = { editable = "services/gateway" }
 dependencies = [
     { name = "fastapi" },
+    { name = "hapm-config" },
     { name = "hapm-core" },
     { name = "hapm-telemetry" },
     { name = "httpx" },
@@ -501,12 +573,61 @@ dependencies = [
 [package.metadata]
 requires-dist = [
     { name = "fastapi", specifier = ">=0.120" },
+    { name = "hapm-config", editable = "libs/config" },
     { name = "hapm-core", editable = "libs/core" },
     { name = "hapm-telemetry", editable = "libs/telemetry" },
     { name = "httpx", specifier = ">=0.28" },
     { name = "pyyaml", specifier = ">=6.0.2" },
     { name = "redis", specifier = ">=5.2" },
     { name = "uvicorn", specifier = ">=0.34" },
+]
+
+[[package]]
+name = "hapm-github"
+version = "0.1.0"
+source = { editable = "connectors/github" }
+dependencies = [
+    { name = "hapm-codeintel" },
+    { name = "hapm-config" },
+    { name = "hapm-core" },
+    { name = "hapm-mcp-client" },
+    { name = "httpx" },
+    { name = "mcp" },
+    { name = "pyjwt", extra = ["crypto"] },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "hapm-codeintel", editable = "libs/codeintel" },
+    { name = "hapm-config", editable = "libs/config" },
+    { name = "hapm-core", editable = "libs/core" },
+    { name = "hapm-mcp-client", editable = "libs/mcp_client" },
+    { name = "httpx", specifier = ">=0.28" },
+    { name = "mcp", specifier = ">=1.12,<2" },
+    { name = "pyjwt", extras = ["crypto"], specifier = ">=2.10" },
+]
+
+[[package]]
+name = "hapm-jira"
+version = "0.1.0"
+source = { editable = "connectors/jira" }
+dependencies = [
+    { name = "hapm-config" },
+    { name = "hapm-core" },
+    { name = "hapm-mcp-client" },
+    { name = "httpx" },
+    { name = "mcp" },
+    { name = "pyyaml" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "hapm-config", editable = "libs/config" },
+    { name = "hapm-core", editable = "libs/core" },
+    { name = "hapm-mcp-client", editable = "libs/mcp_client" },
+    { name = "httpx", specifier = ">=0.28" },
+    { name = "mcp", specifier = ">=1.12,<2" },
+    { name = "pyyaml", specifier = ">=6.0.2" },
 ]
 
 [[package]]
@@ -686,6 +807,27 @@ dependencies = [
 requires-dist = [
     { name = "aiokafka", specifier = ">=0.12" },
     { name = "hapm-core", editable = "libs/core" },
+]
+
+[[package]]
+name = "hapm-sandbox"
+version = "0.1.0"
+source = { editable = "services/sandbox" }
+dependencies = [
+    { name = "fastapi" },
+    { name = "hapm-core" },
+    { name = "hapm-telemetry" },
+    { name = "httpx" },
+    { name = "uvicorn" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "fastapi", specifier = ">=0.120" },
+    { name = "hapm-core", editable = "libs/core" },
+    { name = "hapm-telemetry", editable = "libs/telemetry" },
+    { name = "httpx", specifier = ">=0.28" },
+    { name = "uvicorn", specifier = ">=0.34" },
 ]
 
 [[package]]

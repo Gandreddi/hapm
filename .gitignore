@@ -17,3 +17,7 @@ playwright-report/
 .terraform/
 .terraform.lock.hcl
 requirements-audit.txt
+config/*.yaml
+config/repos/*.yaml
+!config/*.example.yaml
+!config/repos/*.example.yaml

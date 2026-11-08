@@ -44,6 +44,29 @@ def submit(
     return dict(resp.json())
 
 
+def submit_task(
+    user: str, agent: str, task_input: dict[str, Any], mode: str = "live", **options: float
+) -> dict[str, Any]:
+    body = {"agent_id": agent, "input": task_input, "options": options, "mode": mode}
+    resp = httpx.post(f"{ORCHESTRATOR}/v1/tasks", json=body, headers=auth(user), timeout=30)
+    resp.raise_for_status()
+    return dict(resp.json())
+
+
+def pending_for_step(run_id: str, step: str, timeout: float = 180) -> dict[str, Any]:
+    """Wait for the pending approval of one gate (approval ids end with the step id)."""
+    deadline = time.monotonic() + timeout
+    while time.monotonic() < deadline:
+        current = run(run_id)
+        for a in current["approvals"]:
+            if a["status"] == "pending" and a["id"].endswith(f"_{step}"):
+                return dict(a)
+        if current["state"] in TERMINAL:
+            raise RuntimeError(f"run {run_id} ended as {current['state']} ({current.get('error')}) before gate {step}")
+        time.sleep(1)
+    raise TimeoutError(f"no pending approval for gate {step} on {run_id}")
+
+
 def run(run_id: str, user: str = "viewer") -> dict[str, Any]:
     resp = httpx.get(f"{ORCHESTRATOR}/v1/runs/{run_id}", headers=auth(user), timeout=30)
     resp.raise_for_status()

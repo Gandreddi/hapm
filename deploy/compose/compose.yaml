@@ -7,6 +7,9 @@ x-python: &python
     dockerfile: deploy/docker/python.Dockerfile
   mem_limit: 256m
   restart: unless-stopped
+  volumes:
+    # Office values: drop real config/*.yaml files here (git-ignored); examples are used otherwise.
+    - ../../config:/src/config:ro
 
 x-env: &env
   HAPM_LOG_LEVEL: ${HAPM_LOG_LEVEL:-INFO}
@@ -22,6 +25,14 @@ x-env: &env
   HAPM_OIDC_JWKS_URL: http://oidc:8000/jwks
   HAPM_TRACKER_MCP_URL: http://mock-tracker:8000/mcp
   HAPM_REPO_MCP_URL: http://mock-repo:8000/mcp
+  HAPM_JIRA_MCP_URL: http://jira-connector:8000/mcp
+  HAPM_GITHUB_MCP_URL: http://github-connector:8000/mcp
+  HAPM_SANDBOX_URL: http://sandbox:8000
+  HAPM_OIDC_TOKEN_URL: http://oidc:8000/token
+  GITHUB_MODELS_TOKEN: ${GITHUB_MODELS_TOKEN:-}
+  JIRA_EMAIL: ${JIRA_EMAIL:-}
+  JIRA_API_TOKEN: ${JIRA_API_TOKEN:-}
+  GITHUB_TOKEN: ${GITHUB_TOKEN:-}
 
 x-http-health: &http-health
   test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/healthz', timeout=2)"]
@@ -189,7 +200,7 @@ services:
 
   orchestrator-worker:
     <<: *python
-    mem_limit: 384m
+    mem_limit: 512m
     command: ["python", "-m", "hapm_orchestrator.worker"]
     environment:
       <<: *env
@@ -199,6 +210,9 @@ services:
       temporal: { condition: service_healthy }
       gateway: { condition: service_healthy }
       mock-tracker: { condition: service_healthy }
+      jira-connector: { condition: service_healthy }
+      github-connector: { condition: service_healthy }
+      sandbox: { condition: service_healthy }
 
   eval:
     <<: *python
@@ -246,6 +260,46 @@ services:
     depends_on:
       oneview: { condition: service_healthy }
       orchestrator-api: { condition: service_healthy }
+
+  jira-connector:
+    <<: *python
+    command: ["python", "-m", "hapm_jira.main"]
+    environment:
+      <<: *env
+      HAPM_SERVICE_NAME: jira-connector
+    ports: ["127.0.0.1:8103:8000"]
+    healthcheck: *http-health
+    depends_on:
+      migrate: { condition: service_completed_successfully }
+
+  github-connector:
+    <<: *python
+    command: ["python", "-m", "hapm_github.main"]
+    environment:
+      <<: *env
+      HAPM_SERVICE_NAME: github-connector
+    ports: ["127.0.0.1:8104:8000"]
+    healthcheck: *http-health
+    depends_on:
+      migrate: { condition: service_completed_successfully }
+
+  sandbox:
+    <<: *python
+    # Needs the Docker socket to start throwaway test containers (ADR-0017). Runs as root only to
+    # reach the socket; the containers it starts run as nobody, with no network and no credentials.
+    user: root
+    command: ["uvicorn", "hapm_sandbox.main:create_app", "--factory", "--host", "0.0.0.0", "--port", "8000"]
+    environment:
+      HAPM_SERVICE_NAME: sandbox
+      HAPM_LOG_LEVEL: ${HAPM_LOG_LEVEL:-INFO}
+      HAPM_OIDC_ISSUER: http://localhost:8006
+      HAPM_OIDC_JWKS_URL: http://oidc:8000/jwks
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports: ["127.0.0.1:8105:8000"]
+    healthcheck: *http-health
+    depends_on:
+      oidc: { condition: service_healthy }
 
 volumes:
   postgres_data:

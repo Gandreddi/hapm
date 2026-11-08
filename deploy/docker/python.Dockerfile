@@ -11,6 +11,8 @@ RUN uv sync --frozen --no-dev --all-packages
 COPY policies policies
 COPY schemas schemas
 COPY agents agents
+COPY config config
+COPY tests/fixtures tests/fixtures
 
 FROM python:3.12.15-slim-trixie
 # Pick up OS security fixes released after the base image was built.
