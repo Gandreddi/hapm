@@ -1,0 +1,30 @@
+# Ground truth for the payments_service fixture: every seeded defect and its location.
+# Kept outside the repository folder so the agent never sees it. LOGIC entries are real bugs no
+# deterministic rule detects, so recall below 1.0 is expected and honest.
+repo: payments-service
+defects:
+  - { rule: R7, path: src/payments/api.py, line: 3 }
+  - { rule: R5, path: src/payments/api.py, line: 7 }
+  - { rule: R6, path: src/payments/api.py, line: 8 }
+  - { rule: R3, path: src/payments/api.py, line: 11 }
+  - { rule: R8, path: src/payments/currency.py, line: 7 }
+  - { rule: R2, path: src/payments/currency.py, line: 13 }
+  - { rule: R8, path: src/payments/currency.py, line: 19 }
+  - { rule: R9, path: src/payments/currency.py, line: 25 }
+  - { rule: LOGIC, path: src/payments/currency.py, line: 30, note: "float to cents truncates instead of rounding" }
+  - { rule: R1, path: src/payments/ledger.py, line: 4 }
+  - { rule: R1, path: src/payments/ledger.py, line: 9 }
+  - { rule: R6, path: src/payments/ledger.py, line: 16 }
+  - { rule: R4, path: src/payments/ledger.py, line: 21 }
+  - { rule: R1, path: src/payments/notifications.py, line: 4 }
+  - { rule: R4, path: src/payments/notifications.py, line: 10 }
+  - { rule: R9, path: src/payments/notifications.py, line: 13 }
+  - { rule: R3, path: src/payments/notifications.py, line: 20 }
+  - { rule: R2, path: src/payments/refunds.py, line: 5 }
+  - { rule: R5, path: src/payments/refunds.py, line: 8 }
+  - { rule: R2, path: src/payments/refunds.py, line: 9 }
+  - { rule: R3, path: src/payments/refunds.py, line: 17 }
+  - { rule: R4, path: src/payments/refunds.py, line: 22 }
+  - { rule: R2, path: src/payments/utils.py, line: 5 }
+  - { rule: R8, path: src/payments/utils.py, line: 11 }
+  - { rule: LOGIC, path: src/payments/utils.py, line: 15, note: "chunk drops the last item (range stop off by one)" }
