@@ -1,8 +1,10 @@
 # Tool registry: which MCP server hosts each tool, whether it reads or writes, and its limits.
-# Server URLs come from the environment (HAPM_TRACKER_MCP_URL, HAPM_REPO_MCP_URL).
+# Server URLs come from the environment.
 servers:
   tracker: { url_env: HAPM_TRACKER_MCP_URL, default_url: "http://127.0.0.1:8101/mcp" }
   repo: { url_env: HAPM_REPO_MCP_URL, default_url: "http://127.0.0.1:8102/mcp" }
+  jira: { url_env: HAPM_JIRA_MCP_URL, default_url: "http://127.0.0.1:8103/mcp" }
+  github: { url_env: HAPM_GITHUB_MCP_URL, default_url: "http://127.0.0.1:8104/mcp" }
 
 tools:
   - { name: create_story, server: tracker, kind: write }
@@ -11,6 +13,19 @@ tools:
   - { name: read_file, server: repo, kind: read }
   - { name: open_pull_request, server: repo, kind: write }
   - { name: list_pull_requests, server: repo, kind: read }
+  - { name: jira_get_epic, server: jira, kind: read }
+  - { name: jira_list_epic_issues, server: jira, kind: read }
+  - { name: jira_search_issues, server: jira, kind: read }
+  - { name: jira_get_issue, server: jira, kind: read }
+  - { name: jira_create_issue, server: jira, kind: write }
+  - { name: jira_add_comment, server: jira, kind: write }
+  - { name: github_head, server: github, kind: read }
+  - { name: github_list_tree, server: github, kind: read, max_response_bytes: 2000000 }
+  - { name: github_read_file, server: github, kind: read, max_response_bytes: 400000 }
+  - { name: github_list_commits, server: github, kind: read }
+  - { name: github_list_issues_and_prs, server: github, kind: read }
+  - { name: github_push_branch, server: github, kind: write, max_args_bytes: 1000000, timeout_seconds: 60 }
+  - { name: github_open_pull_request, server: github, kind: write }
 
 defaults:
   timeout_seconds: 15
