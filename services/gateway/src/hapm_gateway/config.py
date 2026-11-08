@@ -10,11 +10,16 @@ from pydantic import BaseModel, ConfigDict, Field, model_validator
 class ProviderConfig(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
-    type: Literal["fake", "azure_openai", "anthropic"]
+    type: Literal["fake", "azure_openai", "anthropic", "github_models"]
     always_fail: bool = False
+    endpoint: str | None = None
+    endpoint_ref: str | None = None
+    api_key_ref: str | None = None
+    token_ref: str | None = None
+    api_version: str | None = None
+    # Deprecated spellings kept for older config files.
     endpoint_env: str | None = None
     api_key_env: str | None = None
-    api_version: str | None = None
 
 
 class Target(BaseModel):
@@ -61,6 +66,7 @@ class Retention(BaseModel):
 class GatewayConfig(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
+    data_approval: str = ""
     providers: dict[str, ProviderConfig]
     aliases: dict[str, AliasConfig]
     prices: dict[str, Price]

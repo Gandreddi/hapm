@@ -4,6 +4,7 @@ version = "0.1.0"
 requires-python = ">=3.12,<3.13"
 dependencies = [
   "hapm-core",
+  "hapm-config",
   "hapm-telemetry",
   "fastapi>=0.120",
   "uvicorn>=0.34",
@@ -14,6 +15,7 @@ dependencies = [
 
 [tool.uv.sources]
 hapm-core = { workspace = true }
+hapm-config = { workspace = true }
 hapm-telemetry = { workspace = true }
 
 [build-system]

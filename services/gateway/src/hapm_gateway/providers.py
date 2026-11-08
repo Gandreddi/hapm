@@ -197,13 +197,70 @@ class AnthropicProvider:
         raise ProviderError(400, "anthropic provider does not offer embeddings", retryable=False)
 
 
+class GitHubModelsProvider:
+    """Official GitHub Models API: OpenAI-compatible chat and embeddings with a bearer token."""
+
+    def __init__(self, name: str, endpoint: str, token: str, client: httpx.AsyncClient) -> None:
+        self.name = name
+        self._base = endpoint.rstrip("/")
+        self._token = token
+        self._client = client
+
+    async def _post(self, path: str, body: dict[str, Any]) -> dict[str, Any]:
+        try:
+            resp = await self._client.post(
+                f"{self._base}/{path}",
+                headers={"Authorization": f"Bearer {self._token}", "Accept": "application/json"},
+                json=body,
+            )
+            resp.raise_for_status()
+        except Exception as exc:
+            raise map_http_error(exc) from exc
+        data: dict[str, Any] = resp.json()
+        return data
+
+    async def chat(
+        self, model: str, messages: list[dict[str, str]], max_tokens: int | None, options: dict[str, Any]
+    ) -> ChatResult:
+        body: dict[str, Any] = {"model": model, "messages": messages}
+        if max_tokens:
+            body["max_tokens"] = max_tokens
+        data = await self._post("chat/completions", body)
+        usage = data.get("usage", {})
+        return ChatResult(
+            data["choices"][0]["message"].get("content") or "",
+            int(usage.get("prompt_tokens", 0)),
+            int(usage.get("completion_tokens", 0)),
+            str(data.get("model", model)),
+        )
+
+    async def embed(self, model: str, inputs: list[str]) -> EmbedResult:
+        data = await self._post("embeddings", {"model": model, "input": inputs})
+        vectors = [item["embedding"] for item in sorted(data["data"], key=lambda i: i["index"])]
+        return EmbedResult(vectors, int(data.get("usage", {}).get("prompt_tokens", 0)), model)
+
+
+def _secret(ref: str | None, legacy_env: str | None) -> str:
+    """Resolve env:/kv: references (hapm_config), falling back to the older *_env field names."""
+    from hapm_config import resolve_ref
+
+    if ref:
+        return resolve_ref(ref, required=False) or ""
+    return os.environ.get(legacy_env or "", "")
+
+
 def build_provider(name: str, cfg: ProviderConfig, client: httpx.AsyncClient) -> Provider | None:
     """Return None when a real provider has no credentials, so it is simply unavailable."""
     if cfg.type == "fake":
         return FakeProvider(name, cfg.always_fail)
-    key = os.environ.get(cfg.api_key_env or "", "")
+    if cfg.type == "github_models":
+        token = _secret(cfg.token_ref, None)
+        if not (token and cfg.endpoint):
+            return None
+        return GitHubModelsProvider(name, cfg.endpoint, token, client)
+    key = _secret(cfg.api_key_ref, cfg.api_key_env)
     if cfg.type == "azure_openai":
-        endpoint = os.environ.get(cfg.endpoint_env or "", "")
+        endpoint = _secret(cfg.endpoint_ref, cfg.endpoint_env) or (cfg.endpoint or "")
         if not (key and endpoint):
             return None
         return AzureOpenAIProvider(name, endpoint, key, cfg.api_version or "2024-10-21", client)

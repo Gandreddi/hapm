@@ -24,7 +24,7 @@ from hapm_gateway.settings import GatewaySettings
 from hapm_policy import PolicyEngine
 
 ROOT = Path(__file__).resolve().parents[3]
-CONFIG = GatewayConfig.load(ROOT / "services/gateway/config.yaml")
+CONFIG = GatewayConfig.load(ROOT / "config/providers.example.yaml")
 HEADERS = {"X-HAPM-Agent-Id": "dummy_echo", "X-HAPM-Team-Id": "core", "X-HAPM-Run-Id": "run_1"}
 
 
