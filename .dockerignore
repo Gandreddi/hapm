@@ -1,0 +1,25 @@
+# Build context for deploy/docker/python.Dockerfile (context = repository root).
+# Allow-list: send only what the image copies. This matters most with Podman, whose classic builder
+# uploads the whole context (.venv, node_modules and .next would otherwise add over 1 GB).
+*
+!pyproject.toml
+!uv.lock
+!libs
+!services
+!connectors
+!policies
+!schemas
+!agents
+!config
+!tests/fixtures
+
+# Never bake caches or real office config into the image (config is mounted read-only at run time).
+**/__pycache__
+**/*.pyc
+**/.pytest_cache
+**/.mypy_cache
+**/.ruff_cache
+config/*.yaml
+config/repos/*.yaml
+!config/*.example.yaml
+!config/repos/*.example.yaml

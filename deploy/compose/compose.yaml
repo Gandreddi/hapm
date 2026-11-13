@@ -42,7 +42,7 @@ x-http-health: &http-health
 
 services:
   postgres:
-    image: pgvector/pgvector:0.8.0-pg16
+    image: docker.io/pgvector/pgvector:0.8.0-pg16
     environment:
       POSTGRES_USER: hapm
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in .env}
@@ -57,7 +57,7 @@ services:
       retries: 30
 
   redis:
-    image: redis:7.4.1-alpine
+    image: docker.io/library/redis:7.4.1-alpine
     ports: ["127.0.0.1:6379:6379"]
     mem_limit: 256m
     healthcheck:
@@ -67,7 +67,7 @@ services:
       retries: 30
 
   redpanda:
-    image: redpandadata/redpanda:v24.3.1
+    image: docker.io/redpandadata/redpanda:v24.3.1
     command:
       - redpanda
       - start
@@ -98,7 +98,7 @@ services:
       retries: 30
 
   temporal:
-    image: temporalio/temporal:1.10.0
+    image: docker.io/temporalio/temporal:1.10.0
     command: ["server", "start-dev", "--ip", "0.0.0.0", "--db-filename", "/data/temporal.db"]
     user: root
     ports: ["127.0.0.1:7233:7233", "127.0.0.1:8233:8233"]
@@ -295,7 +295,8 @@ services:
       HAPM_OIDC_ISSUER: http://localhost:8006
       HAPM_OIDC_JWKS_URL: http://oidc:8000/jwks
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
+      # Docker: /var/run/docker.sock. Podman: set HAPM_CONTAINER_SOCKET in .env (see docs/runbook.md).
+      - ${HAPM_CONTAINER_SOCKET:-/var/run/docker.sock}:/var/run/docker.sock
     ports: ["127.0.0.1:8105:8000"]
     healthcheck: *http-health
     depends_on:

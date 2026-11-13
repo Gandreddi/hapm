@@ -29,15 +29,9 @@ KAFKA = "127.0.0.1:19092"
 
 
 def compose(*args: str) -> None:
-    cmd = [
-        "docker",
-        "compose",
-        "--env-file",
-        str(ROOT / ".env"),
-        "-f",
-        str(ROOT / "deploy/compose/compose.yaml"),
-        *args,
-    ]
+    from scripts.compose import compose_cmd
+
+    cmd = compose_cmd(*args)
     subprocess.run(cmd, check=True, capture_output=True)  # noqa: S603, S607 - fixed docker compose command
 
 

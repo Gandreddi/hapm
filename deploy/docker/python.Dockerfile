@@ -1,5 +1,5 @@
 # One image for every Python service; compose picks the command. Build context: repo root.
-FROM python:3.12.15-slim-trixie AS build
+FROM docker.io/library/python:3.12.15-slim-trixie AS build
 COPY --from=ghcr.io/astral-sh/uv:0.5.11 /uv /bin/uv
 WORKDIR /src
 ENV UV_COMPILE_BYTECODE=1 UV_LINK_MODE=copy
@@ -14,7 +14,7 @@ COPY agents agents
 COPY config config
 COPY tests/fixtures tests/fixtures
 
-FROM python:3.12.15-slim-trixie
+FROM docker.io/library/python:3.12.15-slim-trixie
 # Pick up OS security fixes released after the base image was built.
 RUN apt-get update && apt-get upgrade -y --no-install-recommends && rm -rf /var/lib/apt/lists/* \
     && useradd --create-home --uid 10001 hapm
