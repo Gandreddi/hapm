@@ -27,9 +27,9 @@ x-env: &env
   HAPM_REPO_MCP_URL: http://mock-repo:8000/mcp
   HAPM_JIRA_MCP_URL: http://jira-connector:8000/mcp
   HAPM_GITHUB_MCP_URL: http://github-connector:8000/mcp
+  HAPM_SENTINEL_MCP_URL: http://sentinel-connector:8000/mcp
   HAPM_SANDBOX_URL: http://sandbox:8000
   HAPM_OIDC_TOKEN_URL: http://oidc:8000/token
-  GITHUB_MODELS_TOKEN: ${GITHUB_MODELS_TOKEN:-}
   JIRA_EMAIL: ${JIRA_EMAIL:-}
   JIRA_API_TOKEN: ${JIRA_API_TOKEN:-}
   GITHUB_TOKEN: ${GITHUB_TOKEN:-}
@@ -149,6 +149,10 @@ services:
       <<: *env
       HAPM_SERVICE_NAME: gateway
       HAPM_DB_HOST: postgres
+      # Model provider credentials go to the gateway only.
+      AZURE_OPENAI_ENDPOINT: ${AZURE_OPENAI_ENDPOINT:-}
+      AZURE_OPENAI_API_KEY: ${AZURE_OPENAI_API_KEY:-}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
     ports: ["127.0.0.1:8001:8000"]
     healthcheck: *http-health
     depends_on:
@@ -279,6 +283,18 @@ services:
       <<: *env
       HAPM_SERVICE_NAME: github-connector
     ports: ["127.0.0.1:8104:8000"]
+    healthcheck: *http-health
+    depends_on:
+      migrate: { condition: service_completed_successfully }
+
+  sentinel-connector:
+    <<: *python
+    # Phase 2 context layer: read-only MCP tools over the Sentinel graph (no write tool exists).
+    command: ["python", "-m", "hapm_sentinel_mcp.main"]
+    environment:
+      <<: *env
+      HAPM_SERVICE_NAME: sentinel-connector
+    ports: ["127.0.0.1:8106:8000"]
     healthcheck: *http-health
     depends_on:
       migrate: { condition: service_completed_successfully }

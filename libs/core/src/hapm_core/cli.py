@@ -36,13 +36,45 @@ def config_check(
     typer.echo(f"config directory: {directory}")
     for kind, source in {**report.sources, "providers": providers_path.name if providers_path else "missing"}.items():
         typer.echo(f"  {kind}: {source}")
-    for title, items in (("LIVE", report.live), ("MOCKED", report.mocked), ("MISSING", report.missing)):
+    for title, items in (
+        ("LIVE", report.live),
+        ("MOCKED", report.mocked),
+        ("MISSING", report.missing),
+        ("SENTINEL", report.info),
+    ):
         typer.echo(f"{title} ({len(items)})")
         for item in items:
             typer.echo(f"  - {item}")
+    if project.sentinel.llm != "off":
+        try:
+            from hapm_sentinel.llm import health_check
+        except ImportError:
+            typer.echo("SENTINEL model health: hapm-sentinel is not installed")
+        else:
+            health = health_check(project, providers)
+            typer.echo(f"SENTINEL model health (llm {health.mode})")
+            for name, ok, detail in health.checks:
+                typer.echo(f"  {'OK  ' if ok else 'FAIL'} {name}: {detail}")
+                if not ok:
+                    report.missing.append(f"sentinel {name}")
     typer.echo(f"pilot ready: {report.pilot_ready}")
     if pilot and not report.pilot_ready:
         sys.exit(2)
+
+
+repos_app = typer.Typer(help="Repository onboarding commands", no_args_is_help=True)
+app.add_typer(repos_app, name="repos")
+
+
+@repos_app.command("discover")
+def repos_discover(org: str = typer.Option(..., "--org")) -> None:
+    """List an organisation's repositories and write draft config/repos/<name>.yaml files (sentinel disabled)."""
+    from hapm_config import load_project
+    from hapm_config.loader import config_dir
+    from hapm_sentinel.discover import write_drafts
+
+    for name, action in write_drafts(load_project(), org, config_dir()):
+        typer.echo(f"{name}: {action}")
 
 
 @audit_app.command("verify")

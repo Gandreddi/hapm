@@ -83,7 +83,17 @@ class MockGithub:
         return files[path]
 
     def list_commits(self, repo: RepoConfig, limit: int) -> list[dict[str, Any]]:
-        return [{"sha": self.head(repo), "message": "fixture snapshot", "author": "fixture"}][:limit]
+        """A fixture may carry commit messages in <mock_path>.commits.yaml (used by Sentinel's Jira-key linker)."""
+        head = self.head(repo)
+        sidecar = (self.root / f"{repo.mock_path}.commits.yaml") if repo.mock_path else None
+        if sidecar is not None and sidecar.exists():
+            import yaml
+
+            entries = yaml.safe_load(sidecar.read_text(encoding="utf-8")) or []
+            return [{"sha": head, "message": e["message"], "author": e.get("author", "fixture")} for e in entries][
+                :limit
+            ]
+        return [{"sha": head, "message": "fixture snapshot", "author": "fixture"}][:limit]
 
     def list_pull_requests(self, repo: RepoConfig) -> list[dict[str, Any]]:
         with self.engine.connect() as conn:

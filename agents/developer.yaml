@@ -24,6 +24,9 @@ allowed_tools:
   - github_list_issues_and_prs
   - github_push_branch
   - github_open_pull_request
+  - sentinel_context_pack
+  - sentinel_impact
+  - sentinel_explain
 memory_scopes: [run]
 approval_policy: default_write
 eval_suite: developer

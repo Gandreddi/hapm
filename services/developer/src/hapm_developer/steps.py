@@ -269,7 +269,28 @@ def intake(pctx: Any, state: dict[str, Any]) -> dict[str, Any]:
         if items and items[0]["finding"]:
             _save_findings(pctx, [Finding.model_validate(items[0]["finding"])])
         output.update({"epic": epic, "work_items": items, "findings": []})
+    in_scope = sorted(
+        {f["path"] for f in output.get("findings", [])}
+        | {i["finding"]["path"] for i in output.get("work_items", []) if i.get("finding")}
+    )
+    output["context_pack"] = context_pack(pctx, repo, in_scope, calls)
     return {"output": output, "tool_calls": calls, "cost_usd": cost}
+
+
+def context_pack(pctx: Any, repo: RepoConfig, files: list[str], calls: list[dict[str, Any]]) -> dict[str, Any]:
+    """Phase 2: impacted services, callers in other repositories and tests to run for the files in scope.
+
+    Best effort: Sentinel being down or not yet built never blocks a scan; the pack then says so.
+    """
+    if not files:
+        return {"available": False, "reason": "no files in scope"}
+    try:
+        result = _call(pctx, calls, "sentinel_context_pack", {"repo": repo.name, "files": files[:20]})
+    except Exception as exc:  # noqa: BLE001 - the context layer is optional for the Developer agent
+        return {"available": False, "reason": f"sentinel unavailable: {str(exc)[:200]}"}
+    if result.status != "ok" or not isinstance(result.output, dict):
+        return {"available": False, "reason": f"sentinel returned {result.status}"}
+    return {"available": True, **result.output}
 
 
 def _approvers(repo: RepoConfig, gate: str) -> list[str]:

@@ -41,14 +41,17 @@ def build_activities(settings: OrchestratorSettings) -> Activities:
 async def run(settings: OrchestratorSettings) -> None:
     configure_logging(settings.service_name, settings.log_level)
     configure_tracing(settings.service_name, settings.otel_endpoint)
+    from hapm_sentinel.workflows import ACTIVITIES as SENTINEL_ACTIVITIES
+    from hapm_sentinel.workflows import WORKFLOWS as SENTINEL_WORKFLOWS
+
     activities = build_activities(settings)
     client = await Client.connect(settings.temporal_address, namespace=settings.temporal_namespace)
     with ThreadPoolExecutor(max_workers=settings.activity_threads) as executor:
         worker = Worker(
             client,
             task_queue=settings.task_queue,
-            workflows=[AgentRunWorkflow],
-            activities=activities.all(),
+            workflows=[AgentRunWorkflow, *SENTINEL_WORKFLOWS],
+            activities=[*activities.all(), *SENTINEL_ACTIVITIES],
             activity_executor=executor,
         )
         get_logger().info("worker started", task_queue=settings.task_queue)

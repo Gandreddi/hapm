@@ -198,6 +198,58 @@ def create_app(settings: OneViewSettings | None = None) -> FastAPI:
             ).all()
         return {"items": [{"run_id": r.run_id, "cost_usd": float(r.cost_usd), "calls": r.calls} for r in rows]}
 
+    @app.get("/v1/sentinel")
+    def sentinel(user: Annotated[Principal, Depends(viewer)]) -> dict[str, Any]:
+        """Phase 2 panel: per-repository freshness, node and edge counts, confidence mix, validators, cost."""
+        with engine.connect() as conn:
+            heads = conn.execute(
+                text(
+                    "SELECT h.repo, h.sha, h.built_at, r.precision_tier, r.stats, r.llm, r.engines FROM sentinel_heads h "
+                    "LEFT JOIN sentinel_runs r ON r.id = h.run_id ORDER BY h.repo"
+                )
+            ).all()
+            mix = conn.execute(
+                text(
+                    "SELECT e.repo, e.confidence, count(*) AS c, sum(CASE WHEN e.cross_repo THEN 1 ELSE 0 END) AS x "
+                    "FROM sentinel_edges e JOIN sentinel_heads h ON h.repo = e.repo AND h.sha = e.sha GROUP BY 1, 2"
+                )
+            ).all()
+            latest = conn.execute(
+                text("SELECT repo, status, error, started_at FROM sentinel_runs ORDER BY started_at DESC LIMIT 20")
+            ).all()
+            verify = conn.execute(
+                text("SELECT value FROM sentinel_cache WHERE kind = 'verify' AND key = 'latest'")
+            ).first()
+        confidence: dict[str, dict[str, int]] = {}
+        cross: dict[str, int] = {}
+        for m in mix:
+            confidence.setdefault(m.repo, {})[m.confidence] = m.c
+            cross[m.repo] = cross.get(m.repo, 0) + int(m.x or 0)
+        repos = [
+            {
+                "repo": h.repo,
+                "sha": h.sha,
+                "built_at": _iso(h.built_at),
+                "precision_tier": h.precision_tier,
+                "nodes": (h.stats or {}).get("nodes"),
+                "edges": (h.stats or {}).get("edges"),
+                "confidence": confidence.get(h.repo, {}),
+                "cross_repo_edges": cross.get(h.repo, 0),
+                "llm_tokens": int((h.llm or {}).get("prompt_tokens", 0))
+                + int((h.llm or {}).get("completion_tokens", 0)),
+                "llm_mode": (h.llm or {}).get("mode", "off"),
+                "engines": {k: v.get("status") for k, v in (h.engines or {}).items()},
+            }
+            for h in heads
+        ]
+        return {
+            "repos": repos,
+            "validators": verify.value if verify else None,
+            "recent_runs": [
+                {"repo": r.repo, "status": r.status, "error": r.error, "started_at": _iso(r.started_at)} for r in latest
+            ],
+        }
+
     @app.get("/v1/stream")
     async def stream(
         request: Request,

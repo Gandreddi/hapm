@@ -5,6 +5,7 @@ servers:
   repo: { url_env: HAPM_REPO_MCP_URL, default_url: "http://127.0.0.1:8102/mcp" }
   jira: { url_env: HAPM_JIRA_MCP_URL, default_url: "http://127.0.0.1:8103/mcp" }
   github: { url_env: HAPM_GITHUB_MCP_URL, default_url: "http://127.0.0.1:8104/mcp" }
+  sentinel: { url_env: HAPM_SENTINEL_MCP_URL, default_url: "http://127.0.0.1:8106/mcp" }
 
 tools:
   - { name: create_story, server: tracker, kind: write }
@@ -26,6 +27,17 @@ tools:
   - { name: github_list_issues_and_prs, server: github, kind: read }
   - { name: github_push_branch, server: github, kind: write, max_args_bytes: 1000000, timeout_seconds: 60 }
   - { name: github_open_pull_request, server: github, kind: write }
+  # Sentinel (Phase 2): read-only context layer. No Sentinel write tool exists.
+  - { name: sentinel_query, server: sentinel, kind: read, max_response_bytes: 400000 }
+  - { name: sentinel_ask, server: sentinel, kind: read, max_response_bytes: 400000, timeout_seconds: 120 }
+  - { name: sentinel_explain, server: sentinel, kind: read, max_response_bytes: 400000 }
+  - { name: sentinel_path, server: sentinel, kind: read, max_response_bytes: 400000 }
+  - { name: sentinel_impact, server: sentinel, kind: read, max_response_bytes: 400000 }
+  - { name: sentinel_neighbors, server: sentinel, kind: read, max_response_bytes: 400000 }
+  - { name: sentinel_find, server: sentinel, kind: read, max_response_bytes: 400000 }
+  - { name: sentinel_coverage, server: sentinel, kind: read, max_response_bytes: 400000 }
+  - { name: sentinel_stats, server: sentinel, kind: read, max_response_bytes: 400000 }
+  - { name: sentinel_context_pack, server: sentinel, kind: read, max_response_bytes: 400000, timeout_seconds: 60 }
 
 defaults:
   timeout_seconds: 15

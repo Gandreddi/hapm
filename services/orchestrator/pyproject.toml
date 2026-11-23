@@ -6,6 +6,7 @@ dependencies = [
   "hapm-core",
   "hapm-memory",
   "hapm-mcp-client",
+  "hapm-sentinel",
   "hapm-telemetry",
   "temporalio>=1.9",
   "langgraph>=0.2.60",
@@ -20,6 +21,7 @@ dependencies = [
 hapm-core = { workspace = true }
 hapm-memory = { workspace = true }
 hapm-mcp-client = { workspace = true }
+hapm-sentinel = { workspace = true }
 hapm-telemetry = { workspace = true }
 
 [build-system]
