@@ -19,7 +19,7 @@ development values.
 ## Commands
 | Command | What it does |
 |---|---|
-| `make up` | Build and start all 16 containers; fails unless every service is healthy |
+| `make up` | Build and start all containers (17 with the Sentinel connector); fails unless every service is healthy |
 | `make demo` | Eval, submit a task as requester, wait at the gate, approve as approver, confirm the story |
 | `make verify` | Assert exit checks (a) to (f); prints PASS or FAIL for each and exits 1 on any failure |
 | `make check` | ruff, `mypy --strict` on libs, unit tests |
@@ -57,14 +57,29 @@ Dev sign-in users (from `services/oidc_stub/users.yaml`): `requester`, `approver
 Extra local endpoints: Jira connector http://127.0.0.1:8103/mcp, GitHub connector
 http://127.0.0.1:8104/mcp, sandbox http://127.0.0.1:8105.
 
+## Sentinel context agent (Phase 2)
+| Command | What it does |
+|---|---|
+| `make sentinel-engines` | Build the pinned graphify and SCIP images (needed only for `runner: sandbox` and `sentinel record`) |
+| `make sentinel-demo` | Offline: build the five fixture repositories from recorded engine outputs, link, query, call the live connector, export docs/sentinel/graph.html |
+| `make sentinel-verify` | `sentinel build --force` then validators 1-7 (docs/sentinel/verify-report.json) |
+| `uv run python -m scripts.sentinel_perf` | Synthetic 50-repository fleet: build time, one-file refresh, query p95 |
+| `uv run sentinel doctor` | Model health check when `llm` is not off |
+
+Sentinel MCP connector: http://127.0.0.1:8106/mcp (read-only). From the host, Sentinel connects to
+Postgres on 127.0.0.1 (not `localhost`: on Windows that name first tries IPv6 and took over two minutes).
+Full guide: docs/sentinel.md.
+
 ## Office setup (real repositories, Jira, GitHub and models)
 1. Copy each `config/*.example.yaml` to the same name without `.example` (and
    `config/repos/payments-service.example.yaml` to one file per real repository). These real files are git-ignored.
 2. Fill in values. Secrets are references only: `env:NAME` (put the value in `.env`) or `kv:NAME`
    (Azure Key Vault, mounted at /mnt/secrets in AKS). For example `JIRA_API_TOKEN`, `GITHUB_TOKEN`
-   (or a GitHub App), `GITHUB_MODELS_TOKEN`.
-3. In `config/providers.yaml` put your org's GitHub Models model id first under the `smart`, `fast`
-   and `embed` aliases, and set `data_approval` to the approval reference for sending code to the provider.
+   (or a GitHub App), `AZURE_OPENAI_ENDPOINT`, `AZURE_OPENAI_API_KEY`.
+3. In `config/providers.yaml` put your Azure AI Foundry deployment names first under the `smart`, `fast`
+   and `embed` aliases (`provider: azure-openai`; the model value is the deployment name, and the embedding
+   deployment must return 1536 dimensions). Set `data_approval` to the approval reference for sending code
+   to that provider. GitHub Models was retired on 2026-07-30 and is not supported (ADR-0020).
 4. Run `make config-check` until MISSING is empty and the features you want show as LIVE.
 5. `make up`, then try one repository: `uv run python -m scripts.pilot <repo-name>`. Approve gates in
    the portal inbox. Use a sandbox Jira project and repository first.

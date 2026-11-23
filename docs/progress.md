@@ -138,3 +138,78 @@ PASS (f) killing the worker mid-run and restarting it still completes the run
 
 ### Not verified
 - Real Jira, GitHub and GitHub Models (recorded responses only), AKS sandbox design.
+
+## Change: GitHub Models retired (2026-11-19)
+- GitHub retired GitHub Models on 2026-07-30, so the github_models adapter was removed (ADR-0020,
+  superseding ADR-0016). The office route is Azure OpenAI models deployed in Azure AI Foundry.
+- A config file naming github_models now fails with a message pointing to ADR-0020.
+- Compose passed no Azure or Anthropic credentials to any container; they now go to the gateway only.
+
+## Phase 2: Sentinel context agent (M14-M20), 2026-11-22
+
+Built from ../HAPM_Phase2_Context_Agent_Prompt.md. Decisions: ADR-0021 (engines), ADR-0022 (store,
+linkers, context API), ADR-0023 (LLM modes, local models, Copilot rule). Guide: docs/sentinel.md.
+
+### M14 Repository fleet and snapshots
+- `sentinel:` section in config/repos (enabled, tiers, node_budget, enrich, engines, llm, service_names);
+  config/sentinel.example.yaml; four new fixture repositories (shared_lib, orders_service,
+  inventory_service in Python; web_portal in TypeScript) plus payments_service.
+- Readers: GitHub MCP connector (read tools only; anything else raises) and fixture folders, both giving
+  the same SHA. Mock GitHub reports commit messages from `<fixture>.commits.yaml`.
+- `sentinel build` (incremental by default, `--force`, `--dry-run`); `sentinel_fleet` / `sentinel_repo`
+  Temporal workflows on the orchestrator worker. Temporal run through the connector: 5/5 succeeded, all
+  `exact`, 16 cross-repository links. `hapm repos discover --org` writes disabled drafts only.
+
+### M15 Extraction engines and storage
+- graphify 0.9.115 and SCIP 0.5.2 (scip-python 0.6.8, scip-typescript 0.6.2) images built from
+  deploy/sentinel; graphify installed hash-locked. The sandbox gained `collect` to return one result file.
+  `sentinel record` ran both engines in the sandbox on all five fixtures (Python and TypeScript): all ok;
+  outputs committed under tests/fixtures/sentinel/recorded with the fixture SHA.
+- Mapping, schema probe, merge precedence, disagreement counts, ast fallback, tiers and node budget.
+  Migration 0003 (eight sentinel_* tables). Export json, graphml, html (capped, says what it left out).
+
+### M16 Cross-repository linking
+- HTTP calls to endpoints, manifests (DEPENDS_ON with version check), Python imports and calls into other
+  repositories, SCIP module references, topics, tables, data models, tests, Jira keys. Fixtures: all 12
+  expected links found, no extra (precision 1.00, recall 1.00), all EXTRACTED with file:line evidence.
+
+### M17 Enrichment
+- Gateway provider `local_openai` (Ollama, llama.cpp, vLLM) with JSON-schema response_format; Sentinel
+  aliases enrich, ask, embed_local; `llm: off` default; `sentinel doctor` health check. Through the
+  gateway with the Fake provider (plumbing only): summaries, capability tags from the controlled list,
+  community labels, embeddings in sentinel_embeddings; retries, budget stop and caching unit-tested.
+
+### M18 Context API
+- connectors/sentinel (port 8106): 10 read tools, registered `kind: read`. Live: tools listed, context
+  pack returned evidence. Developer agent intake records a context pack (available in live runs).
+
+### M19 Validation and evaluation
+- `make sentinel-verify`: 7/7 validators passed on the fixture fleet:
+  schema 286/286; integrity 0 dangling, 0 duplicates, 1.0% orphans; structural truth P 1.00 R 1.00, links
+  P 1.00 R 1.00, graphify/SCIP agreement 0.78; evidence 164/164; review sample written (awaiting a
+  human); question -> contract 48/50 (Fake keyword planner: plumbing only); key-fact coverage 0.90 vs grep
+  0.31 vs pgvector search_code 0.53 (Fake embeddings), 492 vs 58 tokens per answer, ~50-95 ms.
+- Synthetic 50-repository fleet (scripts/sentinel_perf.py, ast fallback): 51 repositories, 4,704 nodes,
+  149 cross-repository edges; full build 8.9 s; one-file refresh 0.95 s (target < 60 s); query p50 45 ms,
+  p95 83 ms (target < 2 s).
+- Injection suite (unit): injected docstrings and READMEs stored as data and served `summary_untrusted`;
+  hostile planner output with extra fields rejected; depth clamped; no secrets in graph or answers;
+  commit messages only yield ticket keys; connector has no write tool.
+
+### M20 Pilot
+- `sentinel pilot` refuses with the example config (mock repositories, recorded runner) and lists what
+  is missing; `--rehearsal` runs the flow on the fixtures and writes docs/sentinel/pilot-report.md,
+  labelled as a rehearsal.
+
+### Totals after Phase 2 (this machine, existing local data)
+- `make check`: ruff clean, mypy --strict clean (72 files), 100 unit tests (63 Phase 0/1 + 37 Sentinel).
+- `make verify` 6/6. `make coverage`: 137 passed (100 unit + 37 integration, 8 of them Sentinel) at 83.85% (floor 80%).
+- `make dev-verify` 10/10 from a wiped stack (`make clean`, `make up`, `make dev-demo` with Developer eval
+  1.0, then `make dev-verify`). On the earlier unwiped database it was 8/10 before Phase 2 and 4/10 after:
+  adding the Sentinel read tools changed the Developer agent's config hash, so autonomy gating returned it
+  to suggest_only until its eval passed again, and that eval could not pass on old data where every
+  autofixable finding was already ticketed. A fresh stack removes the stale data and the eval re-unlocks it.
+- After the wipe: `make demo` + `make verify` 6/6, `make sentinel-verify` 7/7 (rebuilt graph).
+
+### Not verified
+- Real repositories, real local model or Azure enrichment, GitHub REST discovery, the office pilot.

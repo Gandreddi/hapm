@@ -149,7 +149,7 @@ flowchart LR
   DEV --> GH[GitHub connector MCP: mock or REST]
   DEV --> JI[Jira connector MCP: mock or REST]
   DEV --> CI[libs/codeintel: snapshot, analysers, findings, autofix, index]
-  DEV --> GW[Gateway: Fake / GitHub Models / Azure OpenAI / Anthropic]
+  DEV --> GW[Gateway: Fake / Azure OpenAI via Foundry / Anthropic]
   DEV --> SB[Sandbox service]
   SB --> D[(Throwaway container: no network, nobody, limits)]
   CFG[config/*.yaml + env:/kv: references] -.-> GH & JI & DEV & GW
@@ -177,6 +177,29 @@ Agent definition: `agents/developer.yaml` (plugin and gate steps, ADR-0018). New
 `code_chunks`, `code_index_state`, `sandbox_runs`, mock `jira_issues`, `jira_comments`,
 `github_branches`, `github_pull_requests`; approvals gained an `approvers` column.
 
+## Phase 2: Sentinel context agent
+
+```mermaid
+flowchart LR
+  SRC[GitHub connector read tools or fixture folder] --> SN[Snapshot at pinned SHA]
+  SN --> F[Facts: endpoints, HTTP calls, topics, tables, manifests, imports]
+  SN --> SB[Sandbox: graphify 0.9.115 + SCIP 0.5.2 images, no network]
+  SB --> M[Merge: SCIP > graphify > ast; disagreements counted]
+  F --> L[Linkers: architecture edges, then cross-repository layer]
+  M --> L --> O[Ontology conformance, tiers, node budget]
+  O --> PG[(Postgres: sentinel_* tables, recursive CTEs)]
+  PG --> MCP[connectors/sentinel MCP, read-only, port 8106]
+  MCP --> DEV[Developer agent context pack]
+  PG --> OV[OneView /v1/sentinel]
+  GW[Gateway: local_openai / Azure / Fake] -.llm not off.-> E[Enrichment: summaries, capabilities, community labels]
+  E --> PG
+  T[Temporal: sentinel_fleet -> sentinel_repo children] --> SN
+```
+
+Sentinel never writes to repositories or Jira. Guide: docs/sentinel.md. New tables (migration 0003):
+`sentinel_runs`, `sentinel_heads`, `sentinel_nodes`, `sentinel_edges`, `sentinel_files`, `sentinel_facts`,
+`sentinel_cache`, `sentinel_embeddings`.
+
 ## Decisions
 
-See `docs/adr/` (ADR-0001 to ADR-0019).
+See `docs/adr/` (ADR-0001 to ADR-0023).

@@ -6,8 +6,9 @@ Deliberately left out of Phase 0.
 - Read repositories as one tarball or tree request instead of file by file.
 - Analysers for languages beyond Python (TypeScript, Java, Go, C#).
 - Sandbox on AKS: Kubernetes Jobs in a locked-down namespace with gVisor or Kata.
+- Adapter for Foundry's non-OpenAI model API, and Entra ID sign-in instead of API keys (ADR-0020).
 - Several work items per run; changes spanning several files; build commands with dependency caches.
-- Live verification of Jira Cloud and Data Center, GitHub App on Enterprise Server, GitHub Models.
+- Live verification of Jira Cloud and Data Center, GitHub App on Enterprise Server, Azure OpenAI on the office Foundry deployment.
 
 ## Security and governance
 - External anchoring of the audit hash chain (periodic signed checkpoints outside the database).
@@ -27,3 +28,11 @@ Deliberately left out of Phase 0.
 - Real Product, Developer and Quality Engineering agent logic.
 - Multi-tenant billing.
 - Live smoke tests of the Azure OpenAI and Anthropic adapters once credentials are approved.
+
+## Sentinel follow-ups
+- Install each repository's dependencies in the SCIP index environment (sandbox with an approved
+  registry) so cross-package symbols resolve exactly, not only modules.
+- graphify per-file incremental update inside a persistent work volume (today: whole repository per SHA).
+- Golden questions and truth files for real repositories, so validators 3, 6 and 7 measure them.
+- OneView portal page for `/v1/sentinel` (the API exists; the portal does not show it yet).
+- Graphiti (temporal PDLC memory) on top of the Sentinel graph, after the pilot.

@@ -20,7 +20,7 @@
 7. **Audit chain is not externally anchored.** The database owner could rewrite the whole chain
    consistently (ADR-0004); anchoring is in the backlog.
 
-8. **Phase 1 live paths unverified.** The real Jira, GitHub and GitHub Models clients are tested
+8. **Phase 1 live paths unverified.** The real Jira, GitHub and Azure OpenAI clients are tested
    only against recorded responses; they will be verified on the office laptop.
 9. **Fake-model limits.** With the Fake provider the LLM review finds nothing and model-written edits
    fail, so only mechanically fixable findings (rules R1, R2, R3, R8) can be implemented offline. A
@@ -29,6 +29,20 @@
     written for the payments_service fixture; real precision is measured by human acceptance in the pilot.
 11. **Snapshot reads every file through the connector.** Fine for small repositories; large ones need
     tarball or tree-at-once reads (backlog).
+12. **Sentinel live paths unverified.** Only the fixtures and a synthetic fleet were built. Real
+    repositories, the GitHub REST backend for `hapm repos discover`, a real local model server and Azure
+    enrichment have not run; `sentinel pilot` refuses until they are configured.
+13. **Sentinel quality numbers with the Fake provider prove plumbing only.** Validator 6 (question to
+    contract) used the Fake keyword planner; validator 7's vector baseline used Fake embeddings.
+14. **SCIP cross-package symbols.** Without the dependency installed in the index environment,
+    scip-python cannot resolve imported symbols; Sentinel then links modules (not symbols) across
+    repositories from SCIP and resolves calls from Python import facts (ADR-0021).
+15. **graphify gives start lines only.** When SCIP or ast did not run for a file, node evidence is the
+    first line, not the full range.
+16. **Changing an agent's YAML re-locks it.** Any edit to agents/developer.yaml (such as adding the
+    Sentinel tools) changes its config hash, so it runs as suggest_only until `make dev-demo` re-runs its
+    eval. On a long-lived local database the eval can fail for stale-data reasons (every autofixable
+    finding already ticketed); `make clean` then `make up` and `make dev-demo` restores 10/10.
 
 ## Fixed during implementation
 - Phase 1: the Developer step named `plan` collided with the workflow's own `plan` node; renamed to
