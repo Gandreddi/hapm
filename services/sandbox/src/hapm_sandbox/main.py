@@ -14,7 +14,11 @@ from hapm_sandbox.docker_api import DockerClient, DockerError, Limits
 class SandboxSettings(CoreSettings):
     service_name: str = "sandbox"
     docker_socket: str = "/var/run/docker.sock"
-    allowed_images: list[str] = ["python:3.12.15-slim-trixie"]
+    allowed_images: list[str] = [
+        "python:3.12.15-slim-trixie",
+        "hapm-sentinel-graphify:0.9.115",  # Sentinel engines (ADR-0021), built from deploy/sentinel
+        "hapm-sentinel-scip:0.5.2",
+    ]
 
 
 class RunRequest(BaseModel):
@@ -25,6 +29,8 @@ class RunRequest(BaseModel):
     memory_mb: int = Field(default=512, ge=128, le=8192)
     pids_limit: int = Field(default=256, ge=32, le=4096)
     timeout_seconds: int = Field(default=120, ge=5, le=3600)
+    # Optional relative path of one result file to return (Sentinel engines write their JSON there).
+    collect: str | None = Field(default=None, max_length=200, pattern=r"^[A-Za-z0-9_.\-][A-Za-z0-9_.\-/]*$")
 
 
 def create_app(settings: SandboxSettings | None = None, docker: DockerClient | None = None) -> FastAPI:
@@ -49,12 +55,15 @@ def create_app(settings: SandboxSettings | None = None, docker: DockerClient | N
             raise HTTPException(422, "files must hold 1-5000 entries and at most 50 MB")
         if any(p.startswith("/") or ".." in p.split("/") for p in body.files):
             raise HTTPException(422, "file paths must be relative and stay inside the work directory")
+        if body.collect and ".." in body.collect.split("/"):
+            raise HTTPException(422, "collect must stay inside the work directory")
         try:
             return client.run(
                 body.image,
                 body.command,
                 body.files,
                 Limits(body.cpus, body.memory_mb, body.pids_limit, body.timeout_seconds),
+                collect=body.collect,
             )
         except DockerError as exc:
             raise HTTPException(502, f"sandbox failed: {exc}") from exc

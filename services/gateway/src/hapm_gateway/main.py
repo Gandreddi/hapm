@@ -31,6 +31,8 @@ class ChatRequest(BaseModel):
     model: str = Field(min_length=1, max_length=64)
     messages: list[Message] = Field(min_length=1, max_length=200)
     max_tokens: int | None = Field(default=None, gt=0, le=32_000)
+    # Optional OpenAI-style response_format (e.g. a JSON schema); providers that cannot honour it ignore it.
+    response_format: dict[str, Any] | None = None
 
 
 class EmbeddingsRequest(BaseModel):
@@ -135,7 +137,9 @@ def create_app(
         if refused:
             return refused
         messages = [m.model_dump() for m in body.messages]
-        options = {"fake_delay_seconds": x_hapm_fake_delay or 0}
+        options: dict[str, Any] = {"fake_delay_seconds": x_hapm_fake_delay or 0}
+        if body.response_format:
+            options["response_format"] = body.response_format
         try:
             routed = await router.call(body.model, lambda p, m: p.chat(m, messages, body.max_tokens, options))
         except ProviderError as exc:

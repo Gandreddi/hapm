@@ -1,7 +1,7 @@
 """Typed gateway configuration loaded from config.yaml."""
 
 from pathlib import Path
-from typing import Literal
+from typing import Any, Literal
 
 import yaml
 from pydantic import BaseModel, ConfigDict, Field, model_validator
@@ -10,16 +10,33 @@ from pydantic import BaseModel, ConfigDict, Field, model_validator
 class ProviderConfig(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
-    type: Literal["fake", "azure_openai", "anthropic", "github_models"]
+    type: Literal["fake", "azure_openai", "anthropic", "local_openai"]
     always_fail: bool = False
     endpoint: str | None = None
     endpoint_ref: str | None = None
     api_key_ref: str | None = None
-    token_ref: str | None = None
     api_version: str | None = None
+    # local_openai: any OpenAI-compatible server on the office machine (Ollama, llama.cpp llama-server, vLLM).
+    server: Literal["ollama", "llama_cpp", "vllm"] | None = None  # informational; ports 11434, 8080, 8000
+    base_url_ref: str | None = None  # e.g. env:SENTINEL_LLM_BASE_URL with a value like http://127.0.0.1:8080/v1
+    quantization: str | None = None  # e.g. Q4_K_M; recorded with every Sentinel run
+    context_tokens: int | None = Field(default=None, gt=0)
+    max_concurrency: int = Field(default=1, ge=1, le=64)  # 1 for Ollama and llama.cpp, higher for vLLM
+    timeout_seconds: float = Field(default=120, gt=0)
+    json_mode: Literal["json_schema", "json_object", "none"] = "json_schema"
     # Deprecated spellings kept for older config files.
     endpoint_env: str | None = None
     api_key_env: str | None = None
+
+    @model_validator(mode="before")
+    @classmethod
+    def reject_retired(cls, data: Any) -> Any:
+        if isinstance(data, dict) and data.get("type") == "github_models":
+            raise ValueError(
+                "github_models is no longer supported: GitHub retired GitHub Models on 2026-07-30. "
+                "Use azure_openai with Azure AI Foundry deployments (ADR-0020)."
+            )
+        return data
 
 
 class Target(BaseModel):

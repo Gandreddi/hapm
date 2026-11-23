@@ -1,9 +1,10 @@
-"""Provider adapters behind one interface: Fake (tests and demo), Azure OpenAI, Anthropic."""
+"""Provider adapters behind one interface: Fake (tests and demo), Azure OpenAI, Anthropic, local OpenAI-compatible."""
 
 import asyncio
 import hashlib
 import math
 import os
+import re
 from dataclasses import dataclass
 from typing import Any, Protocol
 
@@ -13,6 +14,63 @@ from hapm_gateway.config import ProviderConfig
 
 EMBED_DIM = 1536
 JUDGE_MARKER = "You are an evaluation judge"
+SENTINEL_ENRICH_MARKER = "You are Sentinel's enrichment model"
+SENTINEL_ASK_MARKER = "You are Sentinel's query planner"
+
+
+def _field(text: str, name: str) -> str:
+    for line in text.splitlines():
+        if line.startswith(f"{name}:"):
+            return line.split(":", 1)[1].strip()
+    return ""
+
+
+def fake_enrichment(user: str) -> str:
+    """Deterministic JSON so Sentinel's enrichment plumbing runs offline. Not a quality signal."""
+    import json
+
+    label = _field(user, "NODE") or "node"
+    caps = json.loads(_field(user, "CAPABILITIES") or "[]")
+    words = re.findall(r"[a-z]+", label.lower())
+    chosen = [c for c in caps if any(w[:4] in c.lower() for w in words if len(w) > 3)][:2]
+    return json.dumps(
+        {
+            "summary": f"{label} (fake summary for offline tests).",
+            "capabilities": chosen,
+            "label": " ".join(words[:4]).title() or "Group",
+        }
+    )
+
+
+def fake_query_plan(user: str) -> str:
+    """Keyword planner standing in for a model in offline tests. Not a quality signal."""
+    import json
+
+    question = _field(user, "QUESTION") or user
+    low = question.lower()
+    if any(k in low for k in ("break", "impact", "affect", "depends on", "depend on", "who uses", "callers")):
+        intent = "impact"
+    elif any(k in low for k in ("path", "between", "connect", "reach")):
+        intent = "path"
+    elif any(k in low for k in ("test", "coverage", "untested")):
+        intent = "coverage"
+    elif any(k in low for k in ("explain", "what is", "what does", "describe")):
+        intent = "explain"
+    else:
+        intent = "find"
+    names = re.findall(
+        r"`([^`]+)`|\b([A-Za-z_][A-Za-z0-9_]*(?:[\./][A-Za-z0-9_\.\-]+)+|[A-Z][a-z0-9]+[A-Z][A-Za-z0-9]*|[a-z]+_[a-z0-9_]+)\b",
+        question,
+    )
+    entities = [a or b for a, b in names][:2]
+    plan = {
+        "question": question,
+        "intent": intent,
+        "entities": entities[:1] if intent != "path" else entities[:1],
+        "target": entities[1] if intent == "path" and len(entities) > 1 else None,
+        "depth": 2,
+    }
+    return json.dumps(plan)
 
 
 @dataclass
@@ -90,9 +148,14 @@ class FakeProvider:
         user = next((m["content"] for m in reversed(messages) if m["role"] == "user"), "")
         if "FAKE_PROVIDER_ERROR" in user:
             raise ProviderError(400, "fake provider rejected request", retryable=False)
-        if any(JUDGE_MARKER in m["content"] for m in messages if m["role"] == "system"):
+        system = " ".join(m["content"] for m in messages if m["role"] == "system")
+        if JUDGE_MARKER in system:
             score = 0.0 if "FAIL_JUDGE" in user else 1.0
             content = f'{{"score": {score}, "reason": "deterministic fake judge"}}'
+        elif SENTINEL_ENRICH_MARKER in system:
+            content = fake_enrichment(user)
+        elif SENTINEL_ASK_MARKER in system:
+            content = fake_query_plan(user)
         else:
             text = user.split(":", 1)[-1].strip() if ":" in user else user
             words = text.split()
@@ -197,34 +260,55 @@ class AnthropicProvider:
         raise ProviderError(400, "anthropic provider does not offer embeddings", retryable=False)
 
 
-class GitHubModelsProvider:
-    """Official GitHub Models API: OpenAI-compatible chat and embeddings with a bearer token."""
+class LocalOpenAIProvider:
+    """OpenAI-compatible server on the office machine: Ollama (/v1), llama.cpp llama-server or vLLM.
 
-    def __init__(self, name: str, endpoint: str, token: str, client: httpx.AsyncClient) -> None:
+    Concurrency is capped per provider because Ollama and llama.cpp serve one request at a time by default.
+    `response_format` is forwarded according to json_mode, so Sentinel can ask for schema-constrained JSON.
+    """
+
+    def __init__(
+        self,
+        name: str,
+        base_url: str,
+        api_key: str,
+        client: httpx.AsyncClient,
+        max_concurrency: int,
+        json_mode: str,
+        timeout: float,
+    ) -> None:
         self.name = name
-        self._base = endpoint.rstrip("/")
-        self._token = token
+        self._base = base_url.rstrip("/")
+        self._key = api_key
         self._client = client
+        self._limit = asyncio.Semaphore(max_concurrency)
+        self._json_mode = json_mode
+        self._timeout = timeout
 
     async def _post(self, path: str, body: dict[str, Any]) -> dict[str, Any]:
-        try:
-            resp = await self._client.post(
-                f"{self._base}/{path}",
-                headers={"Authorization": f"Bearer {self._token}", "Accept": "application/json"},
-                json=body,
-            )
-            resp.raise_for_status()
-        except Exception as exc:
-            raise map_http_error(exc) from exc
+        headers = {"Authorization": f"Bearer {self._key}"} if self._key else {}
+        async with self._limit:
+            try:
+                resp = await self._client.post(
+                    f"{self._base}/{path}", headers=headers, json=body, timeout=self._timeout
+                )
+                resp.raise_for_status()
+            except Exception as exc:
+                raise map_http_error(exc) from exc
         data: dict[str, Any] = resp.json()
         return data
 
     async def chat(
         self, model: str, messages: list[dict[str, str]], max_tokens: int | None, options: dict[str, Any]
     ) -> ChatResult:
-        body: dict[str, Any] = {"model": model, "messages": messages}
+        body: dict[str, Any] = {"model": model, "messages": messages, "temperature": 0}
         if max_tokens:
             body["max_tokens"] = max_tokens
+        fmt = options.get("response_format")
+        if fmt and self._json_mode == "json_schema":
+            body["response_format"] = fmt
+        elif fmt and self._json_mode == "json_object":
+            body["response_format"] = {"type": "json_object"}
         data = await self._post("chat/completions", body)
         usage = data.get("usage", {})
         return ChatResult(
@@ -253,12 +337,12 @@ def build_provider(name: str, cfg: ProviderConfig, client: httpx.AsyncClient) ->
     """Return None when a real provider has no credentials, so it is simply unavailable."""
     if cfg.type == "fake":
         return FakeProvider(name, cfg.always_fail)
-    if cfg.type == "github_models":
-        token = _secret(cfg.token_ref, None)
-        if not (token and cfg.endpoint):
-            return None
-        return GitHubModelsProvider(name, cfg.endpoint, token, client)
     key = _secret(cfg.api_key_ref, cfg.api_key_env)
+    if cfg.type == "local_openai":
+        base = _secret(cfg.base_url_ref, None) or (cfg.endpoint or "")
+        if not base:
+            return None
+        return LocalOpenAIProvider(name, base, key, client, cfg.max_concurrency, cfg.json_mode, cfg.timeout_seconds)
     if cfg.type == "azure_openai":
         endpoint = _secret(cfg.endpoint_ref, cfg.endpoint_env) or (cfg.endpoint or "")
         if not (key and endpoint):

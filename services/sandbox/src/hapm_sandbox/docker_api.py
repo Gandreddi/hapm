@@ -107,7 +107,30 @@ class DockerClient:
             for _ in r.iter_bytes():
                 pass
 
-    def run(self, image: str, command: str, files: dict[str, str], limits: Limits) -> dict[str, Any]:
+    def collect(self, cid: str, path: str, max_bytes: int) -> str | None:
+        """Read one result file the command wrote under /work (e.g. an engine's JSON output)."""
+        resp = self.http.get(f"{API}/containers/{cid}/archive", params={"path": f"/work/{path}"}, timeout=120)
+        if resp.status_code == 404:
+            return None
+        self._ok(resp)
+        with tarfile.open(fileobj=io.BytesIO(resp.content), mode="r") as tar:
+            member = next((m for m in tar.getmembers() if m.isfile()), None)
+            if member is None:
+                return None
+            if member.size > max_bytes:
+                raise DockerError(f"result file {path} is {member.size} bytes, above the {max_bytes} limit")
+            handle = tar.extractfile(member)
+            return handle.read().decode("utf-8", errors="replace") if handle else None
+
+    def run(
+        self,
+        image: str,
+        command: str,
+        files: dict[str, str],
+        limits: Limits,
+        collect: str | None = None,
+        max_collect_bytes: int = 32_000_000,
+    ) -> dict[str, Any]:
         self.ensure_image(image)
         cid = self._ok(self.http.post(f"{API}/containers/create", json=container_spec(image, command, limits))).json()[
             "Id"
@@ -133,11 +156,14 @@ class DockerClient:
                 timed_out, exit_code = True, None
                 self.http.post(f"{API}/containers/{cid}/kill")
             logs = demux(self.http.get(f"{API}/containers/{cid}/logs", params={"stdout": 1, "stderr": 1}).content)
-            return {
+            result: dict[str, Any] = {
                 "exit_code": exit_code,
                 "timed_out": timed_out,
                 "duration_ms": int((time.monotonic() - started) * 1000),
                 "output": logs[-8000:],
             }
+            if collect and not timed_out:
+                result["artifact"] = self.collect(cid, collect, max_collect_bytes)
+            return result
         finally:
             self.http.delete(f"{API}/containers/{cid}", params={"force": "true", "v": "true"})

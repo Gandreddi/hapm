@@ -7,18 +7,14 @@
 data_approval: ""
 
 providers:
-  github-models:
-    # Official GitHub Models API (OpenAI-compatible). Token: fine-grained PAT with models:read
-    # issued from the office GitHub account. Never use Copilot IDE tokens or private endpoints.
-    type: github_models
-    endpoint: https://models.github.ai/inference
-    token_ref: env:GITHUB_MODELS_TOKEN
   fake:
     type: fake
   fake-broken:
     type: fake
     always_fail: true
   azure-openai:
+    # OpenAI models deployed in your company's Azure AI Foundry (Microsoft Foundry) resource.
+    # Endpoint is the resource URL, e.g. https://<resource>.openai.azure.com (ADR-0020).
     type: azure_openai
     endpoint_ref: env:AZURE_OPENAI_ENDPOINT
     api_key_ref: env:AZURE_OPENAI_API_KEY
@@ -26,8 +22,21 @@ providers:
   anthropic:
     type: anthropic
     api_key_ref: env:ANTHROPIC_API_KEY
+  local-llm:
+    # Sentinel (llm: local): any OpenAI-compatible server on the office GPU/CPU machine. Ollama listens on
+    # 11434, llama.cpp llama-server on 8080, vLLM on 8000; the base URL includes /v1. The alias target's
+    # model must equal an id the server lists at GET /v1/models (`sentinel doctor` checks this).
+    type: local_openai
+    server: llama_cpp
+    base_url_ref: env:SENTINEL_LLM_BASE_URL     # e.g. http://127.0.0.1:8080/v1
+    quantization: Q4_K_M
+    context_tokens: 8192
+    max_concurrency: 1                          # Ollama and llama.cpp: 1; vLLM: 8 or more
+    timeout_seconds: 120
+    json_mode: json_schema
 
 # Each alias lists targets in order; the next target is tried on a retryable error or timeout.
+# For azure-openai, model is the DEPLOYMENT NAME you chose in Foundry, not the model's catalogue name.
 aliases:
   fast:
     timeout_seconds: 30
@@ -36,8 +45,8 @@ aliases:
   smart:
     timeout_seconds: 60
     targets:
-      # Put the model id from your org's GitHub Models catalog first, for example:
-      # - { provider: github-models, model: "<model id>" }
+      # Put your approved chat deployment first, for example:
+      # - { provider: azure-openai, model: "<chat deployment name>" }
       - { provider: fake, model: fake-smart }
   judge:
     timeout_seconds: 60
@@ -45,6 +54,25 @@ aliases:
       - { provider: fake, model: fake-judge }
   embed:
     timeout_seconds: 30
+    targets:
+      # The deployment must return 1536-dimension vectors (the database columns are vector(1536)), e.g.
+      # - { provider: azure-openai, model: "<embedding deployment name>" }
+      - { provider: fake, model: fake-embed }
+  # Sentinel aliases (config/sentinel.yaml aliases). With llm: local, put the local model first, e.g.
+  # - { provider: local-llm, model: "gemma-4-31B-it-Q4_K_M" }. Keep Fake last only for offline tests:
+  # Sentinel records the provider of every summary, so Fake output is never mistaken for a real one.
+  enrich:
+    timeout_seconds: 120
+    targets:
+      - { provider: fake, model: fake-enrich }
+  ask:
+    timeout_seconds: 60
+    targets:
+      - { provider: fake, model: fake-ask }
+  embed_local:
+    # Local embedding models return 768 or 1024 dimensions; Sentinel stores them in its own column
+    # (config/sentinel.yaml embeddings.dimension), never in the vector(1536) columns of ADR-0020.
+    timeout_seconds: 60
     targets:
       - { provider: fake, model: fake-embed }
   fallback-demo:
@@ -62,6 +90,10 @@ budgets:
   per_run: { tokens: 50000, cost_usd: 1.00 }
   per_team_daily: { tokens: 1000000, cost_usd: 20.00 }
   team_overrides:
+    sentinel:
+      # Enrichment makes many small calls per repository run; config/sentinel.yaml budgets cap it further.
+      per_run: { tokens: 250000, cost_usd: 5.00 }
+      per_team_daily: { tokens: 6000000, cost_usd: 50.00 }
     tiny-team:
       per_run: { tokens: 5, cost_usd: 0.0001 }
       per_team_daily: { tokens: 5, cost_usd: 0.0001 }
