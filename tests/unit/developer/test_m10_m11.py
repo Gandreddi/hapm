@@ -93,7 +93,7 @@ def test_sandbox_container_is_locked_down() -> None:
     assert spec["NetworkDisabled"] and host["NetworkMode"] == "none" and host["CapDrop"] == ["ALL"]
     assert spec["User"] == "65534:65534" and "no-new-privileges" in host["SecurityOpt"]
     assert host["Memory"] == 512 * 1024 * 1024 and host["PidsLimit"] == 256
-    assert not any(e.split("=")[0] in ("GITHUB_TOKEN", "JIRA_API_TOKEN", "GITHUB_MODELS_TOKEN") for e in spec["Env"])
+    assert not any(e.split("=")[0] in ("GITHUB_TOKEN", "JIRA_API_TOKEN", "AZURE_OPENAI_API_KEY") for e in spec["Env"])
 
 
 def test_sandbox_tar_and_log_demux() -> None:

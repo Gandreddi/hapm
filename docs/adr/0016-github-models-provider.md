@@ -1,6 +1,6 @@
 # ADR-0016: GitHub Models API as the office LLM route
 
-- Status: accepted
+- Status: superseded by ADR-0020 (GitHub retired GitHub Models on 2026-07-30)
 - Date: 2026-11-08
 
 ## Context
