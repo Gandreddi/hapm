@@ -12,3 +12,7 @@ jira_project: PAY
 approvers: []
 max_new_tickets: 10
 scan_budget_usd: 1.0
+sentinel:
+  enabled: true
+  node_budget: 1000
+  engines: { graphify: true, scip: auto }

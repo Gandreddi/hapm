@@ -21,3 +21,7 @@ config/*.yaml
 config/repos/*.yaml
 !config/*.example.yaml
 !config/repos/*.example.yaml
+# The Sentinel ontology is shared, versioned project data, not an office-specific value.
+!config/ontology.yaml
+# Generated Sentinel outputs (verify, perf and pilot reports, review sample, graph export).
+docs/sentinel/

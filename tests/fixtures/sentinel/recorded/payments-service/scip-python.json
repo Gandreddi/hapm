@@ -1,0 +1,2491 @@
+{
+ "documents": [
+  {
+   "occurrences": [
+    {
+     "range": [
+      0,
+      0,
+      0
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments`/__init__:",
+     "symbol_roles": 1
+    }
+   ],
+   "relative_path": "src/payments/__init__.py",
+   "symbols": [
+    {
+     "documentation": [
+      "(module) src.payments",
+      "Demo payments service used as the HAPM Developer agent fixture."
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments`/__init__:"
+    }
+   ]
+  },
+  {
+   "occurrences": [
+    {
+     "range": [
+      0,
+      0,
+      0
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.api`/__init__:",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      2,
+      0,
+      11
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.api`/DB_PASSWORD.",
+     "symbol_roles": 1
+    },
+    {
+     "enclosing_range": [
+      5,
+      0,
+      11,
+      34
+     ],
+     "range": [
+      5,
+      4,
+      17
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.api`/handle_refund().",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      5,
+      18,
+      25
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.api`/handle_refund().(request)",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      6,
+      25,
+      32
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.api`/handle_refund().(request)",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      7,
+      4,
+      9
+     ],
+     "symbol": "scip-python python python-stdlib 3.11 builtins/print().",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      7,
+      29,
+      36
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.api`/handle_refund().(request)",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      9,
+      41,
+      48
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.api`/handle_refund().(request)",
+     "symbol_roles": 8
+    },
+    {
+     "enclosing_range": [
+      14,
+      0,
+      15,
+      55
+     ],
+     "range": [
+      14,
+      4,
+      13
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.api`/page_size().",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      14,
+      14,
+      23
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.api`/page_size().(requested)",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      15,
+      11,
+      14
+     ],
+     "symbol": "scip-python python python-stdlib 3.11 builtins/min().",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      15,
+      15,
+      24
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.api`/page_size().(requested)",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      15,
+      34,
+      43
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.api`/page_size().(requested)",
+     "symbol_roles": 8
+    }
+   ],
+   "relative_path": "src/payments/api.py",
+   "symbols": [
+    {
+     "documentation": [
+      "(module) src.payments.api",
+      "Tiny request handlers."
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.api`/__init__:"
+    },
+    {
+     "documentation": [
+      "```python\nbuiltins.str\n```"
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.api`/DB_PASSWORD."
+    },
+    {
+     "documentation": [
+      "```python\ndef handle_refund(\n  request\n): # -> dict[str, Unknown] | dict[str, str]:\n```"
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.api`/handle_refund()."
+    },
+    {
+     "symbol": "scip-python python payments-service 0 `src.payments.api`/handle_refund().(request)"
+    },
+    {
+     "documentation": [
+      "```python\ndef page_size(\n  requested\n): # -> int:\n```"
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.api`/page_size()."
+    },
+    {
+     "symbol": "scip-python python payments-service 0 `src.payments.api`/page_size().(requested)"
+    }
+   ]
+  },
+  {
+   "occurrences": [
+    {
+     "range": [
+      0,
+      0,
+      0
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.currency`/__init__:",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      2,
+      0,
+      5
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.currency`/RATES.",
+     "symbol_roles": 1
+    },
+    {
+     "enclosing_range": [
+      5,
+      0,
+      8,
+      12
+     ],
+     "range": [
+      5,
+      4,
+      15
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.currency`/minor_units().",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      5,
+      16,
+      24
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.currency`/minor_units().(currency)",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      6,
+      7,
+      15
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.currency`/minor_units().(currency)",
+     "symbol_roles": 8
+    },
+    {
+     "enclosing_range": [
+      11,
+      0,
+      14,
+      59
+     ],
+     "range": [
+      11,
+      4,
+      11
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.currency`/convert().",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      11,
+      12,
+      18
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.currency`/convert().(amount)",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      11,
+      20,
+      26
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.currency`/convert().(source)",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      11,
+      28,
+      34
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.currency`/convert().(target)",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      12,
+      7,
+      12
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.currency`/RATES.",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      12,
+      13,
+      16
+     ],
+     "symbol": "scip-python python python-stdlib 3.11 builtins/dict#get().",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      12,
+      17,
+      23
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.currency`/convert().(source)",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      13,
+      14,
+      24
+     ],
+     "symbol": "scip-python python python-stdlib 3.11 builtins/ValueError#",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      13,
+      45,
+      51
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.currency`/convert().(source)",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      14,
+      11,
+      16
+     ],
+     "symbol": "scip-python python python-stdlib 3.11 builtins/round().",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      14,
+      17,
+      23
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.currency`/convert().(amount)",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      14,
+      26,
+      31
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.currency`/RATES.",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      14,
+      32,
+      38
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.currency`/convert().(source)",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      14,
+      42,
+      47
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.currency`/RATES.",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      14,
+      48,
+      54
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.currency`/convert().(target)",
+     "symbol_roles": 8
+    },
+    {
+     "enclosing_range": [
+      17,
+      0,
+      18,
+      22
+     ],
+     "range": [
+      17,
+      4,
+      11
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.currency`/is_zero().",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      17,
+      12,
+      18
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.currency`/is_zero().(amount)",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      18,
+      11,
+      17
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.currency`/is_zero().(amount)",
+     "symbol_roles": 8
+    },
+    {
+     "enclosing_range": [
+      21,
+      0,
+      25,
+      12
+     ],
+     "range": [
+      21,
+      4,
+      13
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.currency`/safe_rate().",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      21,
+      14,
+      22
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.currency`/safe_rate().(currency)",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      23,
+      15,
+      20
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.currency`/RATES.",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      23,
+      21,
+      29
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.currency`/safe_rate().(currency)",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      24,
+      11,
+      20
+     ],
+     "symbol": "scip-python python python-stdlib 3.11 builtins/Exception#",
+     "symbol_roles": 8
+    },
+    {
+     "enclosing_range": [
+      28,
+      0,
+      29,
+      28
+     ],
+     "range": [
+      28,
+      4,
+      12
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.currency`/to_cents().",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      28,
+      13,
+      19
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.currency`/to_cents().(amount)",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      29,
+      11,
+      14
+     ],
+     "symbol": "scip-python python python-stdlib 3.11 builtins/int#",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      29,
+      15,
+      21
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.currency`/to_cents().(amount)",
+     "symbol_roles": 8
+    }
+   ],
+   "relative_path": "src/payments/currency.py",
+   "symbols": [
+    {
+     "documentation": [
+      "(module) src.payments.currency",
+      "Currency helpers."
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.currency`/__init__:"
+    },
+    {
+     "documentation": [
+      "```python\nbuiltins.dict\n```"
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.currency`/RATES."
+    },
+    {
+     "documentation": [
+      "```python\ndef minor_units(\n  currency\n): # -> Literal[0, 2]:\n```"
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.currency`/minor_units()."
+    },
+    {
+     "symbol": "scip-python python payments-service 0 `src.payments.currency`/minor_units().(currency)"
+    },
+    {
+     "documentation": [
+      "```python\ndef convert(\n  amount,\n  source,\n  target\n):\n```"
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.currency`/convert()."
+    },
+    {
+     "symbol": "scip-python python payments-service 0 `src.payments.currency`/convert().(amount)"
+    },
+    {
+     "symbol": "scip-python python payments-service 0 `src.payments.currency`/convert().(source)"
+    },
+    {
+     "symbol": "scip-python python payments-service 0 `src.payments.currency`/convert().(target)"
+    },
+    {
+     "documentation": [
+      "```python\ndef is_zero(\n  amount\n): # -> bool:\n```"
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.currency`/is_zero()."
+    },
+    {
+     "symbol": "scip-python python payments-service 0 `src.payments.currency`/is_zero().(amount)"
+    },
+    {
+     "documentation": [
+      "```python\ndef safe_rate(\n  currency\n): # -> float | None:\n```"
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.currency`/safe_rate()."
+    },
+    {
+     "symbol": "scip-python python payments-service 0 `src.payments.currency`/safe_rate().(currency)"
+    },
+    {
+     "documentation": [
+      "```python\ndef to_cents(\n  amount\n): # -> int:\n```"
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.currency`/to_cents()."
+    },
+    {
+     "symbol": "scip-python python payments-service 0 `src.payments.currency`/to_cents().(amount)"
+    }
+   ]
+  },
+  {
+   "occurrences": [
+    {
+     "range": [
+      0,
+      0,
+      0
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.ledger`/__init__:",
+     "symbol_roles": 1
+    },
+    {
+     "enclosing_range": [
+      3,
+      0,
+      5,
+      18
+     ],
+     "range": [
+      3,
+      4,
+      13
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.ledger`/add_entry().",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      3,
+      14,
+      19
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.ledger`/add_entry().(entry)",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      3,
+      21,
+      28
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.ledger`/add_entry().(journal)",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      4,
+      4,
+      11
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.ledger`/add_entry().(journal)",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      4,
+      19,
+      24
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.ledger`/add_entry().(entry)",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      5,
+      11,
+      18
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.ledger`/add_entry().(journal)",
+     "symbol_roles": 8
+    },
+    {
+     "enclosing_range": [
+      8,
+      0,
+      11,
+      15
+     ],
+     "range": [
+      8,
+      4,
+      15
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.ledger`/tag_entries().",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      8,
+      16,
+      23
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.ledger`/tag_entries().(entries)",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      8,
+      25,
+      29
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.ledger`/tag_entries().(tags)",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      9,
+      8,
+      13
+     ],
+     "symbol": "local 0",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      9,
+      17,
+      24
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.ledger`/tag_entries().(entries)",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      10,
+      8,
+      12
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.ledger`/tag_entries().(tags)",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      10,
+      13,
+      18
+     ],
+     "symbol": "local 0",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      10,
+      28,
+      33
+     ],
+     "symbol": "local 0",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      11,
+      11,
+      15
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.ledger`/tag_entries().(tags)",
+     "symbol_roles": 8
+    },
+    {
+     "enclosing_range": [
+      14,
+      0,
+      16,
+      44
+     ],
+     "range": [
+      14,
+      4,
+      11
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.ledger`/balance().",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      14,
+      12,
+      19
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.ledger`/balance().(journal)",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      15,
+      4,
+      9
+     ],
+     "symbol": "scip-python python python-stdlib 3.11 builtins/print().",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      16,
+      11,
+      14
+     ],
+     "symbol": "scip-python python python-stdlib 3.11 builtins/sum().",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      16,
+      15,
+      16
+     ],
+     "symbol": "local 1",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      16,
+      31,
+      32
+     ],
+     "symbol": "local 1",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      16,
+      36,
+      43
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.ledger`/balance().(journal)",
+     "symbol_roles": 8
+    },
+    {
+     "enclosing_range": [
+      19,
+      0,
+      22,
+      18
+     ],
+     "range": [
+      19,
+      4,
+      16
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.ledger`/close_period().",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      19,
+      17,
+      24
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.ledger`/close_period().(journal)",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      21,
+      4,
+      11
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.ledger`/close_period().(journal)",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      22,
+      11,
+      18
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.ledger`/close_period().(journal)",
+     "symbol_roles": 8
+    }
+   ],
+   "relative_path": "src/payments/ledger.py",
+   "symbols": [
+    {
+     "documentation": [
+      "(module) src.payments.ledger",
+      "In-memory ledger helpers."
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.ledger`/__init__:"
+    },
+    {
+     "documentation": [
+      "```python\ndef add_entry(\n  entry,\n  journal=[]\n):\n```"
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.ledger`/add_entry()."
+    },
+    {
+     "symbol": "scip-python python payments-service 0 `src.payments.ledger`/add_entry().(entry)"
+    },
+    {
+     "symbol": "scip-python python payments-service 0 `src.payments.ledger`/add_entry().(journal)"
+    },
+    {
+     "documentation": [
+      "```python\ndef tag_entries(\n  entries,\n  tags={}\n):\n```"
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.ledger`/tag_entries()."
+    },
+    {
+     "symbol": "scip-python python payments-service 0 `src.payments.ledger`/tag_entries().(entries)"
+    },
+    {
+     "symbol": "scip-python python payments-service 0 `src.payments.ledger`/tag_entries().(tags)"
+    },
+    {
+     "documentation": [
+      "```python\ndef balance(\n  journal\n): # -> int:\n```"
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.ledger`/balance()."
+    },
+    {
+     "symbol": "scip-python python payments-service 0 `src.payments.ledger`/balance().(journal)"
+    },
+    {
+     "documentation": [
+      "```python\n(variable) e: Unknown\n```"
+     ],
+     "symbol": "local 1"
+    },
+    {
+     "documentation": [
+      "```python\ndef close_period(\n  journal\n):\n```"
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.ledger`/close_period()."
+    },
+    {
+     "symbol": "scip-python python payments-service 0 `src.payments.ledger`/close_period().(journal)"
+    }
+   ]
+  },
+  {
+   "occurrences": [
+    {
+     "range": [
+      0,
+      0,
+      0
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.notifications`/__init__:",
+     "symbol_roles": 1
+    },
+    {
+     "enclosing_range": [
+      3,
+      0,
+      5,
+      16
+     ],
+     "range": [
+      3,
+      4,
+      17
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.notifications`/queue_message().",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      3,
+      18,
+      25
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.notifications`/queue_message().(message)",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      3,
+      27,
+      32
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.notifications`/queue_message().(queue)",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      4,
+      4,
+      9
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.notifications`/queue_message().(queue)",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      4,
+      17,
+      24
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.notifications`/queue_message().(message)",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      5,
+      11,
+      16
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.notifications`/queue_message().(queue)",
+     "symbol_roles": 8
+    },
+    {
+     "enclosing_range": [
+      8,
+      0,
+      13,
+      12
+     ],
+     "range": [
+      8,
+      4,
+      8
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.notifications`/send().",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      8,
+      9,
+      16
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.notifications`/send().(message)",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      11,
+      36,
+      43
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.notifications`/send().(message)",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      12,
+      11,
+      20
+     ],
+     "symbol": "scip-python python python-stdlib 3.11 builtins/Exception#",
+     "symbol_roles": 8
+    },
+    {
+     "enclosing_range": [
+      16,
+      0,
+      20,
+      28
+     ],
+     "range": [
+      16,
+      4,
+      18
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.notifications`/format_subject().",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      16,
+      19,
+      27
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.notifications`/format_subject().(order_id)",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      18,
+      40,
+      48
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.notifications`/format_subject().(order_id)",
+     "symbol_roles": 8
+    }
+   ],
+   "relative_path": "src/payments/notifications.py",
+   "symbols": [
+    {
+     "documentation": [
+      "(module) src.payments.notifications",
+      "Customer notifications."
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.notifications`/__init__:"
+    },
+    {
+     "documentation": [
+      "```python\ndef queue_message(\n  message,\n  queue=[]\n):\n```"
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.notifications`/queue_message()."
+    },
+    {
+     "symbol": "scip-python python payments-service 0 `src.payments.notifications`/queue_message().(message)"
+    },
+    {
+     "symbol": "scip-python python payments-service 0 `src.payments.notifications`/queue_message().(queue)"
+    },
+    {
+     "documentation": [
+      "```python\ndef send(\n  message\n): # -> dict[str, Unknown] | None:\n```"
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.notifications`/send()."
+    },
+    {
+     "symbol": "scip-python python payments-service 0 `src.payments.notifications`/send().(message)"
+    },
+    {
+     "documentation": [
+      "```python\ndef format_subject(\n  order_id\n): # -> str:\n```"
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.notifications`/format_subject()."
+    },
+    {
+     "symbol": "scip-python python payments-service 0 `src.payments.notifications`/format_subject().(order_id)"
+    }
+   ]
+  },
+  {
+   "occurrences": [
+    {
+     "range": [
+      0,
+      0,
+      0
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.refunds`/__init__:",
+     "symbol_roles": 1
+    },
+    {
+     "enclosing_range": [
+      3,
+      0,
+      10,
+      34
+     ],
+     "range": [
+      3,
+      4,
+      17
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.refunds`/refund_amount().",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      3,
+      18,
+      23
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.refunds`/refund_amount().(order)",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      3,
+      25,
+      31
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.refunds`/refund_amount().(reason)",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      4,
+      7,
+      13
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.refunds`/refund_amount().(reason)",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      5,
+      8,
+      14
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.refunds`/refund_amount().(reason)",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      6,
+      4,
+      9
+     ],
+     "symbol": "local 0",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      6,
+      12,
+      17
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.refunds`/refund_amount().(order)",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      7,
+      11,
+      16
+     ],
+     "symbol": "local 0",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      8,
+      7,
+      12
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.refunds`/refund_amount().(order)",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      9,
+      8,
+      13
+     ],
+     "symbol": "local 0",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      9,
+      16,
+      21
+     ],
+     "symbol": "local 0",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      9,
+      24,
+      29
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.refunds`/refund_amount().(order)",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      10,
+      11,
+      16
+     ],
+     "symbol": "scip-python python python-stdlib 3.11 builtins/round().",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      10,
+      17,
+      22
+     ],
+     "symbol": "local 0",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      10,
+      28,
+      34
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.refunds`/refund_amount().(reason)",
+     "symbol_roles": 8
+    },
+    {
+     "enclosing_range": [
+      13,
+      0,
+      17,
+      19
+     ],
+     "range": [
+      13,
+      4,
+      16
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.refunds`/parse_refund().",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      13,
+      17,
+      24
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.refunds`/parse_refund().(payload)",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      15,
+      28,
+      35
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.refunds`/parse_refund().(payload)",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      15,
+      59,
+      64
+     ],
+     "symbol": "scip-python python python-stdlib 3.11 builtins/float#",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      15,
+      65,
+      72
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.refunds`/parse_refund().(payload)",
+     "symbol_roles": 8
+    },
+    {
+     "enclosing_range": [
+      20,
+      0,
+      22,
+      42
+     ],
+     "range": [
+      20,
+      4,
+      18
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.refunds`/partial_refund().",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      20,
+      19,
+      24
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.refunds`/partial_refund().(total)",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      20,
+      26,
+      33
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.refunds`/partial_refund().(percent)",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      22,
+      11,
+      16
+     ],
+     "symbol": "scip-python python python-stdlib 3.11 builtins/round().",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      22,
+      17,
+      22
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.refunds`/partial_refund().(total)",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      22,
+      25,
+      32
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.refunds`/partial_refund().(percent)",
+     "symbol_roles": 8
+    }
+   ],
+   "relative_path": "src/payments/refunds.py",
+   "symbols": [
+    {
+     "documentation": [
+      "(module) src.payments.refunds",
+      "Refund calculations."
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.refunds`/__init__:"
+    },
+    {
+     "documentation": [
+      "```python\ndef refund_amount(\n  order,\n  reason=None\n): # -> tuple[Unknown, Unknown | Literal['customer_request']]:\n```"
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.refunds`/refund_amount()."
+    },
+    {
+     "symbol": "scip-python python payments-service 0 `src.payments.refunds`/refund_amount().(order)"
+    },
+    {
+     "symbol": "scip-python python payments-service 0 `src.payments.refunds`/refund_amount().(reason)"
+    },
+    {
+     "documentation": [
+      "```python\ntyping.Any\n```"
+     ],
+     "symbol": "local 0"
+    },
+    {
+     "documentation": [
+      "```python\ndef parse_refund(\n  payload\n): # -> dict[str, Unknown] | None:\n```"
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.refunds`/parse_refund()."
+    },
+    {
+     "symbol": "scip-python python payments-service 0 `src.payments.refunds`/parse_refund().(payload)"
+    },
+    {
+     "documentation": [
+      "```python\ndef partial_refund(\n  total,\n  percent\n):\n```"
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.refunds`/partial_refund()."
+    },
+    {
+     "symbol": "scip-python python payments-service 0 `src.payments.refunds`/partial_refund().(total)"
+    },
+    {
+     "symbol": "scip-python python payments-service 0 `src.payments.refunds`/partial_refund().(percent)"
+    }
+   ]
+  },
+  {
+   "occurrences": [
+    {
+     "range": [
+      0,
+      0,
+      0
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.utils`/__init__:",
+     "symbol_roles": 1
+    },
+    {
+     "enclosing_range": [
+      3,
+      0,
+      6,
+      19
+     ],
+     "range": [
+      3,
+      4,
+      17
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.utils`/first_or_none().",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      3,
+      18,
+      23
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.utils`/first_or_none().(items)",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      4,
+      7,
+      12
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.utils`/first_or_none().(items)",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      4,
+      24,
+      27
+     ],
+     "symbol": "local 0",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      4,
+      28,
+      33
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.utils`/first_or_none().(items)",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      6,
+      11,
+      16
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.utils`/first_or_none().(items)",
+     "symbol_roles": 8
+    },
+    {
+     "enclosing_range": [
+      9,
+      0,
+      10,
+      24
+     ],
+     "range": [
+      9,
+      4,
+      12
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.utils`/is_retry().",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      9,
+      13,
+      19
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.utils`/is_retry().(status)",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      10,
+      11,
+      17
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.utils`/is_retry().(status)",
+     "symbol_roles": 8
+    },
+    {
+     "enclosing_range": [
+      13,
+      0,
+      14,
+      72
+     ],
+     "range": [
+      13,
+      4,
+      9
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.utils`/chunk().",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      13,
+      10,
+      15
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.utils`/chunk().(items)",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      13,
+      17,
+      21
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.utils`/chunk().(size)",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      14,
+      12,
+      17
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.utils`/chunk().(items)",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      14,
+      18,
+      19
+     ],
+     "symbol": "local 1",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      14,
+      22,
+      23
+     ],
+     "symbol": "local 1",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      14,
+      26,
+      30
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.utils`/chunk().(size)",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      14,
+      36,
+      37
+     ],
+     "symbol": "local 1",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      14,
+      41,
+      46
+     ],
+     "symbol": "scip-python python python-stdlib 3.11 builtins/range#",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      14,
+      50,
+      53
+     ],
+     "symbol": "local 2",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      14,
+      54,
+      59
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.utils`/chunk().(items)",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      14,
+      66,
+      70
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.utils`/chunk().(size)",
+     "symbol_roles": 8
+    }
+   ],
+   "relative_path": "src/payments/utils.py",
+   "symbols": [
+    {
+     "documentation": [
+      "(module) src.payments.utils",
+      "Small utilities."
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.utils`/__init__:"
+    },
+    {
+     "documentation": [
+      "```python\ndef first_or_none(\n  items\n): # -> None:\n```"
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.utils`/first_or_none()."
+    },
+    {
+     "symbol": "scip-python python payments-service 0 `src.payments.utils`/first_or_none().(items)"
+    },
+    {
+     "documentation": [
+      "```python\ndef is_retry(\n  status\n): # -> bool:\n```"
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.utils`/is_retry()."
+    },
+    {
+     "symbol": "scip-python python payments-service 0 `src.payments.utils`/is_retry().(status)"
+    },
+    {
+     "documentation": [
+      "```python\ndef chunk(\n  items,\n  size\n): # -> list[Unknown]:\n```"
+     ],
+     "symbol": "scip-python python payments-service 0 `src.payments.utils`/chunk()."
+    },
+    {
+     "symbol": "scip-python python payments-service 0 `src.payments.utils`/chunk().(items)"
+    },
+    {
+     "symbol": "scip-python python payments-service 0 `src.payments.utils`/chunk().(size)"
+    },
+    {
+     "documentation": [
+      "```python\n(variable) i: int\n```"
+     ],
+     "symbol": "local 1"
+    }
+   ]
+  },
+  {
+   "occurrences": [
+    {
+     "range": [
+      0,
+      0,
+      0
+     ],
+     "symbol": "scip-python python payments-service 0 `tests.test_payments`/__init__:",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      0,
+      7,
+      10
+     ],
+     "symbol": "scip-python python python-stdlib 3.11 sys/__init__:",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      1,
+      7,
+      15
+     ],
+     "symbol": "scip-python python python-stdlib 3.11 unittest/__init__:",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      2,
+      5,
+      12
+     ],
+     "symbol": "scip-python python python-stdlib 3.11 pathlib/__init__:",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      2,
+      20,
+      24
+     ],
+     "symbol": "scip-python python python-stdlib 3.11 pathlib/Path#",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      4,
+      0,
+      3
+     ],
+     "symbol": "scip-python python python-stdlib 3.11 sys/__init__:",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      4,
+      4,
+      8
+     ],
+     "symbol": "scip-python python python-stdlib 3.11 sys/path.path.",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      4,
+      9,
+      15
+     ],
+     "symbol": "scip-python python python-stdlib 3.11 builtins/list#insert().",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      4,
+      19,
+      22
+     ],
+     "symbol": "scip-python python python-stdlib 3.11 builtins/str#",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      4,
+      23,
+      27
+     ],
+     "symbol": "scip-python python python-stdlib 3.11 pathlib/Path#",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      4,
+      28,
+      36
+     ],
+     "symbol": "scip-python python python-stdlib 3.11 builtins/__file__#",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      4,
+      38,
+      45
+     ],
+     "symbol": "scip-python python python-stdlib 3.11 pathlib/Path#resolve().",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      4,
+      48,
+      54
+     ],
+     "symbol": "scip-python python python-stdlib 3.11 pathlib/PurePath#parent().",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      4,
+      55,
+      61
+     ],
+     "symbol": "scip-python python python-stdlib 3.11 pathlib/PurePath#parent().",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      6,
+      5,
+      13
+     ],
+     "symbol": "scip-python python payments-service 0 payments/__init__:",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      6,
+      21,
+      24
+     ],
+     "symbol": "local 0",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      6,
+      26,
+      34
+     ],
+     "symbol": "local 1",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      6,
+      36,
+      42
+     ],
+     "symbol": "local 2",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      6,
+      44,
+      51
+     ],
+     "symbol": "local 3",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      6,
+      53,
+      58
+     ],
+     "symbol": "local 4",
+     "symbol_roles": 8
+    },
+    {
+     "enclosing_range": [
+      9,
+      0,
+      28,
+      53
+     ],
+     "range": [
+      9,
+      6,
+      19
+     ],
+     "symbol": "scip-python python payments-service 0 `tests.test_payments`/PaymentsTests#",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      9,
+      20,
+      28
+     ],
+     "symbol": "scip-python python python-stdlib 3.11 unittest/__init__:",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      9,
+      29,
+      37
+     ],
+     "symbol": "scip-python python payments-service 0 `unittest.case`/TestCase#",
+     "symbol_roles": 8
+    },
+    {
+     "enclosing_range": [
+      10,
+      4,
+      11,
+      106
+     ],
+     "range": [
+      10,
+      8,
+      26
+     ],
+     "symbol": "scip-python python payments-service 0 `tests.test_payments`/PaymentsTests#test_refund_amount().",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      10,
+      27,
+      31
+     ],
+     "symbol": "scip-python python payments-service 0 `tests.test_payments`/PaymentsTests#test_refund_amount().(self)",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      11,
+      8,
+      12
+     ],
+     "symbol": "scip-python python payments-service 0 `tests.test_payments`/PaymentsTests#test_refund_amount().(self)",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      11,
+      13,
+      24
+     ],
+     "symbol": "local 5",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      11,
+      25,
+      32
+     ],
+     "symbol": "local 3",
+     "symbol_roles": 8
+    },
+    {
+     "enclosing_range": [
+      13,
+      4,
+      15,
+      51
+     ],
+     "range": [
+      13,
+      8,
+      25
+     ],
+     "symbol": "scip-python python payments-service 0 `tests.test_payments`/PaymentsTests#test_parse_refund().",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      13,
+      26,
+      30
+     ],
+     "symbol": "scip-python python payments-service 0 `tests.test_payments`/PaymentsTests#test_parse_refund().(self)",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      14,
+      8,
+      12
+     ],
+     "symbol": "scip-python python payments-service 0 `tests.test_payments`/PaymentsTests#test_parse_refund().(self)",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      14,
+      13,
+      24
+     ],
+     "symbol": "local 5",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      14,
+      25,
+      32
+     ],
+     "symbol": "local 3",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      15,
+      8,
+      12
+     ],
+     "symbol": "scip-python python payments-service 0 `tests.test_payments`/PaymentsTests#test_parse_refund().(self)",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      15,
+      13,
+      25
+     ],
+     "symbol": "local 6",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      15,
+      26,
+      33
+     ],
+     "symbol": "local 3",
+     "symbol_roles": 8
+    },
+    {
+     "enclosing_range": [
+      17,
+      4,
+      18,
+      65
+     ],
+     "range": [
+      17,
+      8,
+      20
+     ],
+     "symbol": "scip-python python payments-service 0 `tests.test_payments`/PaymentsTests#test_convert().",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      17,
+      21,
+      25
+     ],
+     "symbol": "scip-python python payments-service 0 `tests.test_payments`/PaymentsTests#test_convert().(self)",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      18,
+      8,
+      12
+     ],
+     "symbol": "scip-python python payments-service 0 `tests.test_payments`/PaymentsTests#test_convert().(self)",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      18,
+      13,
+      24
+     ],
+     "symbol": "local 5",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      18,
+      25,
+      33
+     ],
+     "symbol": "local 1",
+     "symbol_roles": 8
+    },
+    {
+     "enclosing_range": [
+      20,
+      4,
+      21,
+      78
+     ],
+     "range": [
+      20,
+      8,
+      22
+     ],
+     "symbol": "scip-python python payments-service 0 `tests.test_payments`/PaymentsTests#test_add_entry().",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      20,
+      23,
+      27
+     ],
+     "symbol": "scip-python python payments-service 0 `tests.test_payments`/PaymentsTests#test_add_entry().(self)",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      21,
+      8,
+      12
+     ],
+     "symbol": "scip-python python payments-service 0 `tests.test_payments`/PaymentsTests#test_add_entry().(self)",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      21,
+      13,
+      24
+     ],
+     "symbol": "local 5",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      21,
+      25,
+      31
+     ],
+     "symbol": "local 2",
+     "symbol_roles": 8
+    },
+    {
+     "enclosing_range": [
+      23,
+      4,
+      24,
+      79
+     ],
+     "range": [
+      23,
+      8,
+      26
+     ],
+     "symbol": "scip-python python payments-service 0 `tests.test_payments`/PaymentsTests#test_handle_refund().",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      23,
+      27,
+      31
+     ],
+     "symbol": "scip-python python payments-service 0 `tests.test_payments`/PaymentsTests#test_handle_refund().(self)",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      24,
+      8,
+      12
+     ],
+     "symbol": "scip-python python payments-service 0 `tests.test_payments`/PaymentsTests#test_handle_refund().(self)",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      24,
+      13,
+      24
+     ],
+     "symbol": "local 5",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      24,
+      25,
+      28
+     ],
+     "symbol": "local 0",
+     "symbol_roles": 8
+    },
+    {
+     "enclosing_range": [
+      26,
+      4,
+      28,
+      53
+     ],
+     "range": [
+      26,
+      8,
+      26
+     ],
+     "symbol": "scip-python python payments-service 0 `tests.test_payments`/PaymentsTests#test_first_or_none().",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      26,
+      27,
+      31
+     ],
+     "symbol": "scip-python python payments-service 0 `tests.test_payments`/PaymentsTests#test_first_or_none().(self)",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      27,
+      8,
+      12
+     ],
+     "symbol": "scip-python python payments-service 0 `tests.test_payments`/PaymentsTests#test_first_or_none().(self)",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      27,
+      13,
+      25
+     ],
+     "symbol": "local 6",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      27,
+      26,
+      31
+     ],
+     "symbol": "local 4",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      28,
+      8,
+      12
+     ],
+     "symbol": "scip-python python payments-service 0 `tests.test_payments`/PaymentsTests#test_first_or_none().(self)",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      28,
+      13,
+      24
+     ],
+     "symbol": "local 5",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      28,
+      25,
+      30
+     ],
+     "symbol": "local 4",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      31,
+      3,
+      11
+     ],
+     "symbol": "scip-python python payments-service 0 `tests.test_payments`/",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      32,
+      4,
+      12
+     ],
+     "symbol": "scip-python python python-stdlib 3.11 unittest/__init__:",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      32,
+      13,
+      17
+     ],
+     "symbol": "scip-python python payments-service 0 main/__init__:",
+     "symbol_roles": 8
+    }
+   ],
+   "relative_path": "tests/test_payments.py",
+   "symbols": [
+    {
+     "documentation": [
+      "(module) tests.test_payments"
+     ],
+     "symbol": "scip-python python payments-service 0 `tests.test_payments`/__init__:"
+    },
+    {
+     "documentation": [
+      "```python\nclass PaymentsTests(unittest.TestCase):\n```"
+     ],
+     "relationships": [
+      {
+       "is_implementation": true,
+       "symbol": "scip-python python python-stdlib 3.11 `unittest.case`/TestCase#"
+      }
+     ],
+     "symbol": "scip-python python payments-service 0 `tests.test_payments`/PaymentsTests#"
+    },
+    {
+     "documentation": [
+      "```python\ndef test_refund_amount(\n  self\n): # -> None:\n```"
+     ],
+     "symbol": "scip-python python payments-service 0 `tests.test_payments`/PaymentsTests#test_refund_amount()."
+    },
+    {
+     "symbol": "scip-python python payments-service 0 `tests.test_payments`/PaymentsTests#test_refund_amount().(self)"
+    },
+    {
+     "documentation": [
+      "```python\ndef assertEqual(\n  self,\n  first: Any,\n  second: Any,\n  msg: Any = None\n) -> None:\n```"
+     ],
+     "symbol": "local 5"
+    },
+    {
+     "documentation": [
+      "```python\ndef test_parse_refund(\n  self\n): # -> None:\n```"
+     ],
+     "symbol": "scip-python python payments-service 0 `tests.test_payments`/PaymentsTests#test_parse_refund()."
+    },
+    {
+     "symbol": "scip-python python payments-service 0 `tests.test_payments`/PaymentsTests#test_parse_refund().(self)"
+    },
+    {
+     "documentation": [
+      "```python\ndef assertIsNone(\n  self,\n  obj: object,\n  msg: Any = None\n) -> None:\n```"
+     ],
+     "symbol": "local 6"
+    },
+    {
+     "documentation": [
+      "```python\ndef test_convert(\n  self\n): # -> None:\n```"
+     ],
+     "symbol": "scip-python python payments-service 0 `tests.test_payments`/PaymentsTests#test_convert()."
+    },
+    {
+     "symbol": "scip-python python payments-service 0 `tests.test_payments`/PaymentsTests#test_convert().(self)"
+    },
+    {
+     "documentation": [
+      "```python\ndef test_add_entry(\n  self\n): # -> None:\n```"
+     ],
+     "symbol": "scip-python python payments-service 0 `tests.test_payments`/PaymentsTests#test_add_entry()."
+    },
+    {
+     "symbol": "scip-python python payments-service 0 `tests.test_payments`/PaymentsTests#test_add_entry().(self)"
+    },
+    {
+     "documentation": [
+      "```python\ndef test_handle_refund(\n  self\n): # -> None:\n```"
+     ],
+     "symbol": "scip-python python payments-service 0 `tests.test_payments`/PaymentsTests#test_handle_refund()."
+    },
+    {
+     "symbol": "scip-python python payments-service 0 `tests.test_payments`/PaymentsTests#test_handle_refund().(self)"
+    },
+    {
+     "documentation": [
+      "```python\ndef test_first_or_none(\n  self\n): # -> None:\n```"
+     ],
+     "symbol": "scip-python python payments-service 0 `tests.test_payments`/PaymentsTests#test_first_or_none()."
+    },
+    {
+     "symbol": "scip-python python payments-service 0 `tests.test_payments`/PaymentsTests#test_first_or_none().(self)"
+    }
+   ]
+  }
+ ],
+ "external_symbols": [
+  {
+   "documentation": [
+    "```python\n(function) def print(\n    *values: object,\n    sep: str | None = \" \",\n    end: str | None = \"\\n\",\n    file: SupportsWrite[str] | None = None,\n    flush: Literal[False] = False\n) -> None\n```"
+   ],
+   "symbol": "scip-python python python-stdlib 3.11 builtins/print()."
+  },
+  {
+   "documentation": [
+    "```python\n(function) def min(\n    __arg1: SupportsRichComparisonT@min,\n    __arg2: SupportsRichComparisonT@min,\n    *_args: SupportsRichComparisonT@min,\n    key: None = None\n) -> SupportsRichComparisonT@min\n```"
+   ],
+   "symbol": "scip-python python python-stdlib 3.11 builtins/min()."
+  },
+  {
+   "documentation": [
+    "```python\nclass ValueError(*args: object)\n```"
+   ],
+   "symbol": "scip-python python python-stdlib 3.11 builtins/ValueError#"
+  },
+  {
+   "documentation": [
+    "```python\n(function) def round(\n    number: _SupportsRound2[_T@round],\n    ndigits: SupportsIndex\n) -> _T@round\n```"
+   ],
+   "symbol": "scip-python python python-stdlib 3.11 builtins/round()."
+  },
+  {
+   "documentation": [
+    "```python\n(class) Exception\n```"
+   ],
+   "symbol": "scip-python python python-stdlib 3.11 builtins/Exception#"
+  },
+  {
+   "documentation": [
+    "```python\nclass int(\n    __x: ReadableBuffer | str | SupportsInt | SupportsIndex | SupportsTrunc = ...,\n    /\n): ...\n\nclass int(\n    __x: str | bytes | bytearray,\n    /,\n    base: SupportsIndex\n): ...\n\n\n```"
+   ],
+   "symbol": "scip-python python python-stdlib 3.11 builtins/int#"
+  },
+  {
+   "documentation": [
+    "```python\n(function) def sum(\n    __iterable: Iterable[_LiteralInteger | bool],\n    /,\n    start: int = 0\n) -> int\n```"
+   ],
+   "symbol": "scip-python python python-stdlib 3.11 builtins/sum()."
+  },
+  {
+   "documentation": [
+    "```python\nclass float(\n    __x: ReadableBuffer | SupportsFloat | SupportsIndex | str = ...,\n    /\n)\n```"
+   ],
+   "symbol": "scip-python python python-stdlib 3.11 builtins/float#"
+  },
+  {
+   "documentation": [
+    "```python\n(function) def len(\n    __obj: Sized,\n    /\n) -> int\n```"
+   ],
+   "symbol": "local 0"
+  },
+  {
+   "documentation": [
+    "```python\nclass range(\n    __start: SupportsIndex,\n    __stop: SupportsIndex,\n    __step: SupportsIndex = ...,\n    /\n)\n```"
+   ],
+   "symbol": "scip-python python python-stdlib 3.11 builtins/range#"
+  },
+  {
+   "documentation": [
+    "```python\n(function) def len(\n    __obj: Sized,\n    /\n) -> int\n```"
+   ],
+   "symbol": "local 2"
+  },
+  {
+   "documentation": [
+    "```python\n(module) pathlib\n```"
+   ],
+   "symbol": "scip-python python python-stdlib 3.11 pathlib/__init__:"
+  },
+  {
+   "documentation": [
+    "```python\n(module) sys\n```",
+    "---\n",
+    "The typing module: Support for gradual typing as defined by PEP 484.\n\nAt large scale, the structure of the module is following:\n * Imports and exports, all public names should be explicitly added to \\_\\_all\\_\\_.\n * Internal helper functions: these should never be used in code outside this module.\n * \\_SpecialForm and its instances (special forms):\nAny, NoReturn, Never, ClassVar, Union, Optional, Concatenate, Unpack\n * Classes whose instances can be type arguments in addition to types:\nForwardRef, TypeVar and ParamSpec\n * The core of internal generics API: \\_GenericAlias and \\_VariadicGenericAlias, the latter is\ncurrently only used by Tuple and Callable. All subscripted types like X\\[int\\], Union\\[int, str\\],\netc., are instances of either of these classes.\n * The public counterpart of the generics API consists of two classes: Generic and Protocol.\n * Public helper functions: get\\_type\\_hints, overload, cast, no\\_type\\_check,\nno\\_type\\_check\\_decorator.\n * Generic aliases for collections.abc ABCs and few additional protocols.\n * Special types: NewType, NamedTuple, TypedDict.\n * Wrapper submodules for re and io related types."
+   ],
+   "symbol": "scip-python python python-stdlib 3.11 sys/__init__:"
+  },
+  {
+   "documentation": [
+    "```python\n(variable) path: list[str]\n```"
+   ],
+   "symbol": "scip-python python python-stdlib 3.11 sys/"
+  },
+  {
+   "documentation": [
+    "```python\n(variable) path: list[str]\n```"
+   ],
+   "symbol": "scip-python python python-stdlib 3.11 sys/path."
+  },
+  {
+   "documentation": [
+    "```python\n(variable) path: list[str]\n```"
+   ],
+   "symbol": "scip-python python python-stdlib 3.11 sys/path.path."
+  },
+  {
+   "documentation": [
+    "```python\nclass str(object: object = ...): ...\n\nclass str(\n    object: ReadableBuffer,\n    encoding: str = ...,\n    errors: str = ...\n): ...\n\n\n```"
+   ],
+   "symbol": "scip-python python python-stdlib 3.11 builtins/str#"
+  },
+  {
+   "documentation": [
+    "```python\n__file__: str\n```"
+   ],
+   "symbol": "scip-python python python-stdlib 3.11 builtins/__file__#"
+  }
+ ],
+ "metadata": {
+  "project_root": "file:///work",
+  "text_document_encoding": 1,
+  "tool_info": {
+   "name": "scip-python",
+   "version": "0.6.8"
+  }
+ }
+}

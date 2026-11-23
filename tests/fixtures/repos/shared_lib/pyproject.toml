@@ -1,0 +1,5 @@
+[project]
+name = "acme-shared"
+version = "1.2.0"
+requires-python = ">=3.12"
+dependencies = []

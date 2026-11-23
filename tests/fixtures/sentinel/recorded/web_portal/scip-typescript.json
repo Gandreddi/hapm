@@ -1,0 +1,679 @@
+{
+ "documents": [
+  {
+   "language": "TypeScript",
+   "occurrences": [
+    {
+     "enclosing_range": [
+      0,
+      0,
+      1,
+      0
+     ],
+     "range": [
+      0,
+      0,
+      0
+     ],
+     "symbol": "scip-typescript npm web-portal 2.0.0 src/`config.ts`/",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      0,
+      13,
+      23
+     ],
+     "symbol": "scip-typescript npm web-portal 2.0.0 src/`config.ts`/ORDERS_URL.",
+     "symbol_roles": 1
+    }
+   ],
+   "position_encoding": 2,
+   "relative_path": "src/config.ts",
+   "symbols": [
+    {
+     "documentation": [
+      "```ts\nmodule \"config.ts\"\n```"
+     ],
+     "kind": 16,
+     "symbol": "scip-typescript npm web-portal 2.0.0 src/`config.ts`/"
+    },
+    {
+     "documentation": [
+      "```ts\nvar ORDERS_URL: \"http://orders-service:8000\"\n```"
+     ],
+     "kind": 8,
+     "symbol": "scip-typescript npm web-portal 2.0.0 src/`config.ts`/ORDERS_URL."
+    }
+   ]
+  },
+  {
+   "language": "TypeScript",
+   "occurrences": [
+    {
+     "enclosing_range": [
+      0,
+      0,
+      15,
+      0
+     ],
+     "range": [
+      0,
+      0,
+      0
+     ],
+     "symbol": "scip-typescript npm web-portal 2.0.0 src/`ordersApi.ts`/",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      0,
+      9,
+      19
+     ],
+     "symbol": "scip-typescript npm web-portal 2.0.0 src/`config.ts`/ORDERS_URL."
+    },
+    {
+     "range": [
+      0,
+      27,
+      37
+     ],
+     "symbol": "scip-typescript npm web-portal 2.0.0 src/`config.ts`/"
+    },
+    {
+     "enclosing_range": [
+      2,
+      0,
+      4,
+      1
+     ],
+     "range": [
+      2,
+      17,
+      27
+     ],
+     "symbol": "scip-typescript npm web-portal 2.0.0 src/`ordersApi.ts`/OrderTotal#",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      3,
+      2,
+      13
+     ],
+     "symbol": "scip-typescript npm web-portal 2.0.0 src/`ordersApi.ts`/OrderTotal#total_cents.",
+     "symbol_roles": 1
+    },
+    {
+     "enclosing_range": [
+      6,
+      0,
+      9,
+      1
+     ],
+     "range": [
+      6,
+      22,
+      32
+     ],
+     "symbol": "scip-typescript npm web-portal 2.0.0 src/`ordersApi.ts`/placeOrder().",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      6,
+      33,
+      36
+     ],
+     "symbol": "scip-typescript npm web-portal 2.0.0 src/`ordersApi.ts`/placeOrder().(sku)",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      6,
+      46,
+      54
+     ],
+     "symbol": "scip-typescript npm web-portal 2.0.0 src/`ordersApi.ts`/placeOrder().(quantity)",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      6,
+      64,
+      69
+     ],
+     "symbol": "scip-typescript npm web-portal 2.0.0 src/`ordersApi.ts`/placeOrder().(price)",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      6,
+      80,
+      87
+     ],
+     "symbol": "scip-typescript npm typescript 6.0.3 lib/`lib.es5.d.ts`/Promise#"
+    },
+    {
+     "range": [
+      6,
+      80,
+      87
+     ],
+     "symbol": "scip-typescript npm typescript 6.0.3 lib/`lib.es2015.iterable.d.ts`/Promise#"
+    },
+    {
+     "range": [
+      6,
+      80,
+      87
+     ],
+     "symbol": "scip-typescript npm typescript 6.0.3 lib/`lib.es2015.promise.d.ts`/Promise."
+    },
+    {
+     "range": [
+      6,
+      80,
+      87
+     ],
+     "symbol": "scip-typescript npm typescript 6.0.3 lib/`lib.es2015.symbol.wellknown.d.ts`/Promise#"
+    },
+    {
+     "range": [
+      6,
+      80,
+      87
+     ],
+     "symbol": "scip-typescript npm typescript 6.0.3 lib/`lib.es2018.promise.d.ts`/Promise#"
+    },
+    {
+     "range": [
+      6,
+      88,
+      98
+     ],
+     "symbol": "scip-typescript npm web-portal 2.0.0 src/`ordersApi.ts`/OrderTotal#"
+    },
+    {
+     "range": [
+      7,
+      8,
+      12
+     ],
+     "symbol": "local 2",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      7,
+      21,
+      26
+     ],
+     "symbol": "scip-typescript npm typescript 6.0.3 lib/`lib.dom.d.ts`/fetch()."
+    },
+    {
+     "range": [
+      7,
+      30,
+      40
+     ],
+     "symbol": "scip-typescript npm web-portal 2.0.0 src/`config.ts`/ORDERS_URL."
+    },
+    {
+     "range": [
+      7,
+      55,
+      58
+     ],
+     "symbol": "scip-typescript npm web-portal 2.0.0 src/`ordersApi.ts`/placeOrder().(sku)"
+    },
+    {
+     "range": [
+      7,
+      71,
+      79
+     ],
+     "symbol": "scip-typescript npm web-portal 2.0.0 src/`ordersApi.ts`/placeOrder().(quantity)"
+    },
+    {
+     "range": [
+      7,
+      89,
+      94
+     ],
+     "symbol": "scip-typescript npm web-portal 2.0.0 src/`ordersApi.ts`/placeOrder().(price)"
+    },
+    {
+     "range": [
+      7,
+      100,
+      106
+     ],
+     "symbol": "scip-typescript npm typescript 6.0.3 lib/`lib.dom.d.ts`/RequestInit#method."
+    },
+    {
+     "range": [
+      8,
+      16,
+      20
+     ],
+     "symbol": "local 2"
+    },
+    {
+     "range": [
+      8,
+      21,
+      25
+     ],
+     "symbol": "scip-typescript npm typescript 6.0.3 lib/`lib.dom.d.ts`/Body#json()."
+    },
+    {
+     "range": [
+      8,
+      32,
+      42
+     ],
+     "symbol": "scip-typescript npm web-portal 2.0.0 src/`ordersApi.ts`/OrderTotal#"
+    },
+    {
+     "enclosing_range": [
+      11,
+      0,
+      14,
+      1
+     ],
+     "range": [
+      11,
+      22,
+      30
+     ],
+     "symbol": "scip-typescript npm web-portal 2.0.0 src/`ordersApi.ts`/getOrder().",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      11,
+      31,
+      38
+     ],
+     "symbol": "scip-typescript npm web-portal 2.0.0 src/`ordersApi.ts`/getOrder().(orderId)",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      11,
+      49,
+      56
+     ],
+     "symbol": "scip-typescript npm typescript 6.0.3 lib/`lib.es5.d.ts`/Promise#"
+    },
+    {
+     "range": [
+      11,
+      49,
+      56
+     ],
+     "symbol": "scip-typescript npm typescript 6.0.3 lib/`lib.es2015.iterable.d.ts`/Promise#"
+    },
+    {
+     "range": [
+      11,
+      49,
+      56
+     ],
+     "symbol": "scip-typescript npm typescript 6.0.3 lib/`lib.es2015.promise.d.ts`/Promise."
+    },
+    {
+     "range": [
+      11,
+      49,
+      56
+     ],
+     "symbol": "scip-typescript npm typescript 6.0.3 lib/`lib.es2015.symbol.wellknown.d.ts`/Promise#"
+    },
+    {
+     "range": [
+      11,
+      49,
+      56
+     ],
+     "symbol": "scip-typescript npm typescript 6.0.3 lib/`lib.es2018.promise.d.ts`/Promise#"
+    },
+    {
+     "range": [
+      12,
+      8,
+      12
+     ],
+     "symbol": "local 5",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      12,
+      21,
+      26
+     ],
+     "symbol": "scip-typescript npm typescript 6.0.3 lib/`lib.dom.d.ts`/fetch()."
+    },
+    {
+     "range": [
+      12,
+      30,
+      40
+     ],
+     "symbol": "scip-typescript npm web-portal 2.0.0 src/`config.ts`/ORDERS_URL."
+    },
+    {
+     "range": [
+      12,
+      51,
+      58
+     ],
+     "symbol": "scip-typescript npm web-portal 2.0.0 src/`ordersApi.ts`/getOrder().(orderId)"
+    },
+    {
+     "range": [
+      13,
+      9,
+      13
+     ],
+     "symbol": "local 5"
+    },
+    {
+     "range": [
+      13,
+      14,
+      18
+     ],
+     "symbol": "scip-typescript npm typescript 6.0.3 lib/`lib.dom.d.ts`/Body#json()."
+    }
+   ],
+   "position_encoding": 2,
+   "relative_path": "src/ordersApi.ts",
+   "symbols": [
+    {
+     "documentation": [
+      "```ts\nmodule \"ordersApi.ts\"\n```"
+     ],
+     "kind": 16,
+     "symbol": "scip-typescript npm web-portal 2.0.0 src/`ordersApi.ts`/"
+    },
+    {
+     "documentation": [
+      "```ts\ninterface OrderTotal\n```"
+     ],
+     "kind": 21,
+     "symbol": "scip-typescript npm web-portal 2.0.0 src/`ordersApi.ts`/OrderTotal#"
+    },
+    {
+     "documentation": [
+      "```ts\n(property) total_cents: number\n```"
+     ],
+     "kind": 41,
+     "symbol": "scip-typescript npm web-portal 2.0.0 src/`ordersApi.ts`/OrderTotal#total_cents."
+    },
+    {
+     "documentation": [
+      "```ts\nfunction placeOrder(sku: string, quantity: number, price: string): Promise<OrderTotal>\n```"
+     ],
+     "kind": 17,
+     "symbol": "scip-typescript npm web-portal 2.0.0 src/`ordersApi.ts`/placeOrder()."
+    },
+    {
+     "documentation": [
+      "```ts\n(parameter) sku: string\n```"
+     ],
+     "kind": 37,
+     "symbol": "scip-typescript npm web-portal 2.0.0 src/`ordersApi.ts`/placeOrder().(sku)"
+    },
+    {
+     "documentation": [
+      "```ts\n(parameter) quantity: number\n```"
+     ],
+     "kind": 37,
+     "symbol": "scip-typescript npm web-portal 2.0.0 src/`ordersApi.ts`/placeOrder().(quantity)"
+    },
+    {
+     "documentation": [
+      "```ts\n(parameter) price: string\n```"
+     ],
+     "kind": 37,
+     "symbol": "scip-typescript npm web-portal 2.0.0 src/`ordersApi.ts`/placeOrder().(price)"
+    },
+    {
+     "documentation": [
+      "```ts\nvar resp: Response\n```"
+     ],
+     "kind": 8,
+     "symbol": "local 2"
+    },
+    {
+     "documentation": [
+      "```ts\nfunction getOrder(orderId: number): Promise<unknown>\n```"
+     ],
+     "kind": 17,
+     "symbol": "scip-typescript npm web-portal 2.0.0 src/`ordersApi.ts`/getOrder()."
+    },
+    {
+     "documentation": [
+      "```ts\n(parameter) orderId: number\n```"
+     ],
+     "kind": 37,
+     "symbol": "scip-typescript npm web-portal 2.0.0 src/`ordersApi.ts`/getOrder().(orderId)"
+    },
+    {
+     "documentation": [
+      "```ts\nvar resp: Response\n```"
+     ],
+     "kind": 8,
+     "symbol": "local 5"
+    }
+   ]
+  },
+  {
+   "language": "TypeScript",
+   "occurrences": [
+    {
+     "enclosing_range": [
+      0,
+      0,
+      8,
+      0
+     ],
+     "range": [
+      0,
+      0,
+      0
+     ],
+     "symbol": "scip-typescript npm web-portal 2.0.0 src/`checkout.ts`/",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      0,
+      9,
+      19
+     ],
+     "symbol": "scip-typescript npm web-portal 2.0.0 src/`ordersApi.ts`/placeOrder()."
+    },
+    {
+     "range": [
+      0,
+      27,
+      40
+     ],
+     "symbol": "scip-typescript npm web-portal 2.0.0 src/`ordersApi.ts`/"
+    },
+    {
+     "enclosing_range": [
+      2,
+      0,
+      7,
+      1
+     ],
+     "range": [
+      2,
+      13,
+      21
+     ],
+     "symbol": "scip-typescript npm web-portal 2.0.0 src/`checkout.ts`/Checkout#",
+     "symbol_roles": 1
+    },
+    {
+     "enclosing_range": [
+      3,
+      2,
+      6,
+      3
+     ],
+     "range": [
+      3,
+      8,
+      14
+     ],
+     "symbol": "scip-typescript npm web-portal 2.0.0 src/`checkout.ts`/Checkout#submit().",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      3,
+      15,
+      18
+     ],
+     "symbol": "scip-typescript npm web-portal 2.0.0 src/`checkout.ts`/Checkout#submit().(sku)",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      3,
+      29,
+      36
+     ],
+     "symbol": "scip-typescript npm typescript 6.0.3 lib/`lib.es5.d.ts`/Promise#"
+    },
+    {
+     "range": [
+      3,
+      29,
+      36
+     ],
+     "symbol": "scip-typescript npm typescript 6.0.3 lib/`lib.es2015.iterable.d.ts`/Promise#"
+    },
+    {
+     "range": [
+      3,
+      29,
+      36
+     ],
+     "symbol": "scip-typescript npm typescript 6.0.3 lib/`lib.es2015.promise.d.ts`/Promise."
+    },
+    {
+     "range": [
+      3,
+      29,
+      36
+     ],
+     "symbol": "scip-typescript npm typescript 6.0.3 lib/`lib.es2015.symbol.wellknown.d.ts`/Promise#"
+    },
+    {
+     "range": [
+      3,
+      29,
+      36
+     ],
+     "symbol": "scip-typescript npm typescript 6.0.3 lib/`lib.es2018.promise.d.ts`/Promise#"
+    },
+    {
+     "range": [
+      4,
+      10,
+      16
+     ],
+     "symbol": "local 2",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      4,
+      25,
+      35
+     ],
+     "symbol": "scip-typescript npm web-portal 2.0.0 src/`ordersApi.ts`/placeOrder()."
+    },
+    {
+     "range": [
+      4,
+      36,
+      39
+     ],
+     "symbol": "scip-typescript npm web-portal 2.0.0 src/`checkout.ts`/Checkout#submit().(sku)"
+    },
+    {
+     "range": [
+      5,
+      11,
+      17
+     ],
+     "symbol": "local 2"
+    },
+    {
+     "range": [
+      5,
+      18,
+      29
+     ],
+     "symbol": "scip-typescript npm web-portal 2.0.0 src/`ordersApi.ts`/OrderTotal#total_cents."
+    }
+   ],
+   "position_encoding": 2,
+   "relative_path": "src/checkout.ts",
+   "symbols": [
+    {
+     "documentation": [
+      "```ts\nmodule \"checkout.ts\"\n```"
+     ],
+     "kind": 16,
+     "symbol": "scip-typescript npm web-portal 2.0.0 src/`checkout.ts`/"
+    },
+    {
+     "documentation": [
+      "```ts\nclass Checkout\n```"
+     ],
+     "kind": 7,
+     "symbol": "scip-typescript npm web-portal 2.0.0 src/`checkout.ts`/Checkout#"
+    },
+    {
+     "documentation": [
+      "```ts\n(method) submit(sku: string): Promise<number>\n```"
+     ],
+     "kind": 26,
+     "symbol": "scip-typescript npm web-portal 2.0.0 src/`checkout.ts`/Checkout#submit()."
+    },
+    {
+     "documentation": [
+      "```ts\n(parameter) sku: string\n```"
+     ],
+     "kind": 37,
+     "symbol": "scip-typescript npm web-portal 2.0.0 src/`checkout.ts`/Checkout#submit().(sku)"
+    },
+    {
+     "documentation": [
+      "```ts\nvar result: OrderTotal\n```"
+     ],
+     "kind": 8,
+     "symbol": "local 2"
+    }
+   ]
+  }
+ ],
+ "metadata": {
+  "project_root": "file:///work",
+  "text_document_encoding": 1,
+  "tool_info": {
+   "name": "scip-typescript",
+   "version": "0.6.2"
+  }
+ }
+}

@@ -1,4 +1,4 @@
-"""M9: config loading and checks, GitHub Models adapter, Jira and GitHub REST backends against recorded responses."""
+"""M9: config loading and checks, Azure OpenAI provider config, Jira and GitHub REST backends against recorded responses."""
 
 import asyncio
 import base64
@@ -12,7 +12,7 @@ import respx
 import yaml
 from hapm_config import GithubConfig, JiraConfig, RefError, RepoConfig, check, load_project, resolve_ref
 from hapm_gateway.config import GatewayConfig
-from hapm_gateway.providers import GitHubModelsProvider, ProviderError, build_provider
+from hapm_gateway.providers import AzureOpenAIProvider, build_provider
 from hapm_github.backends import RestGithub
 from hapm_github.main import build as build_github
 from hapm_jira.backends import JiraError, RestJira
@@ -27,7 +27,14 @@ EXAMPLES = ROOT / "config"
 
 def test_example_config_loads_and_everything_is_mocked() -> None:
     project = load_project(EXAMPLES)
-    assert list(project.repos) == ["payments-service"]
+    # payments-service (Phase 1) plus the four Sentinel fixture repositories (Phase 2).
+    assert list(project.repos) == [
+        "inventory-service",
+        "orders-service",
+        "payments-service",
+        "shared-lib",
+        "web-portal",
+    ]
     assert project.sources["jira"] == "jira.example.yaml"
     providers = yaml.safe_load((EXAMPLES / "providers.example.yaml").read_text(encoding="utf-8"))
     GatewayConfig.model_validate(providers)
@@ -74,66 +81,43 @@ def test_office_config_reports_missing_values(tmp_path: Path, monkeypatch: pytes
     (tmp_path / "github.yaml").write_text(yaml.safe_dump({"backend": "github", "token_ref": "env:GH_TOKEN_T"}))
     providers = {
         "data_approval": "SEC-123",
-        "providers": {"github-models": {"type": "github_models", "token_ref": "env:GHM_T"}},
+        "providers": {
+            "azure-openai": {"type": "azure_openai", "endpoint_ref": "env:AOAI_EP_T", "api_key_ref": "env:AOAI_KEY_T"}
+        },
     }
     report = check(load_project(tmp_path), providers)
     assert {"jira.token_ref: env:JIRA_TOKEN_T is not set", "github.token_ref: env:GH_TOKEN_T is not set"} <= set(
         report.missing
     )
-    for name in ("JIRA_EMAIL_T", "JIRA_TOKEN_T", "GH_TOKEN_T", "GHM_T"):
+    for name in ("JIRA_EMAIL_T", "JIRA_TOKEN_T", "GH_TOKEN_T", "AOAI_EP_T", "AOAI_KEY_T"):
         monkeypatch.setenv(name, "x")
     report = check(load_project(tmp_path), providers)
     assert report.pilot_ready, report.missing
-    assert "llm providers: github-models" in report.live
+    assert "llm providers: azure-openai" in report.live
 
 
-# ---------- GitHub Models adapter ----------
+# ---------- LLM providers ----------
 
 
-@respx.mock
-def test_github_models_adapter_chat_embed_and_errors() -> None:
-    chat = respx.post("https://models.github.ai/inference/chat/completions").mock(
-        return_value=httpx.Response(
-            200,
-            json={
-                "model": "m",
-                "choices": [{"message": {"content": "hi"}}],
-                "usage": {"prompt_tokens": 4, "completion_tokens": 1},
-            },
-        )
-    )
-    respx.post("https://models.github.ai/inference/embeddings").mock(
-        return_value=httpx.Response(
-            200, json={"data": [{"index": 0, "embedding": [0.5]}], "usage": {"prompt_tokens": 2}}
-        )
-    )
-
-    async def run() -> None:
-        async with httpx.AsyncClient() as client:
-            p = GitHubModelsProvider("ghm", "https://models.github.ai/inference", "tok", client)
-            r = await p.chat("m", [{"role": "user", "content": "x"}], 5, {})
-            assert (r.content, r.prompt_tokens) == ("hi", 4)
-            assert chat.calls.last.request.headers["authorization"] == "Bearer tok"
-            assert json.loads(chat.calls.last.request.content)["model"] == "m"
-            assert (await p.embed("e", ["x"])).vectors == [[0.5]]
-            chat.mock(return_value=httpx.Response(401))
-            with pytest.raises(ProviderError) as e:
-                await p.chat("m", [{"role": "user", "content": "x"}], None, {})
-            assert not e.value.retryable
-
-    asyncio.run(run())
-
-
-def test_github_models_provider_needs_token(monkeypatch: pytest.MonkeyPatch) -> None:
+def test_azure_openai_provider_needs_endpoint_and_key(monkeypatch: pytest.MonkeyPatch) -> None:
     cfg = GatewayConfig.model_validate(
         yaml.safe_load((EXAMPLES / "providers.example.yaml").read_text(encoding="utf-8"))
     )
-    monkeypatch.delenv("GITHUB_MODELS_TOKEN", raising=False)
-    assert build_provider("github-models", cfg.providers["github-models"], httpx.AsyncClient()) is None
-    monkeypatch.setenv("GITHUB_MODELS_TOKEN", "t")
+    monkeypatch.delenv("AZURE_OPENAI_ENDPOINT", raising=False)
+    monkeypatch.delenv("AZURE_OPENAI_API_KEY", raising=False)
+    assert build_provider("azure-openai", cfg.providers["azure-openai"], httpx.AsyncClient()) is None
+    monkeypatch.setenv("AZURE_OPENAI_ENDPOINT", "https://aoai.test")
+    monkeypatch.setenv("AZURE_OPENAI_API_KEY", "k")
     assert isinstance(
-        build_provider("github-models", cfg.providers["github-models"], httpx.AsyncClient()), GitHubModelsProvider
+        build_provider("azure-openai", cfg.providers["azure-openai"], httpx.AsyncClient()), AzureOpenAIProvider
     )
+
+
+def test_retired_github_models_provider_is_rejected_with_a_clear_message() -> None:
+    providers = yaml.safe_load((EXAMPLES / "providers.example.yaml").read_text(encoding="utf-8"))
+    providers["providers"]["github-models"] = {"type": "github_models"}
+    with pytest.raises(ValueError, match="retired GitHub Models"):
+        GatewayConfig.model_validate(providers)
 
 
 # ---------- Jira REST against recorded responses ----------

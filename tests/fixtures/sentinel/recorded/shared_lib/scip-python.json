@@ -1,0 +1,956 @@
+{
+ "documents": [
+  {
+   "occurrences": [
+    {
+     "range": [
+      0,
+      0,
+      0
+     ],
+     "symbol": "scip-python python acme-shared 1.2.0 acme_shared/__init__:",
+     "symbol_roles": 1
+    }
+   ],
+   "relative_path": "acme_shared/__init__.py",
+   "symbols": [
+    {
+     "documentation": [
+      "(module) acme_shared",
+      "Shared helpers used by Acme services."
+     ],
+     "symbol": "scip-python python acme-shared 1.2.0 acme_shared/__init__:"
+    }
+   ]
+  },
+  {
+   "occurrences": [
+    {
+     "range": [
+      0,
+      0,
+      0
+     ],
+     "symbol": "scip-python python acme-shared 1.2.0 `acme_shared.events`/__init__:",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      2,
+      5,
+      11
+     ],
+     "symbol": "scip-python python python-stdlib 3.11 typing/__init__:",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      2,
+      19,
+      22
+     ],
+     "symbol": "scip-python python python-stdlib 3.11 typing/Any.",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      4,
+      0,
+      5
+     ],
+     "symbol": "scip-python python acme-shared 1.2.0 `acme_shared.events`/_SENT._SENT.",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      4,
+      7,
+      11
+     ],
+     "symbol": "scip-python python python-stdlib 3.11 builtins/list#",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      4,
+      12,
+      17
+     ],
+     "symbol": "scip-python python python-stdlib 3.11 builtins/tuple#",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      4,
+      18,
+      21
+     ],
+     "symbol": "scip-python python python-stdlib 3.11 builtins/str#",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      4,
+      23,
+      27
+     ],
+     "symbol": "scip-python python python-stdlib 3.11 builtins/dict#",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      4,
+      28,
+      31
+     ],
+     "symbol": "scip-python python python-stdlib 3.11 builtins/str#",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      4,
+      33,
+      36
+     ],
+     "symbol": "scip-python python python-stdlib 3.11 typing/Any.",
+     "symbol_roles": 8
+    },
+    {
+     "enclosing_range": [
+      7,
+      0,
+      9,
+      34
+     ],
+     "range": [
+      7,
+      4,
+      11
+     ],
+     "symbol": "scip-python python acme-shared 1.2.0 `acme_shared.events`/publish().",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      7,
+      12,
+      17
+     ],
+     "symbol": "scip-python python acme-shared 1.2.0 `acme_shared.events`/publish().(topic)",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      7,
+      19,
+      22
+     ],
+     "symbol": "scip-python python python-stdlib 3.11 builtins/str#",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      7,
+      24,
+      31
+     ],
+     "symbol": "scip-python python acme-shared 1.2.0 `acme_shared.events`/publish().(payload)",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      7,
+      33,
+      37
+     ],
+     "symbol": "scip-python python python-stdlib 3.11 builtins/dict#",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      7,
+      38,
+      41
+     ],
+     "symbol": "scip-python python python-stdlib 3.11 builtins/str#",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      7,
+      43,
+      46
+     ],
+     "symbol": "scip-python python python-stdlib 3.11 typing/Any.",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      9,
+      4,
+      9
+     ],
+     "symbol": "scip-python python acme-shared 1.2.0 `acme_shared.events`/_SENT._SENT.",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      9,
+      10,
+      16
+     ],
+     "symbol": "scip-python python python-stdlib 3.11 builtins/list#append().",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      9,
+      18,
+      23
+     ],
+     "symbol": "scip-python python acme-shared 1.2.0 `acme_shared.events`/publish().(topic)",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      9,
+      25,
+      32
+     ],
+     "symbol": "scip-python python acme-shared 1.2.0 `acme_shared.events`/publish().(payload)",
+     "symbol_roles": 8
+    },
+    {
+     "enclosing_range": [
+      12,
+      0,
+      19,
+      19
+     ],
+     "range": [
+      12,
+      4,
+      13
+     ],
+     "symbol": "scip-python python acme-shared 1.2.0 `acme_shared.events`/subscribe().",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      12,
+      14,
+      19
+     ],
+     "symbol": "scip-python python acme-shared 1.2.0 `acme_shared.events`/subscribe().(topic)",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      12,
+      21,
+      24
+     ],
+     "symbol": "scip-python python python-stdlib 3.11 builtins/str#",
+     "symbol_roles": 8
+    },
+    {
+     "enclosing_range": [
+      15,
+      4,
+      17,
+      22
+     ],
+     "range": [
+      15,
+      8,
+      16
+     ],
+     "symbol": "scip-python python acme-shared 1.2.0 `acme_shared.events`/subscribe().register().",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      15,
+      17,
+      24
+     ],
+     "symbol": "scip-python python acme-shared 1.2.0 `acme_shared.events`/subscribe().register().(handler)",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      16,
+      8,
+      15
+     ],
+     "symbol": "scip-python python acme-shared 1.2.0 `acme_shared.events`/subscribe().register().(handler)",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      16,
+      24,
+      29
+     ],
+     "symbol": "scip-python python acme-shared 1.2.0 `acme_shared.events`/subscribe().(topic)",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      17,
+      15,
+      22
+     ],
+     "symbol": "scip-python python acme-shared 1.2.0 `acme_shared.events`/subscribe().register().(handler)",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      19,
+      11,
+      19
+     ],
+     "symbol": "scip-python python acme-shared 1.2.0 `acme_shared.events`/subscribe().register().",
+     "symbol_roles": 8
+    }
+   ],
+   "relative_path": "acme_shared/events.py",
+   "symbols": [
+    {
+     "documentation": [
+      "(module) acme_shared.events",
+      "Tiny event bus facade. Real deployments publish to Kafka topics."
+     ],
+     "symbol": "scip-python python acme-shared 1.2.0 `acme_shared.events`/__init__:"
+    },
+    {
+     "documentation": [
+      "```python\ndef publish(\n  topic: str,\n  payload: dict[str, Any]\n) -> None:\n```",
+      "Publish one event to a topic."
+     ],
+     "symbol": "scip-python python acme-shared 1.2.0 `acme_shared.events`/publish()."
+    },
+    {
+     "symbol": "scip-python python acme-shared 1.2.0 `acme_shared.events`/publish().(topic)"
+    },
+    {
+     "symbol": "scip-python python acme-shared 1.2.0 `acme_shared.events`/publish().(payload)"
+    },
+    {
+     "documentation": [
+      "```python\ndef subscribe(\n  topic: str\n): # -> (handler: Unknown) -> Unknown:\n```",
+      "Decorator that registers a handler for a topic."
+     ],
+     "symbol": "scip-python python acme-shared 1.2.0 `acme_shared.events`/subscribe()."
+    },
+    {
+     "symbol": "scip-python python acme-shared 1.2.0 `acme_shared.events`/subscribe().(topic)"
+    },
+    {
+     "documentation": [
+      "```python\ndef register(\n  handler\n):\n```"
+     ],
+     "symbol": "scip-python python acme-shared 1.2.0 `acme_shared.events`/subscribe().register()."
+    },
+    {
+     "symbol": "scip-python python acme-shared 1.2.0 `acme_shared.events`/subscribe().register().(handler)"
+    }
+   ]
+  },
+  {
+   "occurrences": [
+    {
+     "range": [
+      0,
+      0,
+      0
+     ],
+     "symbol": "scip-python python acme-shared 1.2.0 `acme_shared.money`/__init__:",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      2,
+      5,
+      12
+     ],
+     "symbol": "scip-python python python-stdlib 3.11 decimal/__init__:",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      2,
+      20,
+      33
+     ],
+     "symbol": "scip-python python python-stdlib 3.11 _decimal/ROUND_HALF_UP.ROUND_HALF_UP.",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      2,
+      35,
+      42
+     ],
+     "symbol": "scip-python python python-stdlib 3.11 _decimal/Decimal#",
+     "symbol_roles": 8
+    },
+    {
+     "enclosing_range": [
+      5,
+      0,
+      15,
+      61
+     ],
+     "range": [
+      5,
+      6,
+      11
+     ],
+     "symbol": "scip-python python acme-shared 1.2.0 `acme_shared.money`/Money#",
+     "symbol_roles": 1
+    },
+    {
+     "enclosing_range": [
+      8,
+      4,
+      10,
+      32
+     ],
+     "range": [
+      8,
+      8,
+      16
+     ],
+     "symbol": "scip-python python acme-shared 1.2.0 `acme_shared.money`/Money#__init__().",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      8,
+      17,
+      21
+     ],
+     "symbol": "scip-python python acme-shared 1.2.0 `acme_shared.money`/Money#__init__().(self)",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      8,
+      23,
+      28
+     ],
+     "symbol": "scip-python python acme-shared 1.2.0 `acme_shared.money`/Money#__init__().(cents)",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      8,
+      30,
+      33
+     ],
+     "symbol": "scip-python python python-stdlib 3.11 builtins/int#",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      8,
+      35,
+      43
+     ],
+     "symbol": "scip-python python acme-shared 1.2.0 `acme_shared.money`/Money#__init__().(currency)",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      8,
+      45,
+      48
+     ],
+     "symbol": "scip-python python python-stdlib 3.11 builtins/str#",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      9,
+      8,
+      12
+     ],
+     "symbol": "scip-python python acme-shared 1.2.0 `acme_shared.money`/Money#__init__().(self)",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      9,
+      13,
+      18
+     ],
+     "symbol": "scip-python python acme-shared 1.2.0 `acme_shared.money`/Money#cents.",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      9,
+      21,
+      26
+     ],
+     "symbol": "scip-python python acme-shared 1.2.0 `acme_shared.money`/Money#__init__().(cents)",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      10,
+      8,
+      12
+     ],
+     "symbol": "scip-python python acme-shared 1.2.0 `acme_shared.money`/Money#__init__().(self)",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      10,
+      13,
+      21
+     ],
+     "symbol": "scip-python python acme-shared 1.2.0 `acme_shared.money`/Money#currency.",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      10,
+      24,
+      32
+     ],
+     "symbol": "scip-python python acme-shared 1.2.0 `acme_shared.money`/Money#__init__().(currency)",
+     "symbol_roles": 8
+    },
+    {
+     "enclosing_range": [
+      12,
+      4,
+      15,
+      61
+     ],
+     "range": [
+      12,
+      8,
+      11
+     ],
+     "symbol": "scip-python python acme-shared 1.2.0 `acme_shared.money`/Money#add().",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      12,
+      38,
+      43
+     ],
+     "symbol": "scip-python python acme-shared 1.2.0 `acme_shared.money`/Money#",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      12,
+      12,
+      16
+     ],
+     "symbol": "scip-python python acme-shared 1.2.0 `acme_shared.money`/Money#add().(self)",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      12,
+      18,
+      23
+     ],
+     "symbol": "scip-python python acme-shared 1.2.0 `acme_shared.money`/Money#add().(other)",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      12,
+      26,
+      31
+     ],
+     "symbol": "scip-python python acme-shared 1.2.0 `acme_shared.money`/Money#",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      13,
+      11,
+      16
+     ],
+     "symbol": "scip-python python acme-shared 1.2.0 `acme_shared.money`/Money#add().(other)",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      13,
+      17,
+      25
+     ],
+     "symbol": "scip-python python acme-shared 1.2.0 `acme_shared.money`/Money#currency.",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      13,
+      29,
+      33
+     ],
+     "symbol": "scip-python python acme-shared 1.2.0 `acme_shared.money`/Money#add().(self)",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      13,
+      34,
+      42
+     ],
+     "symbol": "scip-python python acme-shared 1.2.0 `acme_shared.money`/Money#currency.",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      14,
+      18,
+      28
+     ],
+     "symbol": "scip-python python python-stdlib 3.11 builtins/ValueError#",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      15,
+      15,
+      20
+     ],
+     "symbol": "scip-python python acme-shared 1.2.0 `acme_shared.money`/Money#",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      15,
+      21,
+      25
+     ],
+     "symbol": "scip-python python acme-shared 1.2.0 `acme_shared.money`/Money#add().(self)",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      15,
+      26,
+      31
+     ],
+     "symbol": "scip-python python acme-shared 1.2.0 `acme_shared.money`/Money#cents.",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      15,
+      34,
+      39
+     ],
+     "symbol": "scip-python python acme-shared 1.2.0 `acme_shared.money`/Money#add().(other)",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      15,
+      40,
+      45
+     ],
+     "symbol": "scip-python python acme-shared 1.2.0 `acme_shared.money`/Money#cents.",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      15,
+      47,
+      51
+     ],
+     "symbol": "scip-python python acme-shared 1.2.0 `acme_shared.money`/Money#add().(self)",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      15,
+      52,
+      60
+     ],
+     "symbol": "scip-python python acme-shared 1.2.0 `acme_shared.money`/Money#currency.",
+     "symbol_roles": 8
+    },
+    {
+     "enclosing_range": [
+      18,
+      0,
+      20,
+      86
+     ],
+     "range": [
+      18,
+      4,
+      12
+     ],
+     "symbol": "scip-python python acme-shared 1.2.0 `acme_shared.money`/to_cents().",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      18,
+      29,
+      32
+     ],
+     "symbol": "scip-python python python-stdlib 3.11 builtins/int#",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      18,
+      13,
+      19
+     ],
+     "symbol": "scip-python python acme-shared 1.2.0 `acme_shared.money`/to_cents().(amount)",
+     "symbol_roles": 1
+    },
+    {
+     "range": [
+      18,
+      21,
+      24
+     ],
+     "symbol": "scip-python python python-stdlib 3.11 builtins/str#",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      20,
+      11,
+      14
+     ],
+     "symbol": "scip-python python python-stdlib 3.11 builtins/int#",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      20,
+      16,
+      23
+     ],
+     "symbol": "scip-python python python-stdlib 3.11 _decimal/Decimal#",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      20,
+      24,
+      30
+     ],
+     "symbol": "scip-python python acme-shared 1.2.0 `acme_shared.money`/to_cents().(amount)",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      20,
+      39,
+      47
+     ],
+     "symbol": "scip-python python python-stdlib 3.11 _decimal/Decimal#quantize().",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      20,
+      48,
+      55
+     ],
+     "symbol": "scip-python python python-stdlib 3.11 _decimal/Decimal#",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      20,
+      62,
+      70
+     ],
+     "symbol": "scip-python python python-stdlib 3.11 _decimal/Decimal#quantize().(rounding)",
+     "symbol_roles": 8
+    },
+    {
+     "range": [
+      20,
+      71,
+      84
+     ],
+     "symbol": "scip-python python python-stdlib 3.11 _decimal/ROUND_HALF_UP.ROUND_HALF_UP.",
+     "symbol_roles": 8
+    }
+   ],
+   "relative_path": "acme_shared/money.py",
+   "symbols": [
+    {
+     "documentation": [
+      "(module) acme_shared.money",
+      "Money helpers shared by every service."
+     ],
+     "symbol": "scip-python python acme-shared 1.2.0 `acme_shared.money`/__init__:"
+    },
+    {
+     "documentation": [
+      "```python\nclass Money:\n```",
+      "An amount in minor units with a currency code."
+     ],
+     "symbol": "scip-python python acme-shared 1.2.0 `acme_shared.money`/Money#"
+    },
+    {
+     "documentation": [
+      "```python\ndef __init__(\n  self,\n  cents: int,\n  currency: str = \"EUR\"\n) -> None:\n```"
+     ],
+     "symbol": "scip-python python acme-shared 1.2.0 `acme_shared.money`/Money#__init__()."
+    },
+    {
+     "symbol": "scip-python python acme-shared 1.2.0 `acme_shared.money`/Money#__init__().(self)"
+    },
+    {
+     "symbol": "scip-python python acme-shared 1.2.0 `acme_shared.money`/Money#__init__().(cents)"
+    },
+    {
+     "symbol": "scip-python python acme-shared 1.2.0 `acme_shared.money`/Money#__init__().(currency)"
+    },
+    {
+     "documentation": [
+      "```python\n(variable) cents: int\n```"
+     ],
+     "symbol": "scip-python python acme-shared 1.2.0 `acme_shared.money`/Money#cents."
+    },
+    {
+     "documentation": [
+      "```python\n(variable) currency: str\n```"
+     ],
+     "symbol": "scip-python python acme-shared 1.2.0 `acme_shared.money`/Money#currency."
+    },
+    {
+     "documentation": [
+      "```python\ndef add(\n  self,\n  other: Money\n) -> Money:\n```"
+     ],
+     "symbol": "scip-python python acme-shared 1.2.0 `acme_shared.money`/Money#add()."
+    },
+    {
+     "symbol": "scip-python python acme-shared 1.2.0 `acme_shared.money`/Money#add().(self)"
+    },
+    {
+     "symbol": "scip-python python acme-shared 1.2.0 `acme_shared.money`/Money#add().(other)"
+    },
+    {
+     "documentation": [
+      "```python\ndef to_cents(\n  amount: str\n) -> int:\n```",
+      "Convert a decimal string such as '12.34' to cents, rounding half up."
+     ],
+     "symbol": "scip-python python acme-shared 1.2.0 `acme_shared.money`/to_cents()."
+    },
+    {
+     "symbol": "scip-python python acme-shared 1.2.0 `acme_shared.money`/to_cents().(amount)"
+    }
+   ]
+  }
+ ],
+ "external_symbols": [
+  {
+   "documentation": [
+    "```python\n(module) typing\n```",
+    "---\n",
+    "The typing module: Support for gradual typing as defined by PEP 484.\n\nAt large scale, the structure of the module is following:\n * Imports and exports, all public names should be explicitly added to \\_\\_all\\_\\_.\n * Internal helper functions: these should never be used in code outside this module.\n * \\_SpecialForm and its instances (special forms):\nAny, NoReturn, Never, ClassVar, Union, Optional, Concatenate, Unpack\n * Classes whose instances can be type arguments in addition to types:\nForwardRef, TypeVar and ParamSpec\n * The core of internal generics API: \\_GenericAlias and \\_VariadicGenericAlias, the latter is\ncurrently only used by Tuple and Callable. All subscripted types like X\\[int\\], Union\\[int, str\\],\netc., are instances of either of these classes.\n * The public counterpart of the generics API consists of two classes: Generic and Protocol.\n * Public helper functions: get\\_type\\_hints, overload, cast, no\\_type\\_check,\nno\\_type\\_check\\_decorator.\n * Generic aliases for collections.abc ABCs and few additional protocols.\n * Special types: NewType, NamedTuple, TypedDict.\n * Wrapper submodules for re and io related types."
+   ],
+   "symbol": "scip-python python python-stdlib 3.11 typing/__init__:"
+  },
+  {
+   "documentation": [
+    "```python\n(variable) Any: Any\n```"
+   ],
+   "symbol": "scip-python python python-stdlib 3.11 typing/"
+  },
+  {
+   "documentation": [
+    "```python\n(variable) Any: Any\n```"
+   ],
+   "symbol": "scip-python python python-stdlib 3.11 typing/Any."
+  },
+  {
+   "documentation": [
+    "```python\n(class) list\n```"
+   ],
+   "symbol": "scip-python python python-stdlib 3.11 builtins/list#"
+  },
+  {
+   "documentation": [
+    "```python\n(class) tuple\n```"
+   ],
+   "symbol": "scip-python python python-stdlib 3.11 builtins/tuple#"
+  },
+  {
+   "documentation": [
+    "```python\n(class) str\n```"
+   ],
+   "symbol": "scip-python python python-stdlib 3.11 builtins/str#"
+  },
+  {
+   "documentation": [
+    "```python\n(class) dict\n```"
+   ],
+   "symbol": "scip-python python python-stdlib 3.11 builtins/dict#"
+  },
+  {
+   "documentation": [
+    "```python\n(module) decimal\n```"
+   ],
+   "symbol": "scip-python python python-stdlib 3.11 decimal/__init__:"
+  },
+  {
+   "documentation": [
+    "```python\n(constant) ROUND_HALF_UP: str\n```"
+   ],
+   "symbol": "scip-python python python-stdlib 3.11 _decimal/"
+  },
+  {
+   "documentation": [
+    "```python\n(constant) ROUND_HALF_UP: str\n```"
+   ],
+   "symbol": "scip-python python python-stdlib 3.11 _decimal/ROUND_HALF_UP."
+  },
+  {
+   "documentation": [
+    "```python\n(constant) ROUND_HALF_UP: str\n```"
+   ],
+   "symbol": "scip-python python python-stdlib 3.11 _decimal/ROUND_HALF_UP.ROUND_HALF_UP."
+  },
+  {
+   "documentation": [
+    "```python\n(class) int\n```"
+   ],
+   "symbol": "scip-python python python-stdlib 3.11 builtins/int#"
+  },
+  {
+   "documentation": [
+    "```python\nclass ValueError(*args: object)\n```"
+   ],
+   "symbol": "scip-python python python-stdlib 3.11 builtins/ValueError#"
+  },
+  {
+   "documentation": [
+    "```python\n(parameter) rounding: str | None\n```"
+   ],
+   "symbol": "scip-python python python-stdlib 3.11 _decimal/Decimal#quantize().(rounding)"
+  }
+ ],
+ "metadata": {
+  "project_root": "file:///work",
+  "text_document_encoding": 1,
+  "tool_info": {
+   "name": "scip-python",
+   "version": "0.6.8"
+  }
+ }
+}

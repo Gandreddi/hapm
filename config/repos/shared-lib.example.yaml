@@ -1,0 +1,21 @@
+# Sentinel fixture repository (Phase 2). Copy to config/repos/shared-lib.yaml (git-ignored) for real repositories.
+name: shared-lib
+backend: mock
+github_repo: null
+mock_path: tests/fixtures/repos/shared_lib
+default_branch: main
+languages: [python]
+test_command: python -m unittest discover -s tests -q
+sandbox_image: python:3.12.15-slim-trixie
+excluded_paths: [".git/*", "vendor/*", "node_modules/*", "*.min.js", "secrets/*"]
+jira_project: SHR
+approvers: []
+max_new_tickets: 10
+scan_budget_usd: 1.0
+sentinel:
+  enabled: true
+  tiers: [1, 2, 3]
+  node_budget: 1000
+  enrich: true
+  engines: { graphify: true, scip: auto }
+  service_names: []

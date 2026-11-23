@@ -1,0 +1,74 @@
+# Sentinel ontology (Phase 2). Versioned: changing it bumps `version` and needs a migration note in
+# docs/sentinel.md. Every node and edge Sentinel stores must conform; anything else is rejected and counted.
+version: "1"
+
+# tier 1 = architecture (always kept), tier 2 = structure, tier 3 = functions (dropped from default views
+# when a repository exceeds its node budget).
+node_types:
+  Repository: { tier: 1 }
+  Service: { tier: 1 }
+  ApiEndpoint: { tier: 1 }
+  Topic: { tier: 1 }
+  Table: { tier: 1 }
+  BusinessCapability: { tier: 1 }
+  Team: { tier: 1 }
+  Ticket: { tier: 1 }
+  Module: { tier: 2 }
+  File: { tier: 2 }
+  Config: { tier: 2 }
+  Class: { tier: 2 }
+  DataModel: { tier: 2 }
+  Test: { tier: 2 }
+  ExternalLibrary: { tier: 2 }
+  Function: { tier: 3 }
+
+# Allowed source and target types per relation.
+relations:
+  CONTAINS:
+    sources: [Repository, Service, Module, Class, DataModel, Test, File, Config]
+    targets: [Service, Module, File, Config, Class, DataModel, Test, Function, ApiEndpoint]
+  IMPORTS:
+    sources: [Module]
+    targets: [Module, ExternalLibrary, Class, DataModel, Function, Test]
+  CALLS:
+    sources: [Function, Test, Class, DataModel]
+    targets: [Function, Class, DataModel, Test]
+  INHERITS:
+    sources: [Class, DataModel, Test]
+    targets: [Class, DataModel, Test, ExternalLibrary]
+  DEPENDS_ON:
+    sources: [Repository, Service, Module, Class, DataModel, Function, Test]
+    targets: [Repository, ExternalLibrary, Module, Class, DataModel, Function]
+  EXPOSES:
+    sources: [Service, Function, Module]
+    targets: [ApiEndpoint]
+  CONSUMES:
+    sources: [Service, Function, Module, Class]
+    targets: [ApiEndpoint]
+  PUBLISHES:
+    sources: [Service, Function, Module, Class]
+    targets: [Topic]
+  SUBSCRIBES:
+    sources: [Service, Function, Module, Class]
+    targets: [Topic]
+  READS:
+    sources: [Service, Function, Module, Class, DataModel]
+    targets: [Table]
+  WRITES:
+    sources: [Service, Function, Module, Class, DataModel]
+    targets: [Table]
+  TESTED_BY:
+    sources: [Module, Class, DataModel, Function]
+    targets: [Test, Module]
+  IMPLEMENTS:
+    sources: [Service, Module, Class, Function, ApiEndpoint]
+    targets: [BusinessCapability]
+  OWNED_BY:
+    sources: [Repository, Service, Module]
+    targets: [Team]
+  REFERENCES:
+    sources: [Module, Class, DataModel, Function, Test]
+    targets: [Module, Class, DataModel, Function, Test, Table, ExternalLibrary]
+  REFERENCES_TICKET:
+    sources: [Repository]
+    targets: [Ticket]

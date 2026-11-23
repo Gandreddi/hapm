@@ -1,0 +1,63 @@
+# Golden questions for validators 6 (question -> contract) and 7 (answer quality). `expect` is the contract a
+# correct planner produces; `facts` are strings a correct answer must contain (ids, labels or file paths).
+questions:
+  - q: "What breaks if I change `get_stock`?"
+    expect: { intent: impact, entities: [get_stock] }
+    facts: ["stock_level", "OrderService.create", "orders-service"]
+  - q: "Who depends on `available`?"
+    expect: { intent: impact, entities: [available], repos: [inventory-service] }
+    facts: ["get_stock", "reserve"]
+  - q: "What is affected if `OrderService.create` changes?"
+    expect: { intent: impact, entities: [OrderService.create] }
+    facts: ["create_order"]
+  - q: "What would break if `placeOrder` changed?"
+    expect: { intent: impact, entities: [placeOrder] }
+    facts: ["Checkout.submit"]
+  - q: "Explain `OrderService.create`"
+    expect: { intent: explain, entities: [OrderService.create] }
+    facts: ["orders/service.py", "PUBLISHES", "CALLS"]
+  - q: "Explain `on_order_created`"
+    expect: { intent: explain, entities: [on_order_created] }
+    facts: ["inventory/stock.py", "SUBSCRIBES"]
+  - q: "Describe `Checkout.submit`"
+    expect: { intent: explain, entities: [Checkout.submit] }
+    facts: ["src/checkout.ts"]
+  - q: "What is `orders.created`?"
+    expect: { intent: explain, entities: [orders.created] }
+    facts: ["Topic", "PUBLISHES", "SUBSCRIBES"]
+  - q: "Is there a path between `placeOrder` and `create_order`?"
+    expect: { intent: path, entities: [placeOrder], target: create_order }
+    facts: ["POST /orders"]
+  - q: "How does `stock_level` connect to `available`?"
+    expect: { intent: path, entities: [stock_level], target: available }
+    facts: ["GET /inventory/{sku}", "get_stock"]
+  - q: "Find `inventory_client.py`"
+    expect: { intent: find, entities: [inventory_client.py] }
+    facts: ["orders/inventory_client.py"]
+  - q: "Find `orders.created`"
+    expect: { intent: find, entities: [orders.created] }
+    facts: ["orders.created"]
+  - q: "Which code in `repo:orders-service` has no tests?"
+    expect: { intent: coverage, entities: ["repo:orders-service"] }
+    facts: ["reserve", "stock_level"]
+  - q: "Show test coverage for `repo:inventory-service`"
+    expect: { intent: coverage, entities: ["repo:inventory-service"] }
+    facts: ["available"]
+  - q: "What depends on `publish`?"
+    expect: { intent: impact, entities: [publish], repos: [shared-lib] }
+    facts: ["OrderService.create", "orders-service"]
+  - q: "Who uses `to_cents` from shared-lib?"
+    expect: { intent: impact, entities: [to_cents], repos: [shared-lib] }
+    facts: ["OrderService.create"]
+  - q: "Explain `create_reservation`"
+    expect: { intent: explain, entities: [create_reservation] }
+    facts: ["POST /inventory/{sku}/reservations"]
+  - q: "What breaks if `reserve` in inventory-service changes?"
+    expect: { intent: impact, entities: [reserve], repos: [inventory-service] }
+    facts: ["create_reservation"]
+  - q: "Explain `Money`"
+    expect: { intent: explain, entities: [Money] }
+    facts: ["acme_shared/money.py"]
+  - q: "Find `getOrder`"
+    expect: { intent: find, entities: [getOrder] }
+    facts: ["src/ordersApi.ts"]

@@ -15,6 +15,7 @@ members = [
   "libs/mcp_client",
   "libs/memory",
   "libs/policy",
+  "libs/sentinel",
   "libs/telemetry",
   "services/audit",
   "services/developer",
@@ -29,6 +30,7 @@ members = [
   "connectors/jira",
   "connectors/mock_repo",
   "connectors/mock_tracker",
+  "connectors/sentinel",
 ]
 
 [tool.uv.sources]
@@ -39,6 +41,7 @@ hapm-events = { workspace = true }
 hapm-mcp-client = { workspace = true }
 hapm-memory = { workspace = true }
 hapm-policy = { workspace = true }
+hapm-sentinel = { workspace = true }
 hapm-telemetry = { workspace = true }
 hapm-audit = { workspace = true }
 hapm-developer = { workspace = true }
@@ -53,6 +56,7 @@ hapm-github = { workspace = true }
 hapm-jira = { workspace = true }
 hapm-mock-repo = { workspace = true }
 hapm-mock-tracker = { workspace = true }
+hapm-sentinel-mcp = { workspace = true }
 
 [dependency-groups]
 dev = [
@@ -63,6 +67,7 @@ dev = [
   "hapm-mcp-client",
   "hapm-memory",
   "hapm-policy",
+  "hapm-sentinel",
   "hapm-telemetry",
   "hapm-audit",
   "hapm-developer",
@@ -77,6 +82,7 @@ dev = [
   "hapm-jira",
   "hapm-mock-repo",
   "hapm-mock-tracker",
+  "hapm-sentinel-mcp",
   "ruff==0.8.4",
   "mypy==1.13.0",
   "pytest==8.3.4",
@@ -102,6 +108,8 @@ ignore = ["S101", "E501", "N818"]  # long SQL strings; exception names read bett
 "libs/core/src/hapm_core/migrations/**" = ["S608"]
 # ast.NodeVisitor requires visit_<NodeName> method names.
 "libs/codeintel/src/hapm_codeintel/analyzers.py" = ["N802", "N815"]
+# Typer declares CLI options as call defaults by design.
+"libs/sentinel/src/hapm_sentinel/cli.py" = ["B008"]
 # Tests pass env:/kv: references, not secrets.
 "tests/**" = ["S105", "S106"]
 

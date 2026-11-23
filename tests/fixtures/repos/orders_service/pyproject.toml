@@ -1,0 +1,5 @@
+[project]
+name = "orders-service"
+version = "0.4.0"
+requires-python = ">=3.12"
+dependencies = ["acme-shared>=1.2", "fastapi>=0.115", "httpx>=0.28", "sqlalchemy>=2.0"]

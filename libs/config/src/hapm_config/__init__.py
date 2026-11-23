@@ -1,4 +1,4 @@
-"""Project configuration: repositories, Jira, GitHub, approvers, sandbox and LLM providers.
+"""Project configuration: repositories, Jira, GitHub, approvers, sandbox, Sentinel and LLM providers.
 
 Every office-specific value lives in config/*.yaml. Secrets are references (env:NAME or kv:NAME),
 never values. When a real file is missing, the committed *.example.yaml is used, which points
@@ -10,9 +10,12 @@ from hapm_config.models import (
     ApproversConfig,
     GithubConfig,
     JiraConfig,
+    LlmMode,
     ProjectConfig,
     RepoConfig,
+    RepoSentinel,
     SandboxConfig,
+    SentinelConfig,
 )
 from hapm_config.refs import RefError, resolve_ref
 
@@ -21,10 +24,13 @@ __all__ = [
     "CheckReport",
     "GithubConfig",
     "JiraConfig",
+    "LlmMode",
     "ProjectConfig",
     "RefError",
     "RepoConfig",
+    "RepoSentinel",
     "SandboxConfig",
+    "SentinelConfig",
     "check",
     "load_project",
     "resolve_ref",

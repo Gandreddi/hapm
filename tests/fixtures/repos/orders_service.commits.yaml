@@ -1,0 +1,3 @@
+# Commit messages the mock GitHub backend reports for this fixture (newest first).
+- { message: "ORD-12 publish orders.created after reservation", author: fixture }
+- { message: "ORD-7 add inventory client", author: fixture }

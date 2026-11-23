@@ -1,0 +1,5 @@
+[project]
+name = "inventory-service"
+version = "0.9.1"
+requires-python = ">=3.12"
+dependencies = ["acme-shared>=1.2", "fastapi>=0.115"]

@@ -1,0 +1,1 @@
+- { message: "INV-3 subscribe to orders.created", author: fixture }

@@ -25,6 +25,8 @@ members = [
     "hapm-policy",
     "hapm-relay",
     "hapm-sandbox",
+    "hapm-sentinel",
+    "hapm-sentinel-mcp",
     "hapm-telemetry",
 ]
 
@@ -364,6 +366,8 @@ dev = [
     { name = "hapm-policy" },
     { name = "hapm-relay" },
     { name = "hapm-sandbox" },
+    { name = "hapm-sentinel" },
+    { name = "hapm-sentinel-mcp" },
     { name = "hapm-telemetry" },
     { name = "httpx" },
     { name = "mypy" },
@@ -399,6 +403,8 @@ dev = [
     { name = "hapm-policy", editable = "libs/policy" },
     { name = "hapm-relay", editable = "services/relay" },
     { name = "hapm-sandbox", editable = "services/sandbox" },
+    { name = "hapm-sentinel", editable = "libs/sentinel" },
+    { name = "hapm-sentinel-mcp", editable = "connectors/sentinel" },
     { name = "hapm-telemetry", editable = "libs/telemetry" },
     { name = "httpx", specifier = "==0.28.1" },
     { name = "mypy", specifier = "==1.13.0" },
@@ -755,6 +761,7 @@ dependencies = [
     { name = "hapm-core" },
     { name = "hapm-mcp-client" },
     { name = "hapm-memory" },
+    { name = "hapm-sentinel" },
     { name = "hapm-telemetry" },
     { name = "langgraph" },
     { name = "langgraph-checkpoint-postgres" },
@@ -770,6 +777,7 @@ requires-dist = [
     { name = "hapm-core", editable = "libs/core" },
     { name = "hapm-mcp-client", editable = "libs/mcp_client" },
     { name = "hapm-memory", editable = "libs/memory" },
+    { name = "hapm-sentinel", editable = "libs/sentinel" },
     { name = "hapm-telemetry", editable = "libs/telemetry" },
     { name = "langgraph", specifier = ">=0.2.60" },
     { name = "langgraph-checkpoint-postgres", specifier = ">=2.0.10" },
@@ -828,6 +836,58 @@ requires-dist = [
     { name = "hapm-telemetry", editable = "libs/telemetry" },
     { name = "httpx", specifier = ">=0.28" },
     { name = "uvicorn", specifier = ">=0.34" },
+]
+
+[[package]]
+name = "hapm-sentinel"
+version = "0.1.0"
+source = { editable = "libs/sentinel" }
+dependencies = [
+    { name = "hapm-codeintel" },
+    { name = "hapm-config" },
+    { name = "hapm-core" },
+    { name = "hapm-mcp-client" },
+    { name = "httpx" },
+    { name = "pydantic" },
+    { name = "pyyaml" },
+    { name = "sqlalchemy" },
+    { name = "temporalio" },
+    { name = "typer" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "hapm-codeintel", editable = "libs/codeintel" },
+    { name = "hapm-config", editable = "libs/config" },
+    { name = "hapm-core", editable = "libs/core" },
+    { name = "hapm-mcp-client", editable = "libs/mcp_client" },
+    { name = "httpx", specifier = ">=0.28" },
+    { name = "pydantic", specifier = ">=2.10" },
+    { name = "pyyaml", specifier = ">=6.0.2" },
+    { name = "sqlalchemy", specifier = ">=2.0.36" },
+    { name = "temporalio", specifier = ">=1.9" },
+    { name = "typer", specifier = ">=0.15" },
+]
+
+[[package]]
+name = "hapm-sentinel-mcp"
+version = "0.1.0"
+source = { editable = "connectors/sentinel" }
+dependencies = [
+    { name = "hapm-config" },
+    { name = "hapm-core" },
+    { name = "hapm-mcp-client" },
+    { name = "hapm-sentinel" },
+    { name = "hapm-telemetry" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "hapm-config", editable = "libs/config" },
+    { name = "hapm-core", editable = "libs/core" },
+    { name = "hapm-mcp-client", editable = "libs/mcp_client" },
+    { name = "hapm-sentinel", editable = "libs/sentinel" },
+    { name = "hapm-telemetry", editable = "libs/telemetry" },
 ]
 
 [[package]]

@@ -1,0 +1,406 @@
+{
+ "directed": false,
+ "graph": {
+  "graphify_version": "0.9.115",
+  "schema_version": 1
+ },
+ "hyperedges": [],
+ "links": [
+  {
+   "_origin": "ast",
+   "confidence": "EXTRACTED",
+   "confidence_score": 1.0,
+   "context": "call",
+   "relation": "calls",
+   "source": "src_checkout_checkout_submit",
+   "source_file": "src/checkout.ts",
+   "source_location": "L5",
+   "target": "src_ordersapi_placeorder",
+   "weight": 1.0
+  },
+  {
+   "_origin": "ast",
+   "confidence": "EXTRACTED",
+   "confidence_score": 1.0,
+   "context": "import",
+   "relation": "imports",
+   "source": "package",
+   "source_file": "package.json",
+   "source_location": "L5",
+   "target": "ref_react",
+   "weight": 1.0
+  },
+  {
+   "_origin": "ast",
+   "confidence": "EXTRACTED",
+   "confidence_score": 1.0,
+   "context": "import",
+   "relation": "imports",
+   "source": "src_checkout",
+   "source_file": "src/checkout.ts",
+   "source_location": "L1",
+   "target": "src_ordersapi_placeorder",
+   "weight": 1.0
+  },
+  {
+   "_origin": "ast",
+   "confidence": "EXTRACTED",
+   "confidence_score": 1.0,
+   "context": "import",
+   "relation": "imports",
+   "source": "src_ordersapi",
+   "source_file": "src/ordersApi.ts",
+   "source_location": "L1",
+   "target": "src_config_orders_url",
+   "weight": 1.0
+  },
+  {
+   "_origin": "ast",
+   "confidence": "EXTRACTED",
+   "confidence_score": 1.0,
+   "context": "import",
+   "relation": "imports_from",
+   "source": "src_checkout",
+   "source_file": "src/checkout.ts",
+   "source_location": "L1",
+   "target": "src_ordersapi",
+   "weight": 1.0
+  },
+  {
+   "_origin": "ast",
+   "confidence": "EXTRACTED",
+   "confidence_score": 1.0,
+   "context": "import",
+   "relation": "imports_from",
+   "source": "src_ordersapi",
+   "source_file": "src/ordersApi.ts",
+   "source_location": "L1",
+   "target": "src_config",
+   "weight": 1.0
+  },
+  {
+   "_origin": "ast",
+   "confidence": "EXTRACTED",
+   "confidence_score": 1.0,
+   "relation": "contains",
+   "source": "package",
+   "source_file": "package.json",
+   "source_location": "L2",
+   "target": "package_name",
+   "weight": 1.0
+  },
+  {
+   "_origin": "ast",
+   "confidence": "EXTRACTED",
+   "confidence_score": 1.0,
+   "relation": "contains",
+   "source": "package",
+   "source_file": "package.json",
+   "source_location": "L3",
+   "target": "package_version",
+   "weight": 1.0
+  },
+  {
+   "_origin": "ast",
+   "confidence": "EXTRACTED",
+   "confidence_score": 1.0,
+   "relation": "contains",
+   "source": "package",
+   "source_file": "package.json",
+   "source_location": "L4",
+   "target": "package_private",
+   "weight": 1.0
+  },
+  {
+   "_origin": "ast",
+   "confidence": "EXTRACTED",
+   "confidence_score": 1.0,
+   "relation": "contains",
+   "source": "package",
+   "source_file": "package.json",
+   "source_location": "L5",
+   "target": "package_dependencies",
+   "weight": 1.0
+  },
+  {
+   "_origin": "ast",
+   "confidence": "EXTRACTED",
+   "confidence_score": 1.0,
+   "relation": "contains",
+   "source": "package_dependencies",
+   "source_file": "package.json",
+   "source_location": "L5",
+   "target": "package_dependencies_react",
+   "weight": 1.0
+  },
+  {
+   "_origin": "ast",
+   "confidence": "EXTRACTED",
+   "confidence_score": 1.0,
+   "relation": "contains",
+   "source": "src_checkout",
+   "source_file": "src/checkout.ts",
+   "source_location": "L3",
+   "target": "src_checkout_checkout",
+   "weight": 1.0
+  },
+  {
+   "_origin": "ast",
+   "confidence": "EXTRACTED",
+   "confidence_score": 1.0,
+   "relation": "contains",
+   "source": "src_config",
+   "source_file": "src/config.ts",
+   "source_location": "L1",
+   "target": "src_config_orders_url",
+   "weight": 1.0
+  },
+  {
+   "_origin": "ast",
+   "confidence": "EXTRACTED",
+   "confidence_score": 1.0,
+   "relation": "contains",
+   "source": "src_ordersapi",
+   "source_file": "src/ordersApi.ts",
+   "source_location": "L12",
+   "target": "src_ordersapi_getorder",
+   "weight": 1.0
+  },
+  {
+   "_origin": "ast",
+   "confidence": "EXTRACTED",
+   "confidence_score": 1.0,
+   "relation": "contains",
+   "source": "src_ordersapi",
+   "source_file": "src/ordersApi.ts",
+   "source_location": "L3",
+   "target": "src_ordersapi_ordertotal",
+   "weight": 1.0
+  },
+  {
+   "_origin": "ast",
+   "confidence": "EXTRACTED",
+   "confidence_score": 1.0,
+   "relation": "contains",
+   "source": "src_ordersapi",
+   "source_file": "src/ordersApi.ts",
+   "source_location": "L7",
+   "target": "src_ordersapi_placeorder",
+   "weight": 1.0
+  },
+  {
+   "_origin": "ast",
+   "confidence": "EXTRACTED",
+   "confidence_score": 1.0,
+   "relation": "declares",
+   "source": "package_dependencies_react",
+   "source_file": "package.json",
+   "source_location": "L5",
+   "target": "ref_react",
+   "weight": 1.0
+  },
+  {
+   "_origin": "ast",
+   "confidence": "EXTRACTED",
+   "confidence_score": 1.0,
+   "relation": "method",
+   "source": "src_checkout_checkout",
+   "source_file": "src/checkout.ts",
+   "source_location": "L4",
+   "target": "src_checkout_checkout_submit",
+   "weight": 1.0
+  }
+ ],
+ "multigraph": false,
+ "nodes": [
+  {
+   "_callable": true,
+   "_callable_class": true,
+   "_origin": "ast",
+   "community": 1,
+   "community_name": "ordersApi.ts",
+   "file_type": "code",
+   "id": "src_ordersapi_ordertotal",
+   "label": "OrderTotal",
+   "metadata": {
+    "type_path": "OrderTotal"
+   },
+   "norm_label": "ordertotal",
+   "source_file": "src/ordersApi.ts",
+   "source_location": "L3"
+  },
+  {
+   "_callable": true,
+   "_callable_class": true,
+   "_origin": "ast",
+   "community": 2,
+   "community_name": "checkout.ts",
+   "file_type": "code",
+   "id": "src_checkout_checkout",
+   "label": "Checkout",
+   "metadata": {
+    "type_path": "Checkout"
+   },
+   "norm_label": "checkout",
+   "source_file": "src/checkout.ts",
+   "source_location": "L3"
+  },
+  {
+   "_callable": true,
+   "_origin": "ast",
+   "community": 1,
+   "community_name": "ordersApi.ts",
+   "file_type": "code",
+   "id": "src_ordersapi_getorder",
+   "label": "getOrder()",
+   "norm_label": "getorder()",
+   "source_file": "src/ordersApi.ts",
+   "source_location": "L12"
+  },
+  {
+   "_callable": true,
+   "_origin": "ast",
+   "community": 2,
+   "community_name": "checkout.ts",
+   "file_type": "code",
+   "id": "src_checkout_checkout_submit",
+   "label": ".submit()",
+   "norm_label": ".submit()",
+   "source_file": "src/checkout.ts",
+   "source_location": "L4"
+  },
+  {
+   "_callable": true,
+   "_origin": "ast",
+   "community": 2,
+   "community_name": "checkout.ts",
+   "file_type": "code",
+   "id": "src_ordersapi_placeorder",
+   "label": "placeOrder()",
+   "norm_label": "placeorder()",
+   "source_file": "src/ordersApi.ts",
+   "source_location": "L7"
+  },
+  {
+   "_origin": "ast",
+   "community": 0,
+   "community_name": "package.json",
+   "file_type": "code",
+   "id": "package",
+   "label": "package.json",
+   "norm_label": "package.json",
+   "source_file": "package.json",
+   "source_location": "L1"
+  },
+  {
+   "_origin": "ast",
+   "community": 0,
+   "community_name": "package.json",
+   "file_type": "code",
+   "id": "package_dependencies",
+   "label": "dependencies",
+   "norm_label": "dependencies",
+   "source_file": "package.json",
+   "source_location": "L5"
+  },
+  {
+   "_origin": "ast",
+   "community": 0,
+   "community_name": "package.json",
+   "file_type": "code",
+   "id": "package_dependencies_react",
+   "label": "react@18.3.1",
+   "norm_label": "react@18.3.1",
+   "source_file": "package.json",
+   "source_location": "L5"
+  },
+  {
+   "_origin": "ast",
+   "community": 0,
+   "community_name": "package.json",
+   "file_type": "code",
+   "id": "package_name",
+   "label": "name",
+   "norm_label": "name",
+   "source_file": "package.json",
+   "source_location": "L2"
+  },
+  {
+   "_origin": "ast",
+   "community": 0,
+   "community_name": "package.json",
+   "file_type": "code",
+   "id": "package_private",
+   "label": "private",
+   "norm_label": "private",
+   "source_file": "package.json",
+   "source_location": "L4"
+  },
+  {
+   "_origin": "ast",
+   "community": 0,
+   "community_name": "package.json",
+   "file_type": "code",
+   "id": "package_version",
+   "label": "version",
+   "norm_label": "version",
+   "source_file": "package.json",
+   "source_location": "L3"
+  },
+  {
+   "_origin": "ast",
+   "community": 0,
+   "community_name": "package.json",
+   "file_type": "concept",
+   "id": "ref_react",
+   "label": "react",
+   "norm_label": "react",
+   "source_file": "package.json",
+   "source_location": "L5"
+  },
+  {
+   "_origin": "ast",
+   "community": 1,
+   "community_name": "ordersApi.ts",
+   "file_type": "code",
+   "id": "src_config",
+   "label": "config.ts",
+   "norm_label": "config.ts",
+   "source_file": "src/config.ts",
+   "source_location": "L1"
+  },
+  {
+   "_origin": "ast",
+   "community": 1,
+   "community_name": "ordersApi.ts",
+   "file_type": "code",
+   "id": "src_config_orders_url",
+   "label": "ORDERS_URL",
+   "norm_label": "orders_url",
+   "source_file": "src/config.ts",
+   "source_location": "L1"
+  },
+  {
+   "_origin": "ast",
+   "community": 1,
+   "community_name": "ordersApi.ts",
+   "file_type": "code",
+   "id": "src_ordersapi",
+   "label": "ordersApi.ts",
+   "norm_label": "ordersapi.ts",
+   "source_file": "src/ordersApi.ts",
+   "source_location": "L1"
+  },
+  {
+   "_origin": "ast",
+   "community": 2,
+   "community_name": "checkout.ts",
+   "file_type": "code",
+   "id": "src_checkout",
+   "label": "checkout.ts",
+   "norm_label": "checkout.ts",
+   "source_file": "src/checkout.ts",
+   "source_location": "L1"
+  }
+ ]
+}

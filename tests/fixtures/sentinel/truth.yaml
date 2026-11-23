@@ -1,0 +1,48 @@
+# Seeded ground truth for the Sentinel fixtures, written by hand from the source (not from any engine).
+# Validator 3 compares the graph's internal IMPORTS (module to module) and CALLS (to functions and methods)
+# against `edges`, and cross-repository links against `links`. Calls to class constructors are left out on
+# purpose: engines disagree on whether Order(...) is a call, and the ontology allows either reading.
+edges:
+  orders-service:
+    IMPORTS:
+      - [orders/inventory_client.py, orders/config.py]
+      - [orders/service.py, orders/inventory_client.py]
+      - [orders/service.py, orders/models.py]
+      - [orders/api.py, orders/service.py]
+      - [tests/test_orders.py, orders/service.py]
+    CALLS:
+      - [orders/service.py#OrderService.create, orders/inventory_client.py#stock_level]
+      - [orders/service.py#OrderService.create, orders/inventory_client.py#reserve]
+      - [orders/service.py#OrderService.create, orders/service.py#BaseService.audit]
+      - [orders/api.py#create_order, orders/service.py#OrderService.create]
+  inventory-service:
+    IMPORTS:
+      - [inventory/api.py, inventory/stock.py]
+      - [tests/test_stock.py, inventory/stock.py]
+    CALLS:
+      - [inventory/api.py#get_stock, inventory/stock.py#available]
+      - [inventory/api.py#create_reservation, inventory/stock.py#reserve]
+      - [inventory/stock.py#reserve, inventory/stock.py#available]
+      - [tests/test_stock.py#StockTest.test_unknown_sku, inventory/stock.py#available]
+  shared-lib:
+    IMPORTS: []
+    CALLS: []
+  web-portal:
+    IMPORTS:
+      - [src/checkout.ts, src/ordersApi.ts]
+      - [src/ordersApi.ts, src/config.ts]
+    CALLS:
+      - [src/checkout.ts#Checkout.submit, src/ordersApi.ts#placeOrder]
+links:
+  - [orders-service:orders/service.py#OrderService.create, CALLS, shared-lib:acme_shared/money.py#to_cents]
+  - [orders-service:orders/service.py#OrderService.create, CALLS, shared-lib:acme_shared/events.py#publish]
+  - [orders-service:orders/service.py, IMPORTS, shared-lib:acme_shared/money.py]
+  - [orders-service:orders/service.py, IMPORTS, shared-lib:acme_shared/events.py]
+  - [inventory-service:inventory/stock.py, IMPORTS, shared-lib:acme_shared/events.py]
+  - [inventory-service:inventory/stock.py#on_order_created, CALLS, shared-lib:acme_shared/events.py#subscribe]
+  - [orders-service:orders/inventory_client.py#stock_level, CONSUMES, "inventory-service:api#GET /inventory/{sku}"]
+  - [orders-service:orders/inventory_client.py#reserve, CONSUMES, "inventory-service:api#POST /inventory/{sku}/reservations"]
+  - [web-portal:src/ordersApi.ts#placeOrder, CONSUMES, "orders-service:api#POST /orders"]
+  - [web-portal:src/ordersApi.ts#getOrder, CONSUMES, "orders-service:api#GET /orders/{order_id}"]
+  - [repo:orders-service, DEPENDS_ON, repo:shared-lib]
+  - [repo:inventory-service, DEPENDS_ON, repo:shared-lib]

@@ -27,6 +27,11 @@ TEXT_SUFFIXES = (
     ".java",
     ".go",
     ".cs",
+    ".tsx",
+    ".jsx",
+    ".sql",
+    ".mod",
+    ".xml",
 )
 
 

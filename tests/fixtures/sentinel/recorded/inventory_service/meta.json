@@ -1,0 +1,17 @@
+{
+ "engines": {
+  "graphify": {
+   "error": null,
+   "status": "ok",
+   "version": "0.9.115"
+  },
+  "scip-python": {
+   "error": null,
+   "indexer": "scip-python@0.6.8",
+   "status": "ok"
+  }
+ },
+ "recorded_at": "2026-11-22T12:32:06.894073+00:00",
+ "repo": "inventory-service",
+ "sha": "e91f0469742aebf8e3c450a240a953a353407ad8"
+}

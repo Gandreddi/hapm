@@ -7,7 +7,15 @@ from typing import Any
 
 import yaml
 
-from hapm_config.models import ApproversConfig, GithubConfig, JiraConfig, ProjectConfig, RepoConfig, SandboxConfig
+from hapm_config.models import (
+    ApproversConfig,
+    GithubConfig,
+    JiraConfig,
+    ProjectConfig,
+    RepoConfig,
+    SandboxConfig,
+    SentinelConfig,
+)
 from hapm_config.refs import RefError, resolve_ref
 
 DEFAULT_DIR = Path(__file__).resolve().parents[4] / "config"
@@ -48,6 +56,7 @@ def load_project(directory: Path | None = None) -> ProjectConfig:
         github=GithubConfig.model_validate(_read(directory, "github", sources)),
         approvers=ApproversConfig.model_validate(_read(directory, "approvers", sources)),
         sandbox=SandboxConfig.model_validate(_read(directory, "sandbox", sources)),
+        sentinel=SentinelConfig.model_validate(_read(directory, "sentinel", sources)),
         sources=sources,
     )
 
@@ -58,6 +67,7 @@ class CheckReport:
     mocked: list[str] = field(default_factory=list)
     missing: list[str] = field(default_factory=list)
     sources: dict[str, str] = field(default_factory=dict)
+    info: list[str] = field(default_factory=list)  # Sentinel status; never affects the Developer pilot
 
     @property
     def pilot_ready(self) -> bool:
@@ -105,12 +115,23 @@ def check(project: ProjectConfig, providers: dict[str, Any] | None = None) -> Ch
                 report.missing.append(f"repo {repo.name}: github_repo")
         if project.jira.backend == "jira" and repo.jira_project not in project.jira.allowed_projects:
             report.missing.append(f"repo {repo.name}: Jira project {repo.jira_project} not in jira.allowed_projects")
+    sentinel = project.sentinel
+    enabled = [r.name for r in project.repos.values() if r.sentinel.enabled]
+    summary = f"sentinel: {len(enabled)} repositories enabled, llm {sentinel.llm}, engines {sentinel.engines.runner}"
+    report.info.append(summary)
+    if sentinel.llm != "off" and providers is not None:
+        for role in ("enrich", "ask", "embed"):
+            alias = getattr(sentinel.aliases, role)
+            if alias not in providers.get("aliases", {}):
+                report.missing.append(f"sentinel llm {sentinel.llm}: gateway alias {alias} is not defined in providers")
     if providers is not None:
         live = [n for n, p in providers.get("providers", {}).items() if p.get("type") != "fake"]
         usable = []
         for name in live:
             cfg = providers["providers"][name]
-            refs = [cfg.get(k) for k in ("token_ref", "api_key_ref", "endpoint_ref") if cfg.get(k)]
+            refs = [cfg.get(k) for k in ("api_key_ref", "endpoint_ref", "base_url_ref") if cfg.get(k)]
+            if cfg.get("type") == "local_openai" and not (cfg.get("base_url_ref") or cfg.get("endpoint")):
+                continue  # a local server without an address is not usable
             try:
                 for r in refs:
                     resolve_ref(r)

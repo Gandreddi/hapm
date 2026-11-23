@@ -1,0 +1,40 @@
+# Sentinel (Phase 2 context agent) fleet settings. Copy to config/sentinel.yaml (git-ignored) to change them.
+# Sentinel is read-only on every repository and on Jira.
+
+concurrency: 4                 # repositories built in parallel
+budgets: { per_repo_usd: 1.0, total_usd: 20.0, per_repo_tokens: 200000, total_tokens: 5000000 }
+
+# off: no model calls at all (default for the first production launch): enrichment, embeddings and
+#      sentinel_ask are disabled and reported as such. local: the local_openai provider (Ollama, llama.cpp
+#      or vLLM on the office server). azure: the Azure AI Foundry route (ADR-0020).
+llm: "off"
+aliases: { enrich: enrich, ask: ask, embed: embed_local }
+enrichment: { label_retries: 3, token_cap: 2000, tiers: [1, 2], prompt_version: "1", backoff_seconds: 1.0 }
+embeddings: { enabled: true, dimension: null }    # null: whatever the configured model returns
+export: { html_node_limit: 7000 }
+refresh_schedule: "0 2 * * *"
+retention_shas: 3
+
+engines:
+  runner: recorded             # recorded (offline fixtures) or sandbox (real graphify and SCIP containers)
+  recorded_dir: tests/fixtures/sentinel/recorded
+  graphify:
+    enabled: true
+    version: "0.9.115"         # ADR-0021: pinned, installed hash-locked from PyPI package graphifyy
+    image: hapm-sentinel-graphify:0.9.115
+    timeout_seconds: 900
+  scip:
+    enabled: true
+    cli_version: "0.5.2"
+    timeout_seconds: 1800
+
+# Host names other services use to call a repository (http://<host>/...) -> repository name.
+service_aliases: {}
+
+# Controlled list for BusinessCapability tags (enrichment may only choose from these).
+capabilities:
+  - Order management
+  - Inventory management
+  - Payments
+  - Customer experience
+  - Shared platform

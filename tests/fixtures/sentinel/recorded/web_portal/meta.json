@@ -1,0 +1,17 @@
+{
+ "engines": {
+  "graphify": {
+   "error": null,
+   "status": "ok",
+   "version": "0.9.115"
+  },
+  "scip-typescript": {
+   "error": null,
+   "indexer": "scip-typescript@0.6.2",
+   "status": "ok"
+  }
+ },
+ "recorded_at": "2026-11-22T12:32:12.076142+00:00",
+ "repo": "web-portal",
+ "sha": "a2b23675356818bde039bc655934451801e4698e"
+}
